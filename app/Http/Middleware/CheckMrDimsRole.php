@@ -16,7 +16,7 @@ class CheckMrDimsRole
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check() || auth()->user()->role !== 'mr_dims') {
-            abort(403, 'Accès refusé. Réservé au SYS_CTRL (mr_dims).');
+            return \Inertia\Inertia::render('Auth/Unauthorized')->toResponse($request)->setStatusCode(403);
         }
 
         return $next($request);
