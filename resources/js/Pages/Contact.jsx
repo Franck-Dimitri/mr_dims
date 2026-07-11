@@ -44,19 +44,39 @@ export default function Contact() {
                         initial="hidden"
                         animate="visible"
                         variants={staggerContainer}
-                        className="mb-16"
+                        className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8"
                     >
-                        <motion.div variants={fadeInUp} className="flex items-center gap-3 font-mono text-[10px] tracking-widest uppercase text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold mb-6">
-                            <div className="w-2 h-2 rounded-full bg-blueprint-bluePrimary dark:bg-blueprint-cyan animate-ping"></div>
-                            MODULE: COMMUNICATION
+                        <div>
+                            <motion.div variants={fadeInUp} className="flex items-center gap-3 font-mono text-[10px] tracking-widest uppercase text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold mb-6">
+                                <div className="w-2 h-2 rounded-full bg-blueprint-bluePrimary dark:bg-blueprint-cyan animate-ping"></div>
+                                MODULE: COMMUNICATION
+                            </motion.div>
+                            <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter uppercase mb-6">
+                                <span className="text-blueprint-textDark dark:text-white">ÉTABLIR LE</span>{' '}
+                                <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan">CONTACT</span>
+                            </motion.h1>
+                            <motion.p variants={fadeInUp} className="font-mono text-sm uppercase tracking-widest text-gray-500 max-w-2xl leading-relaxed">
+                                DISCUTONS DE VOTRE ARCHITECTURE LOGICIELLE. UTILISEZ LE FORMULAIRE CLASSIQUE, NOS CANAUX DIRECTS OU PLANIFIEZ UN APPEL VIDÉO IMMÉDIATEMENT.
+                            </motion.p>
+                        </div>
+
+                        {/* Photo */}
+                        <motion.div variants={fadeInUp} className="shrink-0 hidden md:block">
+                            <div className="relative w-32 h-32 md:w-40 md:h-40 bg-gray-100 dark:bg-[#1A1A1A] border-2 border-blueprint-bluePrimary dark:border-blueprint-cyan overflow-hidden shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500 group">
+                                <img 
+                                    src="/profile.jpg" 
+                                    alt="Mr Dim's" 
+                                    className="absolute inset-0 w-full h-full object-cover z-10 grayscale group-hover:grayscale-0 transition-all duration-700"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        e.target.nextElementSibling.style.display = 'flex';
+                                    }}
+                                />
+                                <div className="w-full h-full items-center justify-center bg-[#1A1A1A] text-gray-500 text-xs font-mono font-bold z-0" style={{ display: 'none' }}>
+                                    PHOTO ICI
+                                </div>
+                            </div>
                         </motion.div>
-                        <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter uppercase mb-6">
-                            <span className="text-blueprint-textDark dark:text-white">ÉTABLIR LE</span>{' '}
-                            <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan">CONTACT</span>
-                        </motion.h1>
-                        <motion.p variants={fadeInUp} className="font-mono text-sm uppercase tracking-widest text-gray-500 max-w-2xl leading-relaxed">
-                            DISCUTONS DE VOTRE ARCHITECTURE LOGICIELLE. UTILISEZ LE FORMULAIRE CLASSIQUE, NOS CANAUX DIRECTS OU PLANIFIEZ UN APPEL VIDÉO IMMÉDIATEMENT.
-                        </motion.p>
                     </motion.div>
 
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-start">

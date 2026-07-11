@@ -110,12 +110,23 @@ export default function Welcome({ auth, projects, blogs }) {
                                 <motion.div 
                                     whileHover={{ scale: 1.05 }}
                                     transition={{ type: "spring", stiffness: 300 }}
-                                    className="text-center"
+                                    className="w-full h-full flex items-center justify-center relative"
                                 >
-                                    <svg className="w-32 h-32 mx-auto text-gray-300 dark:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                                    </svg>
-                                    <div className="mt-4 font-bold text-3xl tracking-tighter text-gray-300 dark:text-gray-700">MR DIM'S</div>
+                                    <img 
+                                        src="/profile.jpg" 
+                                        alt="Mr Dim's" 
+                                        className="absolute inset-0 w-full h-full object-cover z-10"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            e.target.nextElementSibling.style.display = 'block';
+                                        }}
+                                    />
+                                    <div className="text-center z-0" style={{ display: 'none' }}>
+                                        <svg className="w-32 h-32 mx-auto text-gray-300 dark:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                        </svg>
+                                        <div className="mt-4 font-bold text-3xl tracking-tighter text-gray-300 dark:text-gray-700">PHOTO ICI</div>
+                                    </div>
                                 </motion.div>
 
                                 {/* Floating Tags */}
