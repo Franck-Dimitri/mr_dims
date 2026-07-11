@@ -9,12 +9,14 @@ export default function Welcome({ auth, projects, blogs }) {
         email: '',
         message: '',
         platform_origin: 'web',
+        attachment: null,
     });
 
     const submitContact = (e) => {
         e.preventDefault();
         post('/contact', {
             preserveScroll: true,
+            forceFormData: true,
             onSuccess: () => reset(),
         });
     };
@@ -657,6 +659,17 @@ export default function Welcome({ auth, projects, blogs }) {
                                     placeholder="Spécifiez les requis techniques ici..."
                                 ></textarea>
                                 {errors.message && <div className="text-red-500 text-[10px] font-mono mt-2 uppercase">{errors.message}</div>}
+                            </div>
+
+                            <div>
+                                <label className="block text-[10px] font-bold font-mono tracking-widest mb-2 uppercase text-gray-500">PIÈCE JOINTE (MAX 2MO : PDF, DOC, IMG)</label>
+                                <input 
+                                    type="file" 
+                                    onChange={e => setData('attachment', e.target.files[0])}
+                                    className="w-full bg-[#F9FAFB] dark:bg-[#111827] border border-gray-200 dark:border-gray-800 focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:ring-1 focus:ring-blueprint-bluePrimary dark:focus:ring-blueprint-cyan rounded-none p-2 font-mono text-xs file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:font-mono file:font-bold file:uppercase file:bg-blueprint-bluePrimary/10 file:text-blueprint-bluePrimary hover:file:bg-blueprint-bluePrimary/20 transition-colors"
+                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                />
+                                {errors.attachment && <div className="text-red-500 text-[10px] font-mono mt-2 uppercase">{errors.attachment}</div>}
                             </div>
 
                             <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">

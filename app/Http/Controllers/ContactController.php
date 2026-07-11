@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessageMail;
 
 class ContactController extends Controller
 {
@@ -14,9 +16,21 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
             'message' => 'required|string',
             'platform_origin' => 'required|in:web,whatsapp',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
         ]);
 
-        Contact::create($validated);
+        if ($request->hasFile('attachment')) {
+            $path = $request->file('attachment')->store('contacts_attachments', 'public');
+            $validated['attachment_path'] = $path;
+        }
+
+        $contact = Contact::create($validated);
+
+        try {
+            Mail::to('franckdimitri009@gmail.com')->send(new ContactMessageMail($contact));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Erreur lors de l\'envoi du mail de contact: ' . $e->getMessage());
+        }
 
         return back()->with('success', 'Votre message a bien été envoyé. Je vous réponds très vite !');
     }
