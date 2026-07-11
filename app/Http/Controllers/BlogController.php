@@ -13,7 +13,6 @@ class BlogController extends Controller
      */
     public function index()
     {
-        // For public view, we only show published blogs (if status exists) or all for now
         $blogs = Blog::where('status', 'published')
             ->orderBy('published_at', 'desc')
             ->get();
@@ -28,7 +27,10 @@ class BlogController extends Controller
      */
     public function show($slug)
     {
-        $blog = Blog::where('slug', $slug)
+        $blog = Blog::with(['comments' => function ($query) {
+                $query->where('is_approved', true)->orderBy('created_at', 'desc');
+            }])
+            ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 
@@ -46,5 +48,38 @@ class BlogController extends Controller
             'blog' => $blog,
             'recentBlogs' => $recentBlogs
         ]);
+    }
+
+    /**
+     * Like a blog post.
+     */
+    public function like($slug)
+    {
+        $blog = Blog::where('slug', $slug)->firstOrFail();
+        $blog->increment('likes_count');
+        return redirect()->back();
+    }
+
+    /**
+     * Store a new comment.
+     */
+    public function storeComment(Request $request, $slug)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'content' => 'required|string|max:1000',
+        ]);
+
+        $blog = Blog::where('slug', $slug)->firstOrFail();
+
+        $blog->comments()->create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'content' => $validated['content'],
+            'is_approved' => true, // Auto-approved as per requirement
+        ]);
+
+        return redirect()->back()->with('success', 'Votre commentaire a été publié.');
     }
 }

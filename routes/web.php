@@ -24,6 +24,8 @@ Route::middleware('track.activity')->group(function () {
     Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+    Route::post('/blog/{slug}/like', [BlogController::class, 'like'])->name('blog.like');
+    Route::post('/blog/{slug}/comment', [BlogController::class, 'storeComment'])->name('blog.comment.store');
 });
 use App\Models\Project;
 use App\Models\Blog;
@@ -54,6 +56,15 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(funct
         'update' => 'admin.projects.update',
         'destroy' => 'admin.projects.destroy',
     ])->except(['show']);
+
+    // Admin Blog Routes
+    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)->names([
+        'index' => 'admin.blogs.index',
+        'store' => 'admin.blogs.store',
+        'update' => 'admin.blogs.update',
+        'destroy' => 'admin.blogs.destroy',
+    ])->except(['create', 'show', 'edit']);
+    Route::delete('/blogs/comments/{comment}', [\App\Http\Controllers\Admin\BlogController::class, 'destroyComment'])->name('admin.blogs.comments.destroy');
 });
 
 require __DIR__.'/auth.php';

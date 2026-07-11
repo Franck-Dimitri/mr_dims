@@ -92,6 +92,43 @@ export default function Welcome({ auth, projects, blogs }) {
                                     <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan mr-2">{'>_'}</span> INITIER UN PROJET
                                 </a>
                             </motion.div>
+                            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
+                                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+                                    <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-mono tracking-widest uppercase">
+                                        <span className="text-gray-500 mr-2">[ CANAUX_DIRECTS ]</span>
+                                        
+                                        <a 
+                                            href="https://wa.me/237676383986?text=Bonjour%20Mr%20Dims,%20je%20souhaite%20discuter%20d\'un%20projet"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            onClick={() => setData('platform_origin', 'whatsapp')}
+                                            className="text-gray-400 hover:text-[#25D366] transition-colors flex items-center gap-2"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.618-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.664.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964 1.003-3.588c-.608-1.033-.926-2.22-.926-3.441 0-4.111 3.346-7.457 7.466-7.457 4.118 0 7.463 3.346 7.463 7.458-.001 4.114-3.345 7.459-7.464 7.459z"/></svg>
+                                            WHATSAPP
+                                        </a>
+                                        
+                                        <a 
+                                            href="mailto:franckdimitrio009@gmail.com"
+                                            className="text-gray-400 hover:text-red-500 transition-colors flex items-center gap-2"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12.713l11.985-8.713h-23.97l11.985 8.713zm0 2.574l-12-8.727v14.44h24v-14.44l-12 8.727z"/></svg>
+                                            EMAIL
+                                        </a>
+                                        
+                                        <a 
+                                            href="https://github.com/Franck-Dimitri"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="text-gray-400 hover:text-blueprint-textDark dark:hover:text-white transition-colors flex items-center gap-2"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                            GITHUB
+                                        </a>
+                                    </div>
+                                </div>
+                            </motion.div>
+                            
                         </motion.div>
 
                         {/* Right: Visual Avatar Box */}
@@ -185,6 +222,88 @@ export default function Welcome({ auth, projects, blogs }) {
                 </div>
             </section>
 
+            {/* --- SKILLS SECTION --- */}
+            <section className="py-24 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 relative z-10 bg-white/50 dark:bg-[#070A10]/50 backdrop-blur-sm">
+                <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div 
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        variants={staggerContainer}
+                    >
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                            <motion.div variants={fadeInUp}>
+                                <div className="flex items-center gap-3 font-mono text-[10px] tracking-widest uppercase text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold mb-6">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                                    MODULE: COMPÉTENCES
+                                </div>
+                                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase mb-4">
+                                    <span className="text-blueprint-textDark dark:text-white">STACK</span>{' '}
+                                    <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan">TECHNIQUE</span>
+                                </h2>
+                                <p className="font-mono text-xs uppercase tracking-widest text-gray-500 max-w-xl leading-relaxed">
+                                    MATRICE DES TECHNOLOGIES ET ENVIRONNEMENTS MAÎTRISÉS.
+                                </p>
+                            </motion.div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {/* Frontend */}
+                            <motion.div variants={fadeInUp} className="bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 p-8 hover:border-blueprint-bluePrimary/50 dark:hover:border-blueprint-cyan/50 transition-colors">
+                                <div className="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
+                                    <svg className="w-6 h-6 text-blueprint-bluePrimary dark:text-blueprint-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                    <h3 className="font-mono text-sm tracking-widest font-bold uppercase text-blueprint-textDark dark:text-white">FRONTEND</h3>
+                                </div>
+                                <ul className="space-y-3 font-mono text-xs uppercase tracking-widest text-gray-500">
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>HTML / CSS</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>TAILWIND CSS</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>REACT</li>
+                                </ul>
+                            </motion.div>
+
+                            {/* Backend */}
+                            <motion.div variants={fadeInUp} className="bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 p-8 hover:border-blueprint-bluePrimary/50 dark:hover:border-blueprint-cyan/50 transition-colors">
+                                <div className="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
+                                    <svg className="w-6 h-6 text-blueprint-bluePrimary dark:text-blueprint-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                                    <h3 className="font-mono text-sm tracking-widest font-bold uppercase text-blueprint-textDark dark:text-white">BACKEND / API</h3>
+                                </div>
+                                <ul className="space-y-3 font-mono text-xs uppercase tracking-widest text-gray-500">
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>LARAVEL (PHP)</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>API RESTFUL</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>DJANGO</li>
+                                </ul>
+                            </motion.div>
+
+                            {/* Outils & DevOps */}
+                            <motion.div variants={fadeInUp} className="bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 p-8 hover:border-blueprint-bluePrimary/50 dark:hover:border-blueprint-cyan/50 transition-colors">
+                                <div className="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
+                                    <svg className="w-6 h-6 text-blueprint-bluePrimary dark:text-blueprint-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                    <h3 className="font-mono text-sm tracking-widest font-bold uppercase text-blueprint-textDark dark:text-white">OUTILS & DEVOPS</h3>
+                                </div>
+                                <ul className="space-y-3 font-mono text-xs uppercase tracking-widest text-gray-500">
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>GIT & GITHUB</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>DÉPLOIEMENT</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>CI / CD</li>
+                                </ul>
+                            </motion.div>
+
+                            {/* Environnement */}
+                            <motion.div variants={fadeInUp} className="bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 p-8 hover:border-blueprint-bluePrimary/50 dark:hover:border-blueprint-cyan/50 transition-colors">
+                                <div className="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
+                                    <svg className="w-6 h-6 text-blueprint-bluePrimary dark:text-blueprint-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    <h3 className="font-mono text-sm tracking-widest font-bold uppercase text-blueprint-textDark dark:text-white">ENVIRONNEMENT</h3>
+                                </div>
+                                <ul className="space-y-3 font-mono text-xs uppercase tracking-widest text-gray-500">
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>LINUX</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>DEBIAN / UBUNTU / KALI / MINT</li>
+                                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>WINDOWS</li>
+                                </ul>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
             {/* --- PROJECTS SECTION --- */}
             <section className="py-24 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 relative z-10">
                 <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -252,7 +371,7 @@ export default function Welcome({ auth, projects, blogs }) {
                                                 )}
                                                 
                                                 {coverImage ? (
-                                                    <img src={`/storage/${coverImage}`} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                                    <img src={coverImage} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 ) : (
                                                     <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
                                                         <svg className="w-24 h-24 text-blueprint-textDark dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -318,6 +437,51 @@ export default function Welcome({ auth, projects, blogs }) {
                 </div>
             </section>
 
+            {/* --- TECH MARQUEE SECTION --- */}
+            <section className="py-4 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 bg-[#F9FAFB]/30 dark:bg-[#070A10]/30 backdrop-blur-sm relative z-10">
+                <style>
+                    {`
+                    @keyframes scroll-marquee {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                    }
+                    .animate-scroll-marquee {
+                        animation: scroll-marquee 40s linear infinite;
+                        width: max-content;
+                    }
+                    `}
+                </style>
+                <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+                    <div 
+                        className="overflow-hidden"
+                        style={{ 
+                            maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', 
+                            WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' 
+                        }}
+                    >
+                        <div className="animate-scroll-marquee flex items-center gap-12">
+                            {[...Array(2)].map((_, i) => (
+                                <div key={i} className="flex items-center gap-12 pr-12">
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">HTML5</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">CSS3</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">TAILWIND CSS</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">REACT</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">LARAVEL</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">PHP</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">REST API</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">DJANGO</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">GIT</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">GITHUB</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">CI/CD</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">LINUX</div>
+                                    <div className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors cursor-default">WINDOWS</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* --- BLOG SECTION --- */}
             <section className="py-24 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 bg-[#F9FAFB]/50 dark:bg-[#070A10]/50 backdrop-blur-md relative z-10">
                 <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -351,21 +515,51 @@ export default function Welcome({ auth, projects, blogs }) {
                             {blogs && blogs.length > 0 ? (
                                 blogs.map(blog => (
                                     <motion.div variants={fadeInUp} key={blog.id}>
-                                        <Link href={`/blog/${blog.slug}`} className="group bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 p-8 flex flex-col md:flex-row gap-8 hover:border-blueprint-bluePrimary dark:hover:border-blueprint-cyan transition-colors h-full">
-                                            <div className="flex-1">
-                                                <div className="font-mono text-[10px] tracking-widest uppercase text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold mb-4">
-                                                    {new Date(blog.published_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })}
+                                        <Link href={`/blog/${blog.slug}`} className="group bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 flex flex-col hover:border-blueprint-bluePrimary dark:hover:border-blueprint-cyan transition-colors h-full overflow-hidden">
+                                            {/* Image de couverture */}
+                                            <div className="h-48 w-full relative overflow-hidden bg-gray-100 dark:bg-[#111827]">
+                                                {blog.image ? (
+                                                    <img src={blog.image} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-gray-700">
+                                                        <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                                    </div>
+                                                )}
+                                                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 font-mono text-[10px] tracking-widest text-white uppercase border border-white/10 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-blueprint-bluePrimary dark:bg-blueprint-cyan animate-pulse"></div>
+                                                    {new Date(blog.published_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
                                                 </div>
-                                                <h3 className="text-2xl font-bold tracking-tight mb-4 group-hover:underline decoration-blueprint-bluePrimary dark:decoration-blueprint-cyan underline-offset-4">
+                                            </div>
+
+                                            <div className="p-6 md:p-8 flex-1 flex flex-col">
+                                                <div className="flex items-center gap-3 mb-4 text-[10px] font-mono uppercase tracking-widest text-gray-500">
+                                                    <span className="flex items-center gap-1.5 text-blueprint-bluePrimary dark:text-blueprint-cyan">
+                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                                        {blog.author || 'MR DIMS'}
+                                                    </span>
+                                                    <span>//</span>
+                                                    <span className="flex items-center gap-1">
+                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                                        {blog.views_count}
+                                                    </span>
+                                                    <span>//</span>
+                                                    <span className="flex items-center gap-1 text-pink-500">
+                                                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                                        {blog.likes_count}
+                                                    </span>
+                                                </div>
+
+                                                <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-4 group-hover:text-blueprint-bluePrimary dark:group-hover:text-blueprint-cyan transition-colors">
                                                     {blog.title}
                                                 </h3>
-                                                <p className="text-sm text-gray-500 font-mono leading-relaxed line-clamp-2">
+                                                
+                                                <p className="text-sm text-gray-500 font-mono leading-relaxed line-clamp-3 mb-6 flex-1">
                                                     {blog.meta_description || 'Analyse approfondie et documentation technique du processus d\'implémentation.'}
                                                 </p>
-                                            </div>
-                                            <div className="shrink-0 flex items-center">
-                                                <div className="w-12 h-12 rounded-full border-2 border-gray-100 dark:border-gray-800 flex items-center justify-center group-hover:bg-blueprint-bluePrimary/10 dark:group-hover:bg-blueprint-cyan/10 transition-colors">
-                                                    <svg className="w-5 h-5 text-blueprint-textDark dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+
+                                                <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center text-[10px] font-mono tracking-widest uppercase font-bold text-gray-400 group-hover:text-blueprint-bluePrimary dark:group-hover:text-blueprint-cyan transition-colors">
+                                                    <span>LIRE LE LOG</span>
+                                                    <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                                                 </div>
                                             </div>
                                         </Link>
@@ -497,7 +691,7 @@ export default function Welcome({ auth, projects, blogs }) {
                                     </a>
                                     
                                     <a 
-                                        href="mailto:franckdimitri009@gmail.com"
+                                        href="mailto:franckdimitrio009@gmail.com"
                                         className="text-gray-400 hover:text-red-500 transition-colors flex items-center gap-2"
                                     >
                                         <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12.713l11.985-8.713h-23.97l11.985 8.713zm0 2.574l-12-8.727v14.44h24v-14.44l-12 8.727z"/></svg>

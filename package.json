@@ -22,6 +22,7 @@
         "vite": "^6.4.3"
     },
     "dependencies": {
-        "framer-motion": "^12.42.2"
+        "framer-motion": "^12.42.2",
+        "react-markdown": "^10.1.0"
     }
 }
