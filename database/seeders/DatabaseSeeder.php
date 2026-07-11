@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Mr Dim\'s',
             'email' => 'franckimitrio009@gmail.com',
             'password' => bcrypt('Lapersonne2020'),
-            'role' => 'admin',
+            'role' => 'mr_dims',
         ]);
 
         Project::create([
