@@ -7,13 +7,13 @@ export default function Dashboard({ stats, recentMessages }) {
     const dashboardStats = stats || { projects: 0, blogs: 0, messages: 0 };
     const messagesList = recentMessages || [];
     
-    const [activeTab, setActiveTab] = useState('All tasks');
+    const [activeTab, setActiveTab] = useState('Tous les messages');
 
     const statCards = [
-        { label: 'Revenus', value: '$124,542', change: '+41% from last month', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', color: 'text-gray-500', isCurrency: true },
-        { label: 'Total Projets', value: dashboardStats.projects.toString(), change: '+41% from last month', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10', color: 'text-blueprint-bluePrimary dark:text-blueprint-cyan' },
-        { label: 'Total Articles', value: dashboardStats.blogs.toString(), change: '-50% from last month', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15', color: 'text-cyan-500' },
-        { label: 'Messages Reçus', value: dashboardStats.messages.toString(), change: '+41% from last month', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'text-green-500' },
+        { label: 'Vues Globales', value: '14,542', change: '+12% ce mois', icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z', color: 'text-gray-500' },
+        { label: 'Projets Actifs', value: dashboardStats.projects.toString(), change: 'Stables', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10', color: 'text-blueprint-bluePrimary dark:text-blueprint-cyan' },
+        { label: 'Articles Publiés', value: dashboardStats.blogs.toString(), change: 'À jour', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15', color: 'text-cyan-500' },
+        { label: 'Nouveaux Messages', value: dashboardStats.messages.toString(), change: '+2 depuis hier', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'text-green-500' },
     ];
 
     const chartBars = [20, 50, 45, 10, 80, 85, 90, 40, 20];
@@ -23,7 +23,7 @@ export default function Dashboard({ stats, recentMessages }) {
         <AuthenticatedLayout header="Dashboard">
             <Head title="SYS_CTRL - Dashboard" />
 
-            <div className="max-w-7xl mx-auto space-y-6">
+            <div className="w-full mx-auto space-y-6">
                 
                 {/* Banner - EXACTLY matching the design's "Unlock premium features" look but in blueprint colors */}
                 <div className="bg-gradient-to-r from-blueprint-bluePrimary to-[#7B5CFF] dark:from-[#3B28CC] dark:to-[#5C3AFF] text-white p-5 rounded-lg flex justify-between items-center relative overflow-hidden shadow-sm">
@@ -96,7 +96,7 @@ export default function Dashboard({ stats, recentMessages }) {
                     <div className="lg:col-span-2 bg-white dark:bg-[#111827] border border-gray-100 dark:border-gray-800 p-5 rounded-xl shadow-sm">
                         <div className="flex justify-between items-start mb-6">
                             <div>
-                                <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Total Trafic</h4>
+                                <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Vues du Portfolio</h4>
                                 <p className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">1,525</p>
                                 <p className="text-[10px] font-medium text-green-500">+20.5% from last month</p>
                             </div>
@@ -145,7 +145,7 @@ export default function Dashboard({ stats, recentMessages }) {
                     {/* Line Chart Mock (Takes 1/3) */}
                     <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-gray-800 p-5 rounded-xl shadow-sm flex flex-col">
                         <div>
-                            <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Interactions</h4>
+                            <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Niveau d'Engagement</h4>
                             <p className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">20,462</p>
                             <p className="text-[10px] font-medium text-green-500">+12.1% from last month</p>
                         </div>
@@ -205,14 +205,14 @@ export default function Dashboard({ stats, recentMessages }) {
                     
                     {/* Tabs */}
                     <div className="px-5 border-b border-gray-100 dark:border-gray-800 flex gap-6 text-[11px] font-semibold">
-                        {['All tasks', 'Completed', 'In Progress', 'Pending Approval', 'Cancelled'].map(tab => (
+                        {['Tous les messages', 'Non lus', 'Traités', 'Archives'].map(tab => (
                             <button 
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`py-3 transition-colors relative ${activeTab === tab ? 'text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
                             >
                                 {tab}
-                                {tab === 'Pending Approval' && (
+                                {tab === 'Non lus' && (
                                     <span className="ml-1.5 bg-blueprint-bluePrimary dark:bg-[#5C3AFF] text-white text-[9px] px-1.5 py-0.5 rounded-sm">2</span>
                                 )}
                                 {activeTab === tab && (
@@ -245,10 +245,10 @@ export default function Dashboard({ stats, recentMessages }) {
                                 {messagesList.map((msg, i) => {
                                     // Mocking different statuses for UI purposes based on index
                                     const statuses = [
-                                        { label: 'Completed', color: 'text-green-600 dark:text-green-400', dot: 'bg-green-500' },
-                                        { label: 'Pending', color: 'text-yellow-600 dark:text-yellow-400', dot: 'bg-yellow-500' },
-                                        { label: 'In Progress', color: 'text-blueprint-bluePrimary dark:text-[#5C3AFF]', dot: 'bg-blueprint-bluePrimary dark:bg-[#5C3AFF]' },
-                                        { label: 'Cancelled', color: 'text-red-600 dark:text-red-400', dot: 'bg-red-500' }
+                                        { label: 'Traité', color: 'text-green-600 dark:text-green-400', dot: 'bg-green-500' },
+                                        { label: 'Non lu', color: 'text-yellow-600 dark:text-yellow-400', dot: 'bg-yellow-500' },
+                                        { label: 'En cours', color: 'text-blueprint-bluePrimary dark:text-[#5C3AFF]', dot: 'bg-blueprint-bluePrimary dark:bg-[#5C3AFF]' },
+                                        { label: 'Archivé', color: 'text-gray-600 dark:text-gray-400', dot: 'bg-gray-500' }
                                     ];
                                     const status = statuses[i % 4];
 
