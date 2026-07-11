@@ -24,10 +24,14 @@ class ContactController extends Controller
             $validated['attachment_path'] = $path;
         }
 
+        // On retire le fichier lui-même de l'array pour éviter l'erreur SQL
+        unset($validated['attachment']);
+
         $contact = Contact::create($validated);
 
         try {
-            Mail::to('franckdimitri009@gmail.com')->send(new ContactMessageMail($contact));
+            $receiveAddress = env('MAIL_RECEIVE_ADDRESS', 'franckdimitri009@gmail.com');
+            Mail::to($receiveAddress)->send(new ContactMessageMail($contact));
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Erreur lors de l\'envoi du mail de contact: ' . $e->getMessage());
         }
