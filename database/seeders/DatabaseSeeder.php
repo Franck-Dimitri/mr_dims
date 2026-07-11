@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'blueprint-architecture-system',
             'excerpt' => 'A robust monolithic system for high-performance enterprise applications.',
             'description_markdown' => 'Detailed architecture implementation with Laravel and React.',
-            'tech_stack' => json_encode(['Laravel', 'React', 'Tailwind', 'Inertia']),
+            'tech_stack' => ['Laravel', 'React', 'Tailwind', 'Inertia'],
             'is_featured' => true,
         ]);
         
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'devops-mcp-ai-agent',
             'excerpt' => 'Automated server management using Model Context Protocol.',
             'description_markdown' => 'Integration of AI directly into the deployment pipeline.',
-            'tech_stack' => json_encode(['Node.js', 'Python', 'Docker']),
+            'tech_stack' => ['Node.js', 'Python', 'Docker'],
             'is_featured' => true,
         ]);
 
