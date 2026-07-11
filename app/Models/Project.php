@@ -13,7 +13,11 @@ class Project extends Model
         return [
             'is_featured' => 'boolean',
             'tech_stack' => 'array',
-            'images' => 'array',
         ];
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class);
     }
 }

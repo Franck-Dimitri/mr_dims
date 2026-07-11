@@ -13,10 +13,22 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $projects = Project::where('is_featured', true)
+        $projects = Project::with('images')->where('is_featured', true)
             ->orderBy('created_at', 'desc')
             ->take(3)
-            ->get();
+            ->get()
+            ->map(function ($project) {
+                $images = [];
+                if ($project->cover_image) {
+                    $images[] = $project->cover_image;
+                }
+                foreach ($project->images as $img) {
+                    $images[] = $img->image_path;
+                }
+                $arr = $project->toArray();
+                $arr['images'] = $images;
+                return $arr;
+            });
 
         $blogs = Blog::where('status', 'published')
             ->orderBy('published_at', 'desc')
