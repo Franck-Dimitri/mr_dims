@@ -1,7 +1,3 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
@@ -22,97 +18,94 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout title="NOUVELLE AUTORISATION" subtitle="Création d'un profil système">
             <Head title="Register" />
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
+                    <label htmlFor="name" className="block text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-1">
+                        Désignation (Nom)
+                    </label>
+                    <input
                         id="name"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full"
+                        className="w-full bg-[#111827] border border-gray-700 text-white text-sm focus:ring-0 focus:border-[#22D3EE] rounded-sm px-4 py-2.5 transition-colors"
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
                         required
                     />
-
-                    <InputError message={errors.name} className="mt-2" />
+                    {errors.name && <p className="text-[10px] font-mono text-red-500 mt-1">{errors.name}</p>}
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
+                <div>
+                    <label htmlFor="email" className="block text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-1">
+                        Identifiant / Email
+                    </label>
+                    <input
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="w-full bg-[#111827] border border-gray-700 text-white text-sm focus:ring-0 focus:border-[#22D3EE] rounded-sm px-4 py-2.5 transition-colors"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
+                    {errors.email && <p className="text-[10px] font-mono text-red-500 mt-1">{errors.email}</p>}
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
+                <div>
+                    <label htmlFor="password" className="block text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-1">
+                        Code d'accès
+                    </label>
+                    <input
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="w-full bg-[#111827] border border-gray-700 text-white text-sm focus:ring-0 focus:border-[#22D3EE] rounded-sm px-4 py-2.5 transition-colors"
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
                         required
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    {errors.password && <p className="text-[10px] font-mono text-red-500 mt-1">{errors.password}</p>}
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
+                <div>
+                    <label htmlFor="password_confirmation" className="block text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-1">
+                        Confirmer le code
+                    </label>
+                    <input
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full"
+                        className="w-full bg-[#111827] border border-gray-700 text-white text-sm focus:ring-0 focus:border-[#22D3EE] rounded-sm px-4 py-2.5 transition-colors"
                         autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
+                        onChange={(e) => setData('password_confirmation', e.target.value)}
                         required
                     />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
+                    {errors.password_confirmation && <p className="text-[10px] font-mono text-red-500 mt-1">{errors.password_confirmation}</p>}
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                <div className="mt-8 pt-4 border-t border-gray-800 flex flex-col gap-3">
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="w-full flex justify-center items-center gap-2 bg-[#22D3EE] hover:bg-[#06B6D4] text-gray-900 text-xs font-bold uppercase tracking-widest py-3 px-4 rounded-sm transition-colors disabled:opacity-50"
                     >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
+                        GÉNÉRER L'ACCÈS
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
+                    </button>
+                    
+                    <div className="text-center text-[10px] font-mono text-gray-500">
+                        Déjà une accréditation ?{' '}
+                        <Link href={route('login')} className="text-[#2563EB] hover:text-white transition-colors">
+                            Se connecter
+                        </Link>
+                    </div>
                 </div>
             </form>
         </GuestLayout>
