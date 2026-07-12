@@ -1,0 +1,28 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            cd /var/www/mr_dims
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data git pull origin main
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data composer install --optimize-autoloader --no-dev
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data npm install --legacy-peer-deps
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data npm run build
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data php artisan migrate --force
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data php artisan config:cache
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data php artisan route:cache
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S -u www-data php artisan view:cache
