@@ -1,0 +1,22 @@
+# Mbouom Franck Dimitri (Alias Mr Dim's)
+
+## Identité Professionnelle
+Je suis un Développeur web Full-Stack, créateur de solutions technologiques innovantes et adaptées. Je donne vie à vos idées et concrétise vos projets.
+Alias: Mr Dim's, Mbouom Dimitri.
+
+## Services Proposés
+- Développement de Sites Web sur-mesure
+- Conception d'Applications Web complexes
+- Refonte d'architectures et intégration CI/CD
+- Portfolio officiel et réservation en ligne de packs technologiques
+
+## Stack Technologique
+- Backend: Laravel (PHP), Node.js
+- Frontend: React (Inertia.js), TailwindCSS, Framer Motion
+- Base de données: MySQL, PostgreSQL, SQLite, Prisma ORM
+- Serveurs: VPS Linux, Nginx, CI/CD Github Actions
+
+## Me contacter
+- GitHub: https://github.com/Franck-Dimitri
+- Email Pro: contact@mrdims.dev
+- Site Officiel: https://mrdims.dev

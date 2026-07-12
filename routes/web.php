@@ -11,6 +11,17 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BlogController;
 
+// Sitemap Route
+Route::get('/sitemap.xml', function () {
+    $projects = \App\Models\Project::all();
+    $services = \App\Models\Service::all();
+    
+    return response()->view('sitemap', [
+        'projects' => $projects,
+        'services' => $services
+    ])->header('Content-Type', 'text/xml');
+});
+
 Route::middleware('track.activity')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', function () { return Inertia::render('About'); })->name('about');
