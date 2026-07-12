@@ -1,6 +1,7 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import ConstructionBackground from '@/Components/ConstructionBackground';
+import SEO from '@/Components/SEO';
 import { motion } from 'framer-motion';
 
 export default function Welcome({ auth, projects, blogs }) {
@@ -36,7 +37,7 @@ export default function Welcome({ auth, projects, blogs }) {
 
     return (
         <BlueprintLayout>
-            <Head title="Accueil - Ingénieur Full Stack" />
+            <SEO title="Accueil - Ingénieur Full Stack" />
 
             {/* --- HERO SECTION --- */}
             <section className="relative pt-24 pb-32 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 overflow-hidden">

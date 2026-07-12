@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
+import SEO from '@/Components/SEO';
 
 export default function About() {
     const [terminalText, setTerminalText] = useState('');
@@ -51,7 +52,7 @@ export default function About() {
 
     return (
         <BlueprintLayout>
-            <Head title="À Propos - SYS_PROFILE" />
+            <SEO title="À Propos - SYS_PROFILE" description="Découvrez mon parcours, mes compétences et ma vision en tant qu'Architecte Logiciel & Full Stack Dev." />
 
             {/* --- HERO SECTION --- */}
             <section className="relative pt-32 pb-16 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 z-10">
