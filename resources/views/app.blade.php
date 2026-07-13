@@ -4,7 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name', "Mr Dim's") }}</title>
+
+        <!-- Fallback SEO pour les réseaux sociaux (WhatsApp, LinkedIn, Twitter) -->
+        <meta name="description" content="Développeur web Full-Stack, créateur de solutions technologiques innovantes et adaptées.">
+        <meta property="og:title" content="Mr Dim's - Ingénieur Full Stack">
+        <meta property="og:description" content="Développeur web Full-Stack, créateur de solutions technologiques innovantes et adaptées.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://mrdims.dev">
+        <meta property="og:site_name" content="Mr Dim's">
+        <!-- Remplacer par le vrai lien d'une image de couverture plus tard -->
+        <meta property="og:image" content="https://mrdims.dev/logo.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Mr Dim's - Ingénieur Full Stack">
+        <meta name="twitter:description" content="Développeur web Full-Stack, créateur de solutions technologiques innovantes et adaptées.">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
