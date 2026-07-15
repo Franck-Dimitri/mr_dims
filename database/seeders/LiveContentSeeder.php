@@ -22,7 +22,7 @@ class LiveContentSeeder extends Seeder
                 'slug' => Str::slug('Sellify - Plateforme E-commerce & Escrow'),
                 'excerpt' => 'La solution e-commerce tout-en-un pour l\'Afrique. Connectant vendeurs ambitieux, clients exigeants et livreurs agiles à travers des paiements Escrow garantis.',
                 'description_markdown' => "### Architecture d'une Marketplace Complète\n\nSellify est une plateforme e-commerce multi-tenant (SaaS) développée avec Laravel et React (Inertia.js). Elle permet à chaque vendeur de disposer d'une boutique avec une gestion avancée des stocks, et intègre un système logistique intelligent pour les livreurs partenaires.\n\n- **Sécurité** : Intégration de paiements Mobile Money (Orange, MTN) via un système de séquestre (Escrow).\n- **Logistique IA** : Attribution automatique des courses aux livreurs à proximité.\n- **Performance** : Temps de chargement optimisé et SEO dynamique.",
-                'tech_stack' => json_encode(['Laravel 11', 'React.js', 'Inertia.js', 'Tailwind CSS', 'MySQL', 'Redis']),
+                'tech_stack' => ['Laravel 11', 'React.js', 'Inertia.js', 'Tailwind CSS', 'MySQL', 'Redis'],
                 'repository_url' => 'https://github.com/Franck-Dimitri/sellify',
                 'live_url' => 'https://sellify.me',
                 'is_featured' => true,
@@ -33,7 +33,7 @@ class LiveContentSeeder extends Seeder
                 'slug' => Str::slug('Saamaya BI - Intelligence d\'Affaires Financière'),
                 'excerpt' => 'Plateforme de Business Intelligence conçue spécifiquement pour les institutions de microfinance conformes aux normes COBAC.',
                 'description_markdown' => "### L'Analyse Financière au Service des Microfinances\n\nSaamaya BI est une solution d'analyse de données sécurisée qui consolide et traite les données financières pour générer des tableaux de bord en temps réel. L'architecture a été conçue pour respecter des normes strictes de conformité.\n\n- **Modélisation de Données** : Prisma ORM couplé à PostgreSQL pour des requêtes complexes.\n- **Workers Arrière-plan** : Ingestion massive de données via des processus asynchrones.\n- **Visualisation** : Graphiques interactifs React (Recharts / Chart.js).",
-                'tech_stack' => json_encode(['Node.js', 'React.js', 'Prisma ORM', 'PostgreSQL', 'BullMQ']),
+                'tech_stack' => ['Node.js', 'React.js', 'Prisma ORM', 'PostgreSQL', 'BullMQ'],
                 'repository_url' => 'https://github.com/Franck-Dimitri/saamaya-bi',
                 'live_url' => null,
                 'is_featured' => true,
@@ -44,7 +44,7 @@ class LiveContentSeeder extends Seeder
                 'slug' => Str::slug('Système de Gestion de Polyclinique ERP'),
                 'excerpt' => 'Un système de gestion intégré pour les centres hospitaliers, englobant les consultations, la pharmacie et la facturation.',
                 'description_markdown' => "### Numérisation du Secteur Médical\n\nCet ERP gère l'ensemble du cycle de vie patient : de l'accueil à la sortie, en passant par les résultats d'examens de laboratoire et la prescription électronique.\n\n- **Dossier Médical Électronique (DME)** : Accès sécurisé aux antécédents médicaux.\n- **Gestion des Stocks** : Suivi des médicaments avec alertes de péremption.\n- **Tableau de Bord Administratif** : Rapports financiers journaliers.",
-                'tech_stack' => json_encode(['Laravel', 'Livewire', 'Alpine.js', 'Tailwind CSS']),
+                'tech_stack' => ['Laravel', 'Livewire', 'Alpine.js', 'Tailwind CSS'],
                 'repository_url' => null,
                 'live_url' => null,
                 'is_featured' => false,
@@ -53,9 +53,7 @@ class LiveContentSeeder extends Seeder
         ];
 
         foreach ($projects as $project) {
-            if(!Project::where('slug', $project['slug'])->exists()){
-                Project::create($project);
-            }
+            Project::updateOrCreate(['slug' => $project['slug']], $project);
         }
 
         // BLOGS
@@ -96,9 +94,7 @@ class LiveContentSeeder extends Seeder
         ];
 
         foreach ($blogs as $blog) {
-            if(!Blog::where('slug', $blog['slug'])->exists()){
-                Blog::create($blog);
-            }
+            Blog::updateOrCreate(['slug' => $blog['slug']], $blog);
         }
 
         // SERVICES
@@ -109,7 +105,7 @@ class LiveContentSeeder extends Seeder
                 'ref_id' => 'SRV_SAAS_01',
                 'excerpt' => 'Je conçois et développe des plateformes cloud (SaaS) prêtes à la commercialisation, scalables et hautement sécurisées.',
                 'description_markdown' => "Vous avez une idée de startup SaaS ? Je me charge de l'architecture complète, du modèle de base de données jusqu'à l'interface utilisateur. \n\n- Architecture Multi-Tenants\n- Intégration de passerelles de paiement (Stripe, Mobile Money)\n- Systèmes de souscriptions / abonnements\n- Panneaux d'administration complexes",
-                'tech_stack' => json_encode(['Laravel', 'React', 'MySQL', 'Redis']),
+                'tech_stack' => ['Laravel', 'React', 'MySQL', 'Redis'],
                 'base_price' => 1000000.00,
                 'is_active' => true,
             ],
@@ -118,8 +114,8 @@ class LiveContentSeeder extends Seeder
                 'slug' => Str::slug('Création de Plateformes E-commerce'),
                 'ref_id' => 'SRV_ECOM_02',
                 'excerpt' => 'Boutiques en ligne performantes et sur-mesure pour propulser vos ventes sur internet.',
-                'description_markdown' => "Passez au niveau supérieur de la vente en ligne. Je ne crée pas de simples sites vitrines, mais de véritables machines de vente optimisées.\n\n- Gestion de catalogues complexes et variations de produits\n- Tunnels d'achat (Checkout) optimisés pour la conversion\n- API pour logisticiens et livreurs\n- Tableaux de bord de suivi de commandes en temps réel",
-                'tech_stack' => json_encode(['Laravel', 'Inertia.js', 'React']),
+                'description_markdown' => "Passez au niveau supérieur de la vente en ligne. Je ne crée pas de simple sites vitrines, mais de véritables machines de vente optimisées.\n\n- Gestion de catalogues complexes et variations de produits\n- Tunnels d'achat (Checkout) optimisés pour la conversion\n- API pour logisticiens et livreurs\n- Tableaux de bord de suivi de commandes en temps réel",
+                'tech_stack' => ['Laravel', 'Inertia.js', 'React'],
                 'base_price' => 600000.00,
                 'is_active' => true,
             ],
@@ -129,16 +125,34 @@ class LiveContentSeeder extends Seeder
                 'ref_id' => 'SRV_API_03',
                 'excerpt' => 'Architectures backend solides pour vos applications web ou mobiles (RESTful API, GraphQL).',
                 'description_markdown' => "Votre application mobile ou frontend React/Vue a besoin d'un cerveau ? Je développe des API robustes, documentées et sécurisées.\n\n- Conception d'API RESTful\n- Systèmes d'authentification par Tokens (Sanctum / JWT)\n- Optimisation de requêtes SQL\n- Intégration de services tiers (SMS, Paiement, Mails, Géolocalisation)",
-                'tech_stack' => json_encode(['Laravel API', 'PostgreSQL', 'Node.js']),
+                'tech_stack' => ['Laravel API', 'PostgreSQL', 'Node.js'],
                 'base_price' => 450000.00,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'Site Vitrine Simple',
+                'slug' => Str::slug('Site Vitrine Simple'),
+                'ref_id' => 'SRV_WEB_04',
+                'excerpt' => 'Un site web élégant et rapide pour présenter votre entreprise ou vos services au monde entier.',
+                'description_markdown' => "Idéal pour les petites entreprises ou les indépendants qui souhaitent une présence en ligne professionnelle sans complexité.\n\n- Design premium et responsive (adapté aux mobiles et tablettes)\n- Optimisation SEO de base pour Google\n- Intégration de vos réseaux sociaux\n- Hébergement et configuration du nom de domaine",
+                'tech_stack' => ['HTML/CSS', 'Tailwind CSS', 'JavaScript', 'Laravel'],
+                'base_price' => 150000.00,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'Site Vitrine Pro avec Gestion & Mails',
+                'slug' => Str::slug('Site Vitrine Pro avec Gestion et Envoi d\'Email'),
+                'ref_id' => 'SRV_WEB_05',
+                'excerpt' => 'Un site professionnel dynamique avec panel d\'administration et système d\'envoi d\'emails automatisé.',
+                'description_markdown' => "Une solution complète et autonome pour gérer votre contenu vous-même et interagir directement avec vos prospects.\n\n- Panel d'administration sur-mesure pour modifier textes, images et articles\n- Formulaires de contact dynamiques avec notification SMTP (envoi d'email automatique)\n- Tableau de bord de statistiques (visites, interactions)\n- Architecture sécurisée et sauvegardes régulières",
+                'tech_stack' => ['Laravel', 'Inertia.js', 'React', 'MySQL', 'SMTP Mailtrap'],
+                'base_price' => 300000.00,
                 'is_active' => true,
             ]
         ];
 
         foreach ($services as $service) {
-            if(!Service::where('slug', $service['slug'])->exists()){
-                Service::create($service);
-            }
+            Service::updateOrCreate(['slug' => $service['slug']], $service);
         }
     }
 }
