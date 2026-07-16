@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, router } from '@inertiajs/react';
 import Modal from '@/Components/Modal';
 
-export default function Index({ projects, stats }) {
+export default function Index({ projects, stats, recentVisits }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState('create'); // 'create' or 'edit'
     const [currentProject, setCurrentProject] = useState(null);
@@ -19,6 +19,11 @@ export default function Index({ projects, stats }) {
         live_url: '',
         is_featured: false,
         development_time: '',
+        status: 'completed',
+        start_date: '',
+        end_date: '',
+        planned_deployment_date: '',
+        key_features: '',
         images: [],
         new_images: []
     });
@@ -28,7 +33,24 @@ export default function Index({ projects, stats }) {
         setCurrentProject(null);
         reset();
         clearErrors();
-        setData('_method', 'POST');
+        setData({
+            _method: 'POST',
+            title: '',
+            excerpt: '',
+            description_markdown: '',
+            tech_stack: '',
+            repository_url: '',
+            live_url: '',
+            is_featured: false,
+            development_time: '',
+            status: 'completed',
+            start_date: '',
+            end_date: '',
+            planned_deployment_date: '',
+            key_features: '',
+            images: [],
+            new_images: []
+        });
         setIsModalOpen(true);
     };
 
@@ -46,6 +68,11 @@ export default function Index({ projects, stats }) {
             live_url: project.live_url || '',
             is_featured: project.is_featured || false,
             development_time: project.development_time || '',
+            status: project.status || 'completed',
+            start_date: project.start_date || '',
+            end_date: project.end_date || '',
+            planned_deployment_date: project.planned_deployment_date || '',
+            key_features: project.key_features ? project.key_features.join(', ') : '',
             images: [],
             new_images: []
         });
@@ -69,6 +96,10 @@ export default function Index({ projects, stats }) {
         post(endpoint, {
             forceFormData: true,
             preserveScroll: true,
+            onBefore: (visit) => {
+                visit.data.tech_stack = data.tech_stack ? data.tech_stack.split(',').map(s => s.trim()) : [];
+                visit.data.key_features = data.key_features ? data.key_features.split(',').map(s => s.trim()) : [];
+            },
             onSuccess: () => {
                 closeModal();
             }
@@ -284,6 +315,60 @@ export default function Index({ projects, stats }) {
                     )}
                 </div>
 
+                {/* Section Tracking des Visites */}
+                <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden p-6 mt-8">
+                    <div className="border-b border-gray-100 dark:border-gray-800 pb-4 mb-6 flex justify-between items-center">
+                        <div>
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <svg className="w-5 h-5 text-blueprint-bluePrimary dark:text-blueprint-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                Analyse détaillée des visites
+                            </h3>
+                            <p className="text-xs font-mono text-gray-400 mt-1">Historique des accès et interactions (likes) par projet.</p>
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                            <thead className="text-[10px] font-mono tracking-widest text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-800/30 border-b border-gray-100 dark:border-gray-800">
+                                <tr>
+                                    <th className="px-4 py-3">Projet</th>
+                                    <th className="px-4 py-3">Adresse IP</th>
+                                    <th className="px-4 py-3">Pays</th>
+                                    <th className="px-4 py-3">Navigateur</th>
+                                    <th className="px-4 py-3 text-center">Likes</th>
+                                    <th className="px-4 py-3">Date & Heure</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100 dark:divide-gray-800/50">
+                                {!recentVisits || recentVisits.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="6" className="px-4 py-8 text-center text-gray-400 font-mono text-xs">
+                                            Aucune visite enregistrée pour le moment.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    recentVisits.map((visit) => (
+                                        <tr key={visit.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/10 transition-colors">
+                                            <td className="px-4 py-3.5 font-bold text-gray-900 dark:text-white uppercase text-xs">{visit.project_title}</td>
+                                            <td className="px-4 py-3.5 font-mono text-xs text-gray-500 dark:text-gray-400">{visit.ip_address}</td>
+                                            <td className="px-4 py-3.5 text-xs">
+                                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blueprint-bluePrimary/10 text-blueprint-bluePrimary dark:bg-blueprint-cyan/10 dark:text-blueprint-cyan">
+                                                    {visit.country || 'Inconnu'}
+                                                </span>
+                                            </td>
+                                            <td className="px-4 py-3.5 text-xs max-w-xs truncate" title={visit.user_agent}>{visit.user_agent}</td>
+                                            <td className="px-4 py-3.5 text-center text-xs font-mono font-bold text-yellow-500">{visit.likes_count || 0}</td>
+                                            <td className="px-4 py-3.5 text-xs text-gray-500 dark:text-gray-400 font-mono">{visit.created_at_formatted}</td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
 
             {/* Modal de Création / Édition */}
@@ -350,6 +435,70 @@ export default function Index({ projects, stats }) {
                                         placeholder="https://..."
                                     />
                                     {errors.live_url && <p className="text-red-500 text-xs mt-1">{errors.live_url}</p>}
+                                </div>
+
+                                {/* Statut du Projet */}
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">Statut</label>
+                                    <select
+                                        value={data.status}
+                                        onChange={e => setData('status', e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md px-4 py-2 text-sm text-gray-900 dark:text-white focus:ring-blueprint-cyan focus:border-blueprint-cyan transition-colors"
+                                    >
+                                        <option value="completed">Terminé</option>
+                                        <option value="in_progress">En cours de développement</option>
+                                    </select>
+                                    {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status}</p>}
+                                </div>
+
+                                {/* Date de début */}
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">Date de début</label>
+                                    <input
+                                        type="date"
+                                        value={data.start_date}
+                                        onChange={e => setData('start_date', e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md px-4 py-2 text-sm text-gray-900 dark:text-white focus:ring-blueprint-cyan focus:border-blueprint-cyan transition-colors"
+                                    />
+                                    {errors.start_date && <p className="text-red-500 text-xs mt-1">{errors.start_date}</p>}
+                                </div>
+
+                                {/* Date de fin (si terminé) ou déploiement (si en cours) */}
+                                {data.status === 'completed' ? (
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">Date de fin</label>
+                                        <input
+                                            type="date"
+                                            value={data.end_date}
+                                            onChange={e => setData('end_date', e.target.value)}
+                                            className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md px-4 py-2 text-sm text-gray-900 dark:text-white focus:ring-blueprint-cyan focus:border-blueprint-cyan transition-colors"
+                                        />
+                                        {errors.end_date && <p className="text-red-500 text-xs mt-1">{errors.end_date}</p>}
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">Déploiement prévu</label>
+                                        <input
+                                            type="date"
+                                            value={data.planned_deployment_date}
+                                            onChange={e => setData('planned_deployment_date', e.target.value)}
+                                            className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md px-4 py-2 text-sm text-gray-900 dark:text-white focus:ring-blueprint-cyan focus:border-blueprint-cyan transition-colors"
+                                        />
+                                        {errors.planned_deployment_date && <p className="text-red-500 text-xs mt-1">{errors.planned_deployment_date}</p>}
+                                    </div>
+                                )}
+
+                                {/* Fonctionnalités clés */}
+                                <div className="md:col-span-2">
+                                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">Fonctionnalités clés (séparées par des virgules)</label>
+                                    <input
+                                        type="text"
+                                        value={data.key_features}
+                                        onChange={e => setData('key_features', e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md px-4 py-2 text-sm text-gray-900 dark:text-white focus:ring-blueprint-cyan focus:border-blueprint-cyan transition-colors"
+                                        placeholder="Ex: Authentification JWT, Mode sombre dynamique, Export PDF"
+                                    />
+                                    {errors.key_features && <p className="text-red-500 text-xs mt-1">{errors.key_features}</p>}
                                 </div>
 
                                 {/* Tech Stack */}

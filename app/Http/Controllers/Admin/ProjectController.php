@@ -19,13 +19,12 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with('images')->latest()->get()->map(function ($project) {
-            // Calculer les vues totales à partir de la table analytics
-            // On compte les occurences de /projects/slug dans la table
-            $views = DB::table('analytics_page_views')
-                       ->where('page_url', 'like', "%/projects/{$project->slug}%")
+            // Calculate total views from project_visits table
+            $views = DB::table('project_visits')
+                       ->where('project_id', $project->id)
                        ->count();
                        
-            // Construire le tableau d'images pour le frontend (couverture + autres)
+            // Build images array for the frontend (cover + others)
             $images = [];
             if ($project->cover_image) {
                 $images[] = $project->cover_image;
@@ -44,13 +43,26 @@ class ProjectController extends Controller
         $stats = [
             'total' => Project::count(),
             'featured' => Project::where('is_featured', true)->count(),
-            'views' => DB::table('analytics_page_views')->where('page_url', 'like', "%/projects/%")->count(),
+            'views' => DB::table('project_visits')->count(),
             'recent' => Project::where('created_at', '>=', now()->subDays(30))->count(),
         ];
 
+        // Fetch recent visits with project titles for tracking dashboard
+        $recentVisits = DB::table('project_visits')
+            ->join('projects', 'project_visits.project_id', '=', 'projects.id')
+            ->select('project_visits.*', 'projects.title as project_title')
+            ->latest('project_visits.created_at')
+            ->take(50)
+            ->get()
+            ->map(function ($visit) {
+                $visit->created_at_formatted = \Carbon\Carbon::parse($visit->created_at)->format('d M Y H:i');
+                return $visit;
+            });
+
         return Inertia::render('Admin/Projects/Index', [
             'projects' => $projects,
-            'stats' => $stats
+            'stats' => $stats,
+            'recentVisits' => $recentVisits,
         ]);
     }
 
@@ -73,6 +85,12 @@ class ProjectController extends Controller
             ]);
         }
 
+        if (is_string($request->key_features)) {
+            $request->merge([
+                'key_features' => array_values(array_filter(array_map('trim', explode(',', $request->key_features))))
+            ]);
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string',
@@ -82,6 +100,11 @@ class ProjectController extends Controller
             'live_url' => 'nullable|url',
             'is_featured' => 'boolean',
             'development_time' => 'nullable|string',
+            'status' => 'required|string|in:in_progress,completed',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'planned_deployment_date' => 'nullable|date',
+            'key_features' => 'nullable|array',
             'images' => 'required|array|min:1|max:4', // 1 to 4 images minimum as requested
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
@@ -114,6 +137,11 @@ class ProjectController extends Controller
             'live_url' => $request->live_url,
             'is_featured' => $request->boolean('is_featured'),
             'development_time' => $request->development_time,
+            'status' => $request->status,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'planned_deployment_date' => $request->planned_deployment_date,
+            'key_features' => $request->key_features,
             'cover_image' => $coverImagePath,
         ]);
 
@@ -131,8 +159,21 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $project->load('images');
+        
+        $images = [];
+        if ($project->cover_image) {
+            $images[] = $project->cover_image;
+        }
+        foreach ($project->images as $img) {
+            $images[] = $img->image_path;
+        }
+        
+        $projectArray = $project->toArray();
+        $projectArray['images'] = $images;
+
         return Inertia::render('Admin/Projects/Edit', [
-            'project' => $project
+            'project' => $projectArray
         ]);
     }
 
@@ -147,6 +188,12 @@ class ProjectController extends Controller
             ]);
         }
 
+        if (is_string($request->key_features)) {
+            $request->merge([
+                'key_features' => array_values(array_filter(array_map('trim', explode(',', $request->key_features))))
+            ]);
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string',
@@ -156,6 +203,11 @@ class ProjectController extends Controller
             'live_url' => 'nullable|url',
             'is_featured' => 'boolean',
             'development_time' => 'nullable|string',
+            'status' => 'required|string|in:in_progress,completed',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'planned_deployment_date' => 'nullable|date',
+            'key_features' => 'nullable|array',
             'new_images' => 'nullable|array|max:4', 
             'new_images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
@@ -169,6 +221,11 @@ class ProjectController extends Controller
             'live_url' => $request->live_url,
             'is_featured' => $request->boolean('is_featured'),
             'development_time' => $request->development_time,
+            'status' => $request->status,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'planned_deployment_date' => $request->planned_deployment_date,
+            'key_features' => $request->key_features,
         ];
 
         // Replace images if new ones are uploaded
@@ -180,6 +237,7 @@ class ProjectController extends Controller
             }
             
             // Delete old additional images
+            $project->load('images');
             foreach ($project->images as $img) {
                 $storagePath = str_replace('/storage/', '', $img->image_path);
                 Storage::disk('public')->delete($storagePath);
@@ -219,6 +277,7 @@ class ProjectController extends Controller
         }
 
         // Supprimer les images additionnelles
+        $project->load('images');
         foreach ($project->images as $img) {
             $storagePath = str_replace('/storage/', '', $img->image_path);
             Storage::disk('public')->delete($storagePath);

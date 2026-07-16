@@ -13,11 +13,17 @@ class Project extends Model
         return [
             'is_featured' => 'boolean',
             'tech_stack' => 'array',
+            'key_features' => 'array',
         ];
     }
 
     public function images()
     {
         return $this->hasMany(ProjectImage::class);
+    }
+
+    public function visits()
+    {
+        return $this->hasMany(ProjectVisit::class);
     }
 }

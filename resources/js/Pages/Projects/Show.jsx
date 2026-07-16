@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
-import ConstructionBackground from '@/Components/ConstructionBackground';
+import ReactMarkdown from 'react-markdown';
 
-export default function Show({ project }) {
+export default function Show({ project, otherProjects }) {
     const [selectedImage, setSelectedImage] = useState(null);
 
     const fadeInUp = {
@@ -31,6 +31,15 @@ export default function Show({ project }) {
     };
     const techStack = parseJSON(project.tech_stack, ['LARAVEL', 'REACT', 'TAILWIND']);
     const images = parseJSON(project.images, []);
+    
+    const todayStr = new Date().toISOString().split('T')[0];
+    const isCompleted = project.end_date ? (project.end_date <= todayStr) : false;
+
+    const handleLike = () => {
+        router.post(route('projects.like', project.slug), {}, {
+            preserveScroll: true
+        });
+    };
 
     return (
         <BlueprintLayout>
@@ -116,16 +125,36 @@ export default function Show({ project }) {
                                 )}
                             </motion.div>
 
-                            {/* Content body */}
-                            <motion.div variants={fadeInUp} className="prose prose-lg dark:prose-invert max-w-none font-sans prose-headings:font-bold prose-headings:tracking-tight prose-headings:uppercase prose-a:text-blueprint-bluePrimary dark:prose-a:text-blueprint-cyan">
-                                <div dangerouslySetInnerHTML={{ __html: project.description_markdown || '<p>Spécifications détaillées non fournies pour ce prototype.</p>' }} />
+                            {/* Content body with markdown formatting */}
+                            <motion.div variants={fadeInUp} className="prose prose-lg dark:prose-invert max-w-none font-sans prose-headings:font-bold prose-headings:tracking-tight prose-headings:uppercase prose-a:text-blueprint-bluePrimary dark:prose-a:text-blueprint-cyan prose-p:leading-relaxed prose-li:leading-relaxed">
+                                <ReactMarkdown>
+                                    {project.description_markdown || 'Spécifications détaillées non fournies pour ce prototype.'}
+                                </ReactMarkdown>
                             </motion.div>
+
+                            {/* Key Features Section */}
+                            {project.key_features && project.key_features.length > 0 && (
+                                <div className="mt-16 pt-16 border-t border-gray-200 dark:border-gray-800">
+                                    <h3 className="font-mono text-xs tracking-widest text-gray-400 uppercase mb-8">
+                                        // SPÉCIFICATIONS.FONCTIONNALITÉS_CLÉS
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {project.key_features.map((feature, idx) => (
+                                            <div key={idx} className="relative p-6 border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0B0F19] rounded-sm group hover:border-blueprint-bluePrimary/30 dark:hover:border-blueprint-cyan/30 transition-colors">
+                                                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-blueprint-bluePrimary dark:border-blueprint-cyan"></div>
+                                                <div className="font-mono text-[10px] text-gray-400 mb-2">FEAT_{String(idx + 1).padStart(2, '0')}</div>
+                                                <p className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-tight">{feature}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Sidebar Specs */}
                         <div className="lg:col-span-4 space-y-8">
                             
-                            {/* Project Actions (Github & Live) */}
+                            {/* Project Actions (Github & Live & Like) */}
                             <motion.div variants={fadeInUp} className="flex flex-col gap-4">
                                 {project.live_url && (
                                     <a href={project.live_url} target="_blank" rel="noreferrer" className="w-full flex items-center justify-between px-6 py-4 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold font-mono tracking-widest uppercase hover:opacity-90 transition-opacity">
@@ -153,6 +182,20 @@ export default function Show({ project }) {
                                         </span>
                                     </div>
                                 )}
+
+                                {/* Like Button */}
+                                <div className="w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-[#0B0F19] border border-gray-250 dark:border-gray-800 rounded-sm">
+                                    <span className="font-mono text-xs text-gray-500 uppercase">Aimer ce projet</span>
+                                    <button
+                                        onClick={handleLike}
+                                        className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded border border-red-500/30 transition-all font-mono font-bold text-xs"
+                                    >
+                                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        {project.likes_count || 0}
+                                    </button>
+                                </div>
                             </motion.div>
 
                             <motion.div variants={fadeInUp} className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0B0F19] p-8 relative">
@@ -192,19 +235,120 @@ export default function Show({ project }) {
                                         </div>
                                     )}
 
+                                    {/* Statut du Projet */}
                                     <div>
-                                        <div className="text-[10px] tracking-widest text-gray-500 mb-1">SYS_STATUS</div>
-                                        <div className="flex items-center gap-2 font-bold text-green-600 dark:text-green-400">
-                                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                            EN PRODUCTION
+                                        <div className="text-[10px] tracking-widest text-gray-500 mb-1">STATUT</div>
+                                        <div className={`flex items-center gap-2 font-bold ${isCompleted ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
+                                            <div className={`w-2 h-2 rounded-full ${isCompleted ? 'bg-green-500' : 'bg-yellow-500'} animate-pulse`}></div>
+                                            {isCompleted ? 'TERMINÉ' : 'EN DÉVELOPPEMENT'}
                                         </div>
                                     </div>
+
+                                    {/* Dates */}
+                                    {project.start_date && (
+                                        <div>
+                                            <div className="text-[10px] tracking-widest text-gray-500 mb-1">DATE DÉBUT</div>
+                                            <div className="font-bold">
+                                                {new Date(project.start_date).toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' })}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {isCompleted && project.end_date && (
+                                        <div>
+                                            <div className="text-[10px] tracking-widest text-gray-500 mb-1">DATE FIN</div>
+                                            <div className="font-bold">
+                                                {new Date(project.end_date).toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' })}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {!isCompleted && (project.end_date || project.planned_deployment_date) && (
+                                        <div>
+                                            <div className="text-[10px] tracking-widest text-gray-500 mb-1">DÉPLOIEMENT PRÉVU LE</div>
+                                            <div className="font-bold text-blueprint-bluePrimary dark:text-blueprint-cyan">
+                                                {new Date(project.end_date || project.planned_deployment_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </motion.div>
                         </div>
                     </motion.div>
                 </div>
             </article>
+
+            {/* Other Projects Section */}
+            {otherProjects && otherProjects.length > 0 && (
+                <section className="py-20 border-t border-gray-250 dark:border-gray-800 bg-gray-50/50 dark:bg-blueprint-darkNight/30 relative z-10">
+                    <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                            <div>
+                                <h3 className="font-mono text-xs tracking-widest text-gray-400 uppercase mb-2">
+                                    // EXPLORATIONS.CONNEXES
+                                </h3>
+                                <h2 className="text-3xl font-bold tracking-tighter uppercase text-blueprint-textDark dark:text-white">
+                                    D'AUTRES PROJETS À LA SUITE
+                                </h2>
+                            </div>
+                            <Link href="/projects" className="mt-4 md:mt-0 inline-flex items-center gap-2 font-mono text-[10px] tracking-widest text-blueprint-bluePrimary dark:text-blueprint-cyan uppercase hover:underline">
+                                VOIR TOUS LES PROJETS
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </Link>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {otherProjects.map((other) => (
+                                <Link 
+                                    href={`/projects/${other.slug}`} 
+                                    key={other.id} 
+                                    className="bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 p-6 flex flex-col justify-between group hover:border-blueprint-bluePrimary/30 dark:hover:border-blueprint-cyan/30 transition-all rounded-sm shadow-sm"
+                                >
+                                    <div>
+                                        <div className="aspect-video w-full bg-gray-100 dark:bg-gray-800 overflow-hidden mb-4 border border-gray-100 dark:border-gray-800">
+                                            {other.images && other.images.length > 0 ? (
+                                                <img src={other.images[0]} alt={other.title} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <h4 className="font-bold text-lg text-blueprint-textDark dark:text-white uppercase line-clamp-1 group-hover:text-blueprint-bluePrimary dark:group-hover:text-blueprint-cyan transition-colors">{other.title}</h4>
+                                        <p className="text-xs text-gray-400 font-mono mt-1 mb-4 uppercase">{other.category || 'APP_WEB'}</p>
+                                        <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{other.excerpt}</p>
+                                    </div>
+                                    <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between font-mono text-[10px] text-gray-400 group-hover:text-blueprint-bluePrimary dark:group-hover:text-blueprint-cyan transition-colors uppercase">
+                                        <span>Consulter le projet</span>
+                                        <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Contact CTA Section */}
+            <section className="py-24 border-t border-gray-200 dark:border-gray-800 bg-blueprint-bluePrimary dark:bg-blueprint-darkNight relative z-10 overflow-hidden text-center">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(92,58,255,0.15),transparent_70%)] pointer-events-none"></div>
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <h3 className="font-mono text-xs tracking-widest text-white/60 dark:text-blueprint-cyan/60 uppercase mb-3">// OBTENIR UN SYSTÈME SIMILAIRE</h3>
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase mb-6 text-white leading-tight">
+                        UN PROJET EN PERSPECTIVE ? <br/> PARLONS DE VOTRE SOLUTION
+                    </h2>
+                    <p className="text-base text-white/80 dark:text-gray-300 font-mono max-w-2xl mx-auto mb-10">
+                        Architecturons ensemble des applications robustes, sur-mesure et performantes pour vos besoins métiers.
+                    </p>
+                    <Link 
+                        href="/contact" 
+                        className="inline-flex items-center gap-3 px-8 py-4 bg-white text-blueprint-bluePrimary dark:bg-blueprint-cyan dark:text-gray-900 font-bold font-mono tracking-widest uppercase hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-black/25"
+                    >
+                        ME CONTACTER
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </Link>
+                </div>
+            </section>
 
             {/* Fullscreen Image Modal */}
             <AnimatePresence>

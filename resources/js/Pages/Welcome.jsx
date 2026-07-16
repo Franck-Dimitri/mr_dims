@@ -397,10 +397,17 @@ export default function Welcome({ auth, projects, blogs }) {
 
                                                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4 font-mono text-[10px] tracking-widest text-gray-500 uppercase">
                                                     <span>TIME: {project.development_time || 'N/A'}</span>
-                                                    <span className="flex items-center gap-1 text-green-500">
-                                                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                                                        ONLINE
-                                                    </span>
+                                                    {project.live_url ? (
+                                                        <span className="flex items-center gap-1 text-green-500">
+                                                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                                                            ONLINE
+                                                        </span>
+                                                    ) : (
+                                                        <span className="flex items-center gap-1 text-gray-400 dark:text-gray-600">
+                                                            <div className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+                                                            OFFLINE
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 
                                                 <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center font-mono text-[10px] uppercase font-bold relative z-10">
