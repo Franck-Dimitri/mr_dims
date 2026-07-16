@@ -27,8 +27,12 @@ class TrackPortfolioActivity
         
         // Obtenir le pays via le package Location (si disponible)
         $country = 'Inconnu';
-        if ($position = Location::get($ip)) {
-            $country = $position->countryName;
+        try {
+            if ($position = Location::get($ip)) {
+                $country = $position->countryName;
+            }
+        } catch (\Exception $e) {
+            // silent catch
         }
 
         // Hash unique pour identifier le visiteur (IP + User Agent)
