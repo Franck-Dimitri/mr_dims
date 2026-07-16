@@ -33,6 +33,7 @@ Route::middleware('track.activity')->group(function () {
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::post('/projects/{slug}/like', [ProjectController::class, 'like'])->name('projects.like');
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
     Route::post('/blog/{slug}/like', [BlogController::class, 'like'])->name('blog.like');

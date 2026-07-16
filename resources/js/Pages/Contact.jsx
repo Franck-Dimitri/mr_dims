@@ -208,11 +208,12 @@ export default function Contact() {
                         </motion.div>
 
                         {/* Booking Appointment (Calendly Placeholder) */}
+                        {/* Booking Appointment (Under Development) */}
                         <motion.div 
                             initial={{ opacity: 0, x: 50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                            className="h-full flex flex-col bg-white dark:bg-[#070A10] border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden relative"
+                            className="h-full flex flex-col bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden relative min-h-[500px]"
                         >
                             <div className="absolute top-0 left-0 w-full h-1 bg-blueprint-bluePrimary dark:bg-blueprint-cyan"></div>
                             
@@ -223,32 +224,49 @@ export default function Contact() {
                                         PROGRAMMER UN APPEL
                                     </h3>
                                     <p className="font-mono text-[10px] tracking-widest text-gray-500 uppercase mt-2">
-                                        RÉSERVATION EN LIGNE INTÉGRÉE
+                                        RÉSERVATION EN LIGNE
                                     </p>
                                 </div>
                                 <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blueprint-bluePrimary/10 dark:bg-blueprint-cyan/10 text-blueprint-bluePrimary dark:text-blueprint-cyan">
-                                    <svg className="w-6 h-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                                 </div>
                             </div>
                             
-                            <div className="flex-1 bg-[#F9FAFB] dark:bg-[#111827] relative min-h-[500px]">
-                                {/* 
-                                    Ici vous pouvez intégrer le widget Calendly avec une iframe ou react-calendly.
-                                    Si vous avez votre lien Calendly, remplacez src="https://calendly.com/VOTRE_LIEN"
-                                */}
-                                <iframe 
-                                    src="https://calendly.com/franckdimitri009?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=111827&text_color=ffffff&primary_color=00d4ff" 
-                                    width="100%" 
-                                    height="100%" 
-                                    frameBorder="0"
-                                    className="absolute inset-0 w-full h-full dark:opacity-90"
-                                    title="Calendly Scheduling Page"
-                                ></iframe>
-
-                                {/* Fallback/Overlay if Calendly link doesn't exist */}
-                                <div className="absolute inset-0 pointer-events-none flex items-end justify-center pb-8 opacity-0 hover:opacity-100 transition-opacity bg-gradient-to-t from-black/50 to-transparent">
-                                    <div className="font-mono text-[10px] text-white tracking-widest uppercase bg-black/80 px-4 py-2 border border-white/20 backdrop-blur-sm">
-                                        IFRAME CALENDLY
+                            <div className="flex-1 bg-[#F9FAFB] dark:bg-[#111827] flex flex-col items-center justify-center p-8 text-center">
+                                <div className="max-w-md space-y-6">
+                                    {/* Architectural grid element representing construction / under development */}
+                                    <div className="relative mx-auto w-24 h-24 border border-dashed border-gray-400 dark:border-gray-700 flex items-center justify-center">
+                                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-blueprint-bluePrimary dark:border-blueprint-cyan"></div>
+                                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-blueprint-bluePrimary dark:border-blueprint-cyan"></div>
+                                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-blueprint-bluePrimary dark:border-blueprint-cyan"></div>
+                                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-blueprint-bluePrimary dark:border-blueprint-cyan"></div>
+                                        <svg className="w-10 h-10 text-blueprint-bluePrimary dark:text-blueprint-cyan animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    
+                                    <div className="space-y-2">
+                                        <h4 className="font-bold text-lg uppercase tracking-tight text-blueprint-textDark dark:text-white">
+                                            MODULE EN COURS DE DÉVELOPPEMENT
+                                        </h4>
+                                        <p className="text-xs font-mono text-gray-500 uppercase tracking-wider">
+                                            L'intégration de la planification d'appels automatique est actuellement indisponible.
+                                        </p>
+                                    </div>
+                                    
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                                        Pour toute demande d'entretien ou de réunion technique, veuillez utiliser le formulaire de contact ci-contre ou m'envoyer directement un courriel par mail.
+                                    </p>
+                                    
+                                    <div className="pt-4">
+                                        <a 
+                                            href="mailto:franckdimitri009@gmail.com" 
+                                            className="inline-flex items-center gap-2 px-6 py-3 border border-blueprint-bluePrimary dark:border-blueprint-cyan text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold font-mono tracking-widest text-xs uppercase hover:bg-blueprint-bluePrimary/10 dark:hover:bg-blueprint-cyan/10 transition-colors"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                            FRANCKDIMITRI009@GMAIL.COM
+                                        </a>
                                     </div>
                                 </div>
                             </div>
