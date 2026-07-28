@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/Context/LanguageContext';
 
 export default function Contact() {
+    const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
     const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
         name: '',
         email: '',
@@ -11,6 +13,14 @@ export default function Contact() {
         platform_origin: 'web',
         attachment: null,
     });
+
+    React.useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const prefill = params.get('prefill');
+        if (prefill) {
+            setData('message', prefill);
+        }
+    }, []);
 
     const submitContact = (e) => {
         e.preventDefault();

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import ConstructionBackground from '@/Components/ConstructionBackground';
+import { useLanguage } from '@/Context/LanguageContext';
 
 export default function BlueprintLayout({ children }) {
     const { url } = usePage();
     const [theme, setTheme] = useState('system');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { lang, changeLanguage, t } = useLanguage() || { lang: 'fr', changeLanguage: () => {}, t: (k) => k };
 
     useEffect(() => {
         const storedTheme = localStorage.getItem('theme');
@@ -35,13 +37,13 @@ export default function BlueprintLayout({ children }) {
     };
 
     const navLinks = [
-        { name: 'ACCUEIL', href: '/' },
-        { name: 'PROJETS', href: '/projects' },
-        { name: 'À PROPOS', href: '/about' },
-        { name: 'SERVICES', href: '/services' },
-        { name: 'PACKS', href: '/packs' },
-        { name: 'BLOG', href: '/blog' },
-        { name: 'CONTACT', href: '/contact', isButton: true },
+        { name: t('nav_home') || 'ACCUEIL', href: '/' },
+        { name: t('nav_projects') || 'PROJETS', href: '/projects' },
+        { name: t('nav_about') || 'À PROPOS', href: '/about' },
+        { name: t('nav_services') || 'SERVICES', href: '/services' },
+        { name: t('nav_packs') || 'PACKS', href: '/packs' },
+        { name: t('nav_blog') || 'BLOG', href: '/blog' },
+        { name: t('nav_contact') || 'CONTACT', href: '/contact', isButton: true },
     ];
 
     const isActive = (href) => {
@@ -80,7 +82,7 @@ export default function BlueprintLayout({ children }) {
                                     <div key={link.name} className="pl-4 ml-2">
                                         <Link 
                                             href={link.href} 
-                                            className="flex items-center gap-2 px-5 py-2 bg-[#1A1A1A] border border-gray-800 text-white hover:border-blueprint-bluePrimary dark:hover:border-blueprint-cyan transition-colors text-xs font-bold tracking-widest uppercase"
+                                            className="flex items-center gap-2 px-5 py-2 bg-[#1A1A1A] border border-gray-800 text-white hover:border-blueprint-bluePrimary dark:hover:border-blueprint-cyan transition-colors text-xs font-bold tracking-widest uppercase font-mono"
                                         >
                                             {link.name}
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,7 +94,7 @@ export default function BlueprintLayout({ children }) {
                                     <Link 
                                         key={link.name} 
                                         href={link.href} 
-                                        className={`px-4 py-8 text-xs font-bold tracking-widest uppercase relative flex items-center ${isActive(link.href) ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan' : 'text-gray-500 hover:text-blueprint-textDark dark:hover:text-blueprint-white'}`}
+                                        className={`px-4 py-8 text-xs font-bold tracking-widest uppercase relative flex items-center font-mono ${isActive(link.href) ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan' : 'text-gray-500 hover:text-blueprint-textDark dark:hover:text-blueprint-white'}`}
                                     >
                                         {link.name}
                                         {isActive(link.href) && (
@@ -110,9 +112,19 @@ export default function BlueprintLayout({ children }) {
                         <div className="flex items-center gap-4">
                             
                             {/* Language Toggle */}
-                            <div className="hidden sm:flex items-center border border-gray-200 dark:border-gray-800 rounded-sm overflow-hidden text-[10px] font-bold font-mono tracking-widest uppercase">
-                                <button className="px-2 py-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 transition-colors">FR</button>
-                                <button className="px-2 py-1.5 bg-gray-100 dark:bg-[#1A1A1A] text-gray-500 hover:text-blueprint-textDark dark:hover:text-white transition-colors">EN</button>
+                            <div className="hidden sm:flex items-center border border-gray-200 dark:border-gray-800 rounded-none overflow-hidden text-[10px] font-bold font-mono tracking-widest uppercase">
+                                <button 
+                                    onClick={() => changeLanguage('fr')} 
+                                    className={`px-2.5 py-1.5 transition-colors ${lang === 'fr' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'bg-gray-100 dark:bg-[#1A1A1A] text-gray-500 hover:text-blueprint-textDark dark:hover:text-white'}`}
+                                >
+                                    FR
+                                </button>
+                                <button 
+                                    onClick={() => changeLanguage('en')} 
+                                    className={`px-2.5 py-1.5 transition-colors ${lang === 'en' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'bg-gray-100 dark:bg-[#1A1A1A] text-gray-500 hover:text-blueprint-textDark dark:hover:text-white'}`}
+                                >
+                                    EN
+                                </button>
                             </div>
 
                             {/* Theme Switcher (Discreet) */}
@@ -164,9 +176,9 @@ export default function BlueprintLayout({ children }) {
                             ))}
                             
                             <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col justify-center items-center gap-4">
-                                <div className="flex p-1 bg-gray-100 dark:bg-[#1A1A1A] rounded-md border border-gray-200 dark:border-gray-800 font-mono">
-                                    <button className="px-4 py-2 text-xs font-bold rounded-sm bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900">FR</button>
-                                    <button className="px-4 py-2 text-xs font-bold rounded-sm text-gray-500 hover:text-blueprint-textDark dark:hover:text-white">EN</button>
+                                <div className="flex p-1 bg-gray-100 dark:bg-[#1A1A1A] rounded-none border border-gray-200 dark:border-gray-800 font-mono text-xs">
+                                    <button onClick={() => changeLanguage('fr')} className={`px-4 py-2 text-xs font-bold ${lang === 'fr' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'text-gray-500 hover:text-white'}`}>FR</button>
+                                    <button onClick={() => changeLanguage('en')} className={`px-4 py-2 text-xs font-bold ${lang === 'en' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'text-gray-500 hover:text-white'}`}>EN</button>
                                 </div>
                                 <div className="flex p-1 bg-gray-100 dark:bg-[#1A1A1A] rounded-md">
                                     <button onClick={() => applyTheme('light')} className={`px-4 py-2 text-xs font-medium rounded-sm ${theme === 'light' ? 'bg-blueprint-bluePrimary text-white' : 'text-gray-500 dark:text-gray-400'}`}>Clair</button>

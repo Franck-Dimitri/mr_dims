@@ -29,7 +29,7 @@ Route::middleware('track.activity')->group(function () {
     Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
     Route::get('/packs', function () { return Inertia::render('Packs'); })->name('packs');
     Route::get('/contact', function () { return Inertia::render('Contact'); })->name('contact');
-    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
@@ -37,23 +37,13 @@ Route::middleware('track.activity')->group(function () {
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
     Route::post('/blog/{slug}/like', [BlogController::class, 'like'])->name('blog.like');
-    Route::post('/blog/{slug}/comment', [BlogController::class, 'storeComment'])->name('blog.comment.store');
+    Route::post('/blog/{slug}/comment', [BlogController::class, 'storeComment'])->middleware('throttle:5,1')->name('blog.comment.store');
 });
-use App\Models\Project;
-use App\Models\Blog;
-use App\Models\Contact;
+
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard', [
-            'stats' => [
-                'projects' => Project::count(),
-                'blogs' => Blog::count(),
-                'messages' => Contact::count(),
-            ],
-            'recentMessages' => Contact::latest()->take(5)->get(),
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

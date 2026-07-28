@@ -2,8 +2,10 @@ import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
+import { useLanguage } from '@/Context/LanguageContext';
 
 export default function Services({ services }) {
+    const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
     
     const fadeInUp = {
         hidden: { opacity: 0, y: 30 },

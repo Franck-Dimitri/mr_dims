@@ -3,8 +3,10 @@ import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import ConstructionBackground from '@/Components/ConstructionBackground';
 import SEO from '@/Components/SEO';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/Context/LanguageContext';
 
 export default function Welcome({ auth, projects, blogs }) {
+    const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
     const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
         name: '',
         email: '',
@@ -37,7 +39,7 @@ export default function Welcome({ auth, projects, blogs }) {
 
     return (
         <BlueprintLayout>
-            <SEO title="Accueil - Ingénieur Full Stack" />
+            <SEO title={lang === 'en' ? "Home - Full Stack Software Engineer" : "Accueil - Ingénieur Full Stack"} />
 
             {/* --- HERO SECTION --- */}
             <section className="relative pt-24 pb-32 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 overflow-hidden">
@@ -53,7 +55,7 @@ export default function Welcome({ auth, projects, blogs }) {
                             <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-12">
                                 <div className="flex items-center gap-2 font-mono text-xs tracking-widest text-gray-500 dark:text-gray-400">
                                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                    SYS_STATUS: ONLINE
+                                    {t('sys_status')}
                                 </div>
                                 <div className="h-px bg-gray-300 dark:bg-gray-800 flex-1"></div>
                                 <div className="font-mono text-xs tracking-widest text-gray-500 dark:text-gray-400">
@@ -62,20 +64,19 @@ export default function Welcome({ auth, projects, blogs }) {
                             </motion.div>
 
                             <motion.h1 variants={fadeInUp} className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-bold leading-none tracking-tighter mb-4">
-                                <span className="block text-blueprint-textDark dark:text-white">INGÉNIERIE</span>
-                                <span className="block text-blueprint-bluePrimary dark:text-blueprint-cyan">LOGICIELLE</span>
+                                <span className="block text-blueprint-textDark dark:text-white">{t('welcome_hero_title1')}</span>
+                                <span className="block text-blueprint-bluePrimary dark:text-blueprint-cyan">{t('welcome_hero_title2')}</span>
                             </motion.h1>
 
                             <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-8">
                                 <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold">{'>'}</span>
                                 <span className="font-mono text-sm tracking-widest text-gray-600 dark:text-gray-300 uppercase">
-                                    INGÉNIEUR FULL STACK
+                                    {t('welcome_hero_tag')}
                                 </span>
                             </motion.div>
 
-                            <motion.p variants={fadeInUp} className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mb-12 font-mono uppercase tracking-wide opacity-80">
-                                // ARCHITECTURE SYSTÈME ET DÉVELOPPEMENT LOGICIEL.<br/>
-                                JE TRANSFORME DES CONCEPTS COMPLEXES EN APPLICATIONS WEB SCALABLES ET PERFORMANTES.
+                            <motion.p variants={fadeInUp} className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mb-12 font-mono uppercase tracking-wide opacity-80 whitespace-pre-line">
+                                {t('welcome_hero_desc')}
                             </motion.p>
 
                             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
@@ -86,13 +87,13 @@ export default function Welcome({ auth, projects, blogs }) {
                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                     </svg>
-                                    EXPLORER LE CODE
+                                    {t('btn_explore_code')}
                                 </Link>
                                 <a 
                                     href="#contact" 
                                     className="px-8 py-4 border-2 border-[#1A1A1A] dark:border-gray-700 text-blueprint-textDark dark:text-white font-bold text-sm tracking-widest uppercase hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center"
                                 >
-                                    <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan mr-2">{'>_'}</span> INITIER UN PROJET
+                                    <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan mr-2">{'>_'}</span> {t('btn_initiate_project')}
                                 </a>
                             </motion.div>
                             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
@@ -397,17 +398,10 @@ export default function Welcome({ auth, projects, blogs }) {
 
                                                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4 font-mono text-[10px] tracking-widest text-gray-500 uppercase">
                                                     <span>TIME: {project.development_time || 'N/A'}</span>
-                                                    {project.live_url ? (
-                                                        <span className="flex items-center gap-1 text-green-500">
-                                                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                                                            ONLINE
-                                                        </span>
-                                                    ) : (
-                                                        <span className="flex items-center gap-1 text-gray-400 dark:text-gray-600">
-                                                            <div className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
-                                                            OFFLINE
-                                                        </span>
-                                                    )}
+                                                    <span className="flex items-center gap-1 text-green-500">
+                                                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                                                        ONLINE
+                                                    </span>
                                                 </div>
                                                 
                                                 <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center font-mono text-[10px] uppercase font-bold relative z-10">

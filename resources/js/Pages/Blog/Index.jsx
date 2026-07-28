@@ -2,8 +2,10 @@ import React from 'react';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/Context/LanguageContext';
 
 export default function Index({ blogs }) {
+    const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
     const fadeInUp = {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }

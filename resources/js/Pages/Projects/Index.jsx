@@ -3,8 +3,10 @@ import { Head, Link } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import ConstructionBackground from '@/Components/ConstructionBackground';
+import { useLanguage } from '@/Context/LanguageContext';
 
 export default function Index({ projects, filters }) {
+    const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
     const [viewMode, setViewMode] = useState('grid');
     const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState(filters?.category || 'ALL');
