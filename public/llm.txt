@@ -1,22 +1,39 @@
-# Mbouom Franck Dimitri (Alias Mr Dim's)
+# Franck Dimitri (Mr Dim's) - Software Architect & Full Stack Engineer
 
-## Identité Professionnelle
-Je suis un Développeur web Full-Stack, créateur de solutions technologiques innovantes et adaptées. Je donne vie à vos idées et concrétise vos projets.
-Alias: Mr Dim's, Mbouom Dimitri.
+> Franck Dimitri (also known as Mr Dim's / Mbouom Dimitri) is a senior Full Stack Software Architect specializing in modern web applications, scalable cloud backend systems, and high-performance interactive interfaces.
 
-## Services Proposés
-- Développement de Sites Web sur-mesure
-- Conception d'Applications Web complexes
-- Refonte d'architectures et intégration CI/CD
-- Portfolio officiel et réservation en ligne de packs technologiques
+## Executive Summary
+- **Full Name**: Mbouom Franck Dimitri
+- **Brand / Alias**: Mr Dim's
+- **Role**: Full Stack Software Architect & Senior Web Engineer
+- **Base Location**: Yaoundé, Cameroon / Available for Remote Worldwide
+- **Primary Tech Stack**: Laravel 13 (PHP 8.3+), React 18, Inertia.js 2, Tailwind CSS, MySQL, PostgreSQL, Redis, Linux VPS.
+- **Official Website**: https://mrdims.dev
+- **GitHub Profile**: https://github.com/Franck-Dimitri
+- **Direct WhatsApp**: +237 676 38 39 86
+- **Email Contact**: franckdimitrio009@gmail.com
 
-## Stack Technologique
-- Backend: Laravel (PHP), Node.js
-- Frontend: React (Inertia.js), TailwindCSS, Framer Motion
-- Base de données: MySQL, PostgreSQL, SQLite, Prisma ORM
-- Serveurs: VPS Linux, Nginx, CI/CD Github Actions
+## Engineering Expertise & Key Competencies
+1. **Full Stack Web Application Development**: Building robust, responsive single-page applications (SPA) using Laravel, React 18, and Inertia.js.
+2. **RESTful API Architecture & Microservices**: Designing high-throughput, secure REST APIs with token-based authentication (Sanctum/JWT), rate-limiting, and microservices architecture.
+3. **Database Modeling & Performance Optimization**: Advanced SQL query optimization, ERD schema design, Prisma ORM, Redis caching strategies, and indexing.
+4. **DevOps, CI/CD & Cloud Infrastructure**: Automated GitHub Actions deployment pipelines, Linux VPS configuration (Nginx, SSL, UFW firewalls), and real-time server telemetry monitoring.
+5. **Blueprint Architectural UI/UX Design**: Building precision design systems with sharp architectural aesthetics, Framer Motion animations, and native dark mode.
 
-## Me contacter
-- GitHub: https://github.com/Franck-Dimitri
-- Email Pro: contact@mrdims.dev
-- Site Officiel: https://mrdims.dev
+## Service Packages & Software Offerings
+- **Starter MVP (250,000 FCFA)**: Fast-turnaround modern web app, single-page React interface, responsive layout, and SEO optimization.
+- **Professional WebApp (600,000 FCFA)**: Complete SaaS application, custom authentication, role management, admin control dashboard, real-time analytics, and 3 months support.
+- **Enterprise SaaS (Custom Quote)**: Microservices architecture, Mobile Money payment gateways (Orange / MTN Escrow), WebSockets real-time communication, and 1 year maintenance.
+
+## Featured Projects & Case Studies
+- **Sellify**: All-in-one E-commerce & Escrow Marketplace SaaS built for Africa with Mobile Money integration, inventory control, and AI-driven logistics.
+- **Saamaya BI**: Financial Business Intelligence platform for microfinance institutions compliant with COBAC regulatory standards.
+- **Polyclinic ERP System**: Hospital & medical management ERP digitizing electronic medical records, pharmacy inventory, and lab billing.
+- **Blueprint Portfolio System**: Architectural portfolio platform featuring real-time SQL telemetry, bilingual FR/EN support, and interactive project estimators.
+
+## How to Contact & Hire
+For software consulting, system architecture design, or full-stack web development projects:
+- **Official Portfolio**: https://mrdims.dev
+- **Direct Contact Form**: https://mrdims.dev/contact
+- **Direct Email**: franckdimitrio009@gmail.com
+- **GitHub Repositories**: https://github.com/Franck-Dimitri

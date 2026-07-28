@@ -24,3 +24,8 @@ echo "🟢 [6/6] Remise en ligne du serveur (php artisan up)..."
 php artisan up
 
 echo "✅ [SUCCESS] Déploiement terminé avec succès et zéro interruption pour la prod !"
+
+
+# git stash | git pull origin main | composer install --no-dev --optimize-autoloader  |  npm install | npm run build  | php artisan migrate --force  | php artisan config:cache | php artisan route:cache | php artisan view:cache
+
+

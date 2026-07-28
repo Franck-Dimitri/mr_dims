@@ -6,6 +6,11 @@
 
         <title inertia>{{ config('app.name', "Mr Dim's") }}</title>
 
+        <!-- Favicon & App Icon -->
+        <link rel="icon" type="image/x-icon" href="/icone.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="/icone.ico">
+        <link rel="apple-touch-icon" href="/icone.ico">
+
         <!-- Fallback SEO pour les réseaux sociaux (WhatsApp, LinkedIn, Twitter) -->
         <meta name="description" content="Développeur web Full-Stack, créateur de solutions technologiques innovantes et adaptées.">
         <meta property="og:title" content="Mr Dim's - Ingénieur Full Stack">
