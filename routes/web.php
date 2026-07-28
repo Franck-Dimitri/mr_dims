@@ -41,6 +41,10 @@ Route::middleware('track.activity')->group(function () {
 });
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Admin\MessageController as AdminMessageController;
+use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
+use App\Http\Controllers\Admin\ActivityLogController as AdminActivityLogController;
 
 Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -67,6 +71,24 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(funct
         'destroy' => 'admin.blogs.destroy',
     ])->except(['create', 'show', 'edit']);
     Route::delete('/blogs/comments/{comment}', [\App\Http\Controllers\Admin\BlogController::class, 'destroyComment'])->name('admin.blogs.comments.destroy');
+
+    // Admin Services & Packs Routes
+    Route::resource('services', AdminServiceController::class)->names([
+        'index' => 'admin.services.index',
+        'store' => 'admin.services.store',
+        'update' => 'admin.services.update',
+        'destroy' => 'admin.services.destroy',
+    ])->except(['create', 'show', 'edit']);
+
+    // Admin Messages Routes
+    Route::get('/messages', [AdminMessageController::class, 'index'])->name('admin.messages.index');
+    Route::delete('/messages/{message}', [AdminMessageController::class, 'destroy'])->name('admin.messages.destroy');
+
+    // Admin Analytics Route
+    Route::get('/analytics', [AdminAnalyticsController::class, 'index'])->name('admin.analytics.index');
+
+    // Admin Activity Logs Route
+    Route::get('/activity-logs', [AdminActivityLogController::class, 'index'])->name('admin.activity.index');
 });
 
 require __DIR__.'/auth.php';

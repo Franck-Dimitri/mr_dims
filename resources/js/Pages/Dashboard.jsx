@@ -3,21 +3,22 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 
-export default function Dashboard({ stats, recentMessages }) {
-    const dashboardStats = stats || { projects: 0, blogs: 0, messages: 0 };
+export default function Dashboard({ stats, chartData, recentMessages }) {
+    const dashboardStats = stats || { projects: 0, blogs: 0, messages: 0, totalViews: 0 };
     const messagesList = recentMessages || [];
     
     const [activeTab, setActiveTab] = useState('Tous les messages');
 
     const statCards = [
-        { label: 'Vues Globales', value: '14,542', change: '+12% ce mois', icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z', color: 'text-gray-500' },
+        { label: 'Vues Globales', value: (dashboardStats.totalViews || 0).toLocaleString(), change: `+${dashboardStats.todayViews || 0} aujourd'hui`, icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z', color: 'text-gray-500' },
         { label: 'Projets Actifs', value: dashboardStats.projects.toString(), change: 'Stables', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10', color: 'text-blueprint-bluePrimary dark:text-blueprint-cyan' },
         { label: 'Articles Publiés', value: dashboardStats.blogs.toString(), change: 'À jour', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15', color: 'text-cyan-500' },
-        { label: 'Nouveaux Messages', value: dashboardStats.messages.toString(), change: '+2 depuis hier', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'text-green-500' },
+        { label: 'Nouveaux Messages', value: dashboardStats.messages.toString(), change: 'Contacts récents', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'text-green-500' },
     ];
 
-    const chartBars = [20, 50, 45, 10, 80, 85, 90, 40, 20];
-    const chartLabels = ['01 July', '02 July', '03 July', '04 July', '05 July', '06 July', '07 July', '08 July', '09 July'];
+    const chartBars = chartData?.views || [20, 50, 45, 10, 80, 85, 90, 40, 20];
+    const chartLabels = chartData?.labels || ['01 July', '02 July', '03 July', '04 July', '05 July', '06 July', '07 July', '08 July', '09 July'];
+    const maxBarVal = Math.max(...chartBars, 1);
 
     return (
         <AuthenticatedLayout header="Dashboard">
@@ -97,11 +98,11 @@ export default function Dashboard({ stats, recentMessages }) {
                         <div className="flex justify-between items-start mb-6">
                             <div>
                                 <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Vues du Portfolio</h4>
-                                <p className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">1,525</p>
-                                <p className="text-[10px] font-medium text-green-500">+20.5% from last month</p>
+                                <p className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{(dashboardStats.totalViews || 0).toLocaleString()}</p>
+                                <p className="text-[10px] font-medium text-green-500">Télémétrie SQL en direct</p>
                             </div>
                             <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md px-2.5 py-1 text-[10px] text-gray-600 dark:text-gray-300 flex items-center gap-1.5 cursor-pointer">
-                                Last 30 days
+                                14 derniers jours
                                 <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                             </div>
                         </div>
@@ -110,22 +111,21 @@ export default function Dashboard({ stats, recentMessages }) {
                         <div className="h-40 flex items-end justify-between gap-3 relative pb-6 border-b border-gray-100 dark:border-gray-800">
                             {/* Y-axis labels */}
                             <div className="absolute left-0 bottom-6 top-0 flex flex-col justify-between text-[9px] text-gray-400 font-medium">
-                                <span>200</span>
-                                <span>100</span>
-                                <span>50</span>
+                                <span>{maxBarVal}</span>
+                                <span>{Math.round(maxBarVal / 2)}</span>
                                 <span>0</span>
                             </div>
                             
                             <div className="w-full pl-8 h-full flex items-end justify-between gap-3">
                                 {chartBars.map((height, i) => (
                                     <div key={i} className="w-full flex justify-center group relative">
-                                        {/* Hover Tooltip Mock */}
+                                        {/* Hover Tooltip */}
                                         <div className="absolute -top-8 bg-gray-900 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                            {height * 2.5} visits
+                                            {height} visites
                                         </div>
                                         <motion.div 
                                             initial={{ height: 0 }}
-                                            animate={{ height: `${height}%` }}
+                                            animate={{ height: `${Math.max((height / maxBarVal) * 100, 5)}%` }}
                                             transition={{ duration: 0.8, delay: i * 0.05 }}
                                             className="w-full max-w-[28px] bg-blueprint-bluePrimary dark:bg-[#5C3AFF] rounded-t-md opacity-80 group-hover:opacity-100 transition-opacity"
                                         ></motion.div>
