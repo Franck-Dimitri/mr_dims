@@ -1,0 +1,14 @@
+[Unit]
+Description=Bot Telegram de Supervision Serveur et Portfolio
+After=network.target mysql.service nginx.service
+
+[Service]
+Type=simple
+User=franc
+WorkingDirectory=/var/www/mr_dims/telegram-bot
+ExecStart=/var/www/mr_dims/telegram-bot/venv/bin/python bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
