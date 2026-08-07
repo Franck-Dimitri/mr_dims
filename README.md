@@ -1,58 +1,166 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+
+# 🚀 FRANCK DIMITRI KOUONGME (Mr Dim's)
+### Ingénieur Informaticien — Génie Logiciel & Architecte Full Stack
+
+[![Portfolio](https://img.shields.io/badge/Website-mrdims.dev-00f2fe?style=for-the-badge&logo=google-chrome&logoColor=white)](https://mrdims.dev)
+[![GitHub](https://img.shields.io/badge/GitHub-Franck--Dimitri-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Franck-Dimitri)
+[![LinkedIn](https://img.shields.io/badge/Contact-Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:franckdimitrio009@gmail.com)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-+237_676383986-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/237676383986)
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-13.x-FF2D20?style=flat-square&logo=laravel&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-18.x-61DAFB?style=flat-square&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Inertia.js-2.x-9553E9?style=flat-square&logo=inertia&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.x-38BDF8?style=flat-square&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=flat-square&logo=php&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white" />
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+</div>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📌 À Propos / Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Bienvenue sur le dépôt officiel du **Portfolio Professionnel** de **Franck Dimitri Kouongme (Mr Dim's)**.
 
-## Learning Laravel
+Ce projet est une application web moderne conçue selon une esthétique **Blueprint / System Architecture & Cyberpunk**, mettant en avant mon expertise technique, mes réalisations logicielles, mes services d'ingénierie et mon parcours professionnel.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+🌐 **Site web en ligne** : [https://mrdims.dev](https://mrdims.dev)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## ✨ Fonctionnalités Clés du Portfolio
 
-## Agentic Development
+- **📄 Lecteur de CV Interactif Intégré** :
+  - Modal avec vue **PDF** et **Aperçu Image HD**.
+  - Téléchargement direct du CV au format PDF (`CV_KOUONGME_MBOUOM_FRANCK_DIMITRI.pdf`).
+  - Partage de lien via l'API Web Share native ou copie rapide dans le presse-papier avec confirmation toast.
+- **🌐 Support Bilingue (FR / EN)** :
+  - Basculement instantané de la langue (Français et Anglais) via `LanguageContext` et sauvegarde des préférences locales.
+- **💼 Vitrine des Projets & Filtres** :
+  - Catégorisation dynamique (Web Apps, APIs, Mobile).
+  - Liens direct vers les dépôts GitHub et démos en direct (Live).
+- **🧮 Calculateurs & Estimateur de Devis** :
+  - Outil interactif d'estimation de budget projet en temps réel selon les spécifications et fonctionnalités choisies.
+- **📝 Blog & Base de Connaissances** :
+  - Articles techniques, retours d'expérience, gestion des vues, likes et commentaires.
+- **📩 Système de Contact Multi-Canal** :
+  - Formulaire de transmission de cahier des charges avec support de pièces jointes (max 2 Mo).
+  - Intégration WhatsApp direct et boutons de contact rapides.
+- **🎨 Design Blueprint UI & Performance** :
+  - Thème sombre & clair dynamique.
+  - Micro-animations fluides alimentées par **Framer Motion**.
+  - Architecture SPA fluide grâce à **Inertia.js** et **React**.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
-```bash
-composer require laravel/boost --dev
+## 🛠️ Stack Technique & Compétences
 
-php artisan boost:install
+### **Frontend**
+- **Framework & Libs** : React 18, Inertia.js 2, Framer Motion, Headless UI
+- **Styling** : Tailwind CSS, CSS Grid/Flexbox, Design System Blueprint
+
+### **Backend & APIs**
+- **Langages & Frameworks** : PHP 8.3+, Laravel 13, Python (Django)
+- **Architecture & Sécurité** : APIs RESTful, Sanctum Auth, CSRF Protection, Throttling & Rate Limiting
+- **Base de Données** : MySQL, Eloquent ORM
+
+### **DevOps & Environnements**
+- **Systèmes & Outils** : Linux (Ubuntu, Debian, Mint, Kali), Git, GitHub, Docker, Nginx
+- **Déploiement & Cloud** : VPS Linux, SSL, Pipelines CI/CD
+
+---
+
+## 📁 Structure du Dépôt
+
+```
+mr_dims/portfolio/
+├── app/                        # Modèles, Contrôleurs & Logique Métier Laravel
+│   ├── Http/Controllers/       # Controllers Admin, Projects, Blog, Contact, etc.
+│   └── Models/                 # Modèles Eloquent (Project, Blog, Comment, etc.)
+├── public/                     # Assets publics (CV PDF/JPG, images, build Vite)
+│   ├── cv.pdf                  # Curriculum Vitae officiel (PDF)
+│   ├── cv.jpg                  # Aperçu Image du CV (HD)
+│   └── profile.jpg             # Photo de profil
+├── resources/js/               # Application Frontend React (Inertia.js)
+│   ├── Components/             # Composants réutilisables (CvModal, Modal, SEO...)
+│   ├── Context/                # Contexts (LanguageContext pour FR/EN)
+│   ├── Layouts/                # BlueprintLayout, AuthenticatedLayout...
+│   └── Pages/                  # Pages React (Welcome, About, Projects, Blog, Services...)
+├── routes/                     # Configuration des routes (web.php, auth.php)
+└── storage/                    # Fichiers de stockage et pièces jointes
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## ⚙️ Installation & Lancement en Local
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Prérequis
+- **PHP** >= 8.2 (recommandé 8.3+)
+- **Composer** >= 2.x
+- **Node.js** >= 18.x & **npm**
+- **MySQL**
 
-## Code of Conduct
+### 1. Cloner le dépôt
+```bash
+git clone https://github.com/Franck-Dimitri/mr_dims.git
+cd mr_dims/portfolio
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2. Installer les dépendances
+```bash
+# Dépendances PHP
+composer install
 
-## Security Vulnerabilities
+# Dépendances JavaScript
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Configuration de l'environnement
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+Configurez ensuite vos accès base de données MySQL dans le fichier `.env` :
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mr_dims_portfolio
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## License
+### 4. Migrations & Données initiales
+```bash
+php artisan migrate --seed
+php artisan storage:link
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Lancement des serveurs de développement
+```bash
+# Lancement simultané (Laravel Serve + Vite Hot Reload + Queue + Logs)
+composer run dev
+```
+Accédez ensuite à l'application dans votre navigateur : `http://127.0.0.1:8000`
+
+---
+
+## 👨‍💻 Auteur
+
+**KOUONGME MBOUOM F. DIMITRI (Franck Dimitri / Mr Dim's)**  
+*Ingénieur Informaticien — Génie Logiciel & Architecte Full Stack*
+
+- 🌐 Site Web : [https://mrdims.dev](https://mrdims.dev)
+- ✉️ Email : [franckdimitrio009@gmail.com](mailto:franckdimitrio009@gmail.com)
+- 📱 WhatsApp : [+237 676383986](https://wa.me/237676383986)
+- 🐙 GitHub : [@Franck-Dimitri](https://github.com/Franck-Dimitri)
+- 📍 Localisation : Yaoundé, Cameroun / Remote
+
+---
+
+<div align="center">
+  <sub>Développé avec passion, précision architecturale et soin par <strong>Franck Dimitri (Mr Dim's)</strong>.</sub>
+</div>
