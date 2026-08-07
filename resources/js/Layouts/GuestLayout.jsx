@@ -1,9 +1,11 @@
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import TechCursor from '@/Components/ui/tech-curosr';
 
 export default function GuestLayout({ children, title, subtitle }) {
     return (
         <div className="min-h-screen bg-[#070A10] text-gray-100 font-sans selection:bg-blueprint-bluePrimary selection:text-white flex flex-col justify-center items-center relative overflow-hidden">
+            <TechCursor />
             
             {/* Architectural Background */}
             <div className="absolute inset-0 z-0 pointer-events-none opacity-20">

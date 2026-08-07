@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import ConstructionBackground from '@/Components/ConstructionBackground';
+import TechCursor from '@/Components/ui/tech-curosr';
 import { useLanguage } from '@/Context/LanguageContext';
 
 export default function BlueprintLayout({ children }) {
@@ -56,6 +57,7 @@ export default function BlueprintLayout({ children }) {
         <div className="min-h-screen bg-blueprint-white dark:bg-blueprint-darkNight text-blueprint-textDark dark:text-blueprint-textLight font-sans transition-colors duration-300 flex flex-col relative">
             {/* Global Architectural Background */}
             <ConstructionBackground />
+            <TechCursor />
             
             {/* Header */}
             <motion.header 
