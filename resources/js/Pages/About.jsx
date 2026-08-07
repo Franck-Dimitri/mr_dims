@@ -5,6 +5,7 @@ import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import SEO from '@/Components/SEO';
 import { useLanguage } from '@/Context/LanguageContext';
 import CvModal from '@/Components/CvModal';
+import { LocationMap } from '@/Components/ui/expand-map';
 
 export default function About() {
     const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
@@ -469,6 +470,16 @@ export default function About() {
                             ))}
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* --- SECTION 5: GEOLOCATION MAP --- */}
+            <section className="pb-16 pt-6 font-mono">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+                    <LocationMap 
+                        location={lang === 'en' ? 'Yaounde, Cameroon / Remote' : 'Yaoundé, Cameroun / Remote'} 
+                        coordinates="3.8480° N, 11.5021° E" 
+                    />
                 </div>
             </section>
 
