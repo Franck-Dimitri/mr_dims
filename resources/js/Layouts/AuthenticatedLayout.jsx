@@ -7,11 +7,10 @@ export default function AuthenticatedLayout({ header, children }) {
     const user = props.auth.user;
     const [sidebarOpen, setSidebarOpen] = useState(false);
     
-    // Minimalistic theme implementation (mocked state for UI)
+    // Minimalistic theme implementation
     const [theme, setTheme] = useState('dark');
     
     useEffect(() => {
-        // Init theme from document
         if (document.documentElement.classList.contains('dark')) {
             setTheme('dark');
         } else {
@@ -26,7 +25,6 @@ export default function AuthenticatedLayout({ header, children }) {
         } else if (newTheme === 'light') {
             document.documentElement.classList.remove('dark');
         } else {
-            // System
             if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.documentElement.classList.add('dark');
             } else {
@@ -52,7 +50,7 @@ export default function AuthenticatedLayout({ header, children }) {
         { name: 'Paramètres', href: '#', active: false, icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
     ];
 
-    const NavGroup = ({ title, items }) => (
+    const NavGroup = ({ title, items, onItemClick }) => (
         <div className="mb-6">
             <h3 className="px-5 text-[10px] font-bold text-gray-400 font-mono capitalize tracking-wider mb-2">
                 {title}
@@ -64,6 +62,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         <Link
                             key={item.name}
                             href={item.href}
+                            onClick={onItemClick}
                             className={`flex items-center justify-between px-5 py-2.5 text-xs font-bold transition-colors ${
                                 active
                                 ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan bg-blueprint-bluePrimary/10 dark:bg-blueprint-cyan/10 border-l-2 border-blueprint-bluePrimary dark:border-blueprint-cyan'
@@ -76,7 +75,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </svg>
                                 {item.name}
                             </div>
-                            {/* Mock badges */}
                             {item.name === 'Messages' && (
                                 <span className="bg-blueprint-bluePrimary dark:bg-[#5C3AFF] text-white font-mono text-[9px] px-1.5 py-0.5 rounded-sm">2</span>
                             )}
@@ -106,7 +104,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     </Link>
                 </div>
 
-                {/* Workspace Selector Mock */}
+                {/* Workspace Selector */}
                 <div className="px-4 py-2 mb-2">
                     <p className="text-[10px] text-gray-400 mb-2 font-mono">Environnement</p>
                     <button className="w-full flex items-center justify-between bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 px-3 py-2 text-xs font-bold text-gray-700 dark:text-gray-200 rounded-sm shadow-sm">
@@ -130,7 +128,6 @@ export default function AuthenticatedLayout({ header, children }) {
                     <div className="flex items-center justify-between gap-3 px-2 py-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-sm">
                         <div className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border border-gray-300 dark:border-gray-600">
-                                {/* Using user initial for mock avatar */}
                                 <div className="w-full h-full flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 uppercase">
                                     {user.name.charAt(0)}
                                 </div>
@@ -140,12 +137,11 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <span className="text-[9px] text-gray-500 truncate font-mono">{user.email}</span>
                             </div>
                         </div>
-                        <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                     </div>
                 </div>
             </aside>
 
-            {/* Mobile Sidebar Overlay (Mocked) */}
+            {/* Mobile Sidebar Overlay & Nav */}
             <AnimatePresence>
                 {sidebarOpen && (
                     <>
@@ -163,14 +159,62 @@ export default function AuthenticatedLayout({ header, children }) {
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="fixed inset-y-0 left-0 w-64 bg-white dark:bg-[#0B0F19] border-r border-gray-200 dark:border-gray-800 z-50 flex flex-col lg:hidden"
                         >
-                            {/* Identical content for mobile sidebar can be placed here */}
                             <div className="h-16 flex items-center justify-between px-6 shrink-0 border-b border-gray-200 dark:border-gray-800">
-                                <Link href="/" className="flex items-center gap-2">
+                                <Link href="/" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2">
+                                    <div className="w-6 h-6 bg-blueprint-bluePrimary dark:bg-[#5C3AFF] text-white flex items-center justify-center rounded-[4px]">
+                                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                        </svg>
+                                    </div>
                                     <span className="font-bold text-sm tracking-tight text-gray-900 dark:text-white">MR DIM'S</span>
                                 </Link>
-                                <button onClick={() => setSidebarOpen(false)} className="text-gray-500">
+                                <button onClick={() => setSidebarOpen(false)} className="text-gray-500 p-2">
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
+                            </div>
+
+                            {/* Workspace Selector Mobile */}
+                            <div className="px-4 py-2 mb-2">
+                                <p className="text-[10px] text-gray-400 mb-2 font-mono">Environnement</p>
+                                <div className="w-full flex items-center justify-between bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 px-3 py-2 text-xs font-bold text-gray-700 dark:text-gray-200 rounded-sm shadow-sm">
+                                    <span className="flex items-center gap-2">
+                                        <div className="w-4 h-4 bg-blueprint-bluePrimary dark:bg-[#5C3AFF] text-white rounded-sm flex items-center justify-center text-[9px]">P</div>
+                                        Portfolio Global
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Navigation Mobile complète */}
+                            <nav className="flex-1 overflow-y-auto py-2 space-y-2">
+                                <NavGroup title="Gestion Contenu" items={generalNav} onItemClick={() => setSidebarOpen(false)} />
+                                <NavGroup title="Suivi & Admin" items={toolsNav} onItemClick={() => setSidebarOpen(false)} />
+                                <NavGroup title="Configuration" items={profileNav} onItemClick={() => setSidebarOpen(false)} />
+                            </nav>
+
+                            {/* Mobile Theme switcher */}
+                            <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+                                <span className="text-xs font-bold text-gray-500">Thème</span>
+                                <div className="flex p-0.5 bg-gray-100 dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 rounded-md shadow-sm">
+                                    <button onClick={() => applyTheme('light')} className={`p-1.5 rounded-sm transition-colors ${theme === 'light' ? 'bg-white dark:bg-gray-700 shadow-sm text-gray-900 dark:text-white' : 'text-gray-400'}`}>
+                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                    </button>
+                                    <button onClick={() => applyTheme('dark')} className={`p-1.5 rounded-sm transition-colors ${theme === 'dark' ? 'bg-white dark:bg-gray-700 shadow-sm text-gray-900 dark:text-white' : 'text-gray-400'}`}>
+                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* User Area Mobile */}
+                            <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs font-bold uppercase text-gray-600 dark:text-gray-300">
+                                        {user.name.charAt(0)}
+                                    </div>
+                                    <div className="flex flex-col min-w-0">
+                                        <span className="text-xs font-bold text-gray-900 dark:text-white truncate">{user.name}</span>
+                                        <span className="text-[9px] text-gray-500 truncate font-mono">{user.email}</span>
+                                    </div>
+                                </div>
                             </div>
                         </motion.aside>
                     </>
@@ -192,7 +236,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <svg className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
                             </button>
                             <button className="w-6 h-6 flex items-center justify-center rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                                <svg className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                                <svg className="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
                             </button>
                             
                             <span className="text-gray-400 ml-2">Pages / </span>
@@ -200,15 +244,15 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
                         {/* Search Bar */}
                         <div className="hidden md:flex relative">
                             <svg className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                            <input type="text" placeholder="Search items, categories, or more..." className="bg-gray-50 dark:bg-[#111827] border border-gray-200 dark:border-gray-700 text-xs px-3 py-2 pl-9 rounded-md w-72 focus:outline-none focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan" />
+                            <input type="text" placeholder="Search items, categories..." className="bg-gray-50 dark:bg-[#111827] border border-gray-200 dark:border-gray-700 text-xs px-3 py-2 pl-9 rounded-md w-72 focus:outline-none focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan" />
                         </div>
 
                         {/* Theme Switcher */}
-                        <div className="hidden sm:flex p-0.5 bg-gray-100 dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 rounded-md shadow-sm">
+                        <div className="flex p-0.5 bg-gray-100 dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 rounded-md shadow-sm">
                             <button onClick={() => applyTheme('light')} className={`p-1.5 rounded-sm transition-colors ${theme === 'light' ? 'bg-white dark:bg-gray-700 shadow-sm text-gray-900 dark:text-white' : 'text-gray-400 hover:text-gray-900 dark:hover:text-white'}`} title="Clair">
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                             </button>
@@ -217,19 +261,8 @@ export default function AuthenticatedLayout({ header, children }) {
                             </button>
                         </div>
 
-                        {/* Icons */}
-                        <div className="flex items-center gap-3 border-l border-gray-200 dark:border-gray-800 pl-4">
-                            <button className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative">
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-                                <span className="absolute top-0 right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full border-2 border-white dark:border-[#0B0F19]"></span>
-                            </button>
-                            <button className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /></svg>
-                            </button>
-                        </div>
-
-                        {/* Topbar User Avatar */}
-                        <div className="w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 ml-2 overflow-hidden border border-gray-300 dark:border-gray-600 flex items-center justify-center">
+                        {/* User Avatar Topbar */}
+                        <div className="w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border border-gray-300 dark:border-gray-600 flex items-center justify-center">
                             <span className="text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase">{user.name.charAt(0)}</span>
                         </div>
                     </div>

@@ -204,12 +204,12 @@ export default function Dashboard({ stats, chartData, recentMessages }) {
                     </div>
                     
                     {/* Tabs */}
-                    <div className="px-5 border-b border-gray-100 dark:border-gray-800 flex gap-6 text-[11px] font-semibold">
+                    <div className="px-5 border-b border-gray-100 dark:border-gray-800 flex gap-6 text-[11px] font-semibold overflow-x-auto whitespace-nowrap scrollbar-none">
                         {['Tous les messages', 'Non lus', 'Traités', 'Archives'].map(tab => (
                             <button 
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`py-3 transition-colors relative ${activeTab === tab ? 'text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
+                                className={`py-3 transition-colors relative shrink-0 ${activeTab === tab ? 'text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
                             >
                                 {tab}
                                 {tab === 'Non lus' && (
