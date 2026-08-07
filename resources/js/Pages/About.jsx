@@ -4,11 +4,13 @@ import { motion } from 'framer-motion';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import SEO from '@/Components/SEO';
 import { useLanguage } from '@/Context/LanguageContext';
+import CvModal from '@/Components/CvModal';
 
 export default function About() {
     const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
     const [terminalText, setTerminalText] = useState('');
     const [imgError, setImgError] = useState(false);
+    const [showCvModal, setShowCvModal] = useState(false);
 
     const fullTextFR = `>_ INITIALIZING SYS_PROFILE...
 >_ AUTH_LEVEL: ROOT
@@ -189,9 +191,19 @@ export default function About() {
                             </motion.p>
 
                             <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-2">
+                                <button 
+                                    onClick={() => setShowCvModal(true)}
+                                    type="button"
+                                    className="px-6 py-3.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center gap-2 group cursor-pointer"
+                                >
+                                    <svg className="w-4 h-4 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    {t('btn_view_cv')}
+                                </button>
                                 <Link 
                                     href="/contact" 
-                                    className="px-6 py-3.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
+                                    className="px-6 py-3.5 border-2 border-blueprint-bluePrimary dark:border-blueprint-cyan text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold text-xs uppercase tracking-widest hover:bg-blueprint-bluePrimary/10 dark:hover:bg-blueprint-cyan/10 transition-colors"
                                 >
                                     {lang === 'en' ? 'CONTACT ARCHITECT →' : 'CONTACTER L\'ARCHITECTE →'}
                                 </Link>
@@ -459,6 +471,8 @@ export default function About() {
                     </div>
                 </div>
             </section>
+
+            <CvModal show={showCvModal} onClose={() => setShowCvModal(false)} />
         </BlueprintLayout>
     );
 }

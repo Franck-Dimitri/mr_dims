@@ -1,12 +1,15 @@
+import React, { useState } from 'react';
 import { Link, useForm } from '@inertiajs/react';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
 import ConstructionBackground from '@/Components/ConstructionBackground';
 import SEO from '@/Components/SEO';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/Context/LanguageContext';
+import CvModal from '@/Components/CvModal';
 
 export default function Welcome({ auth, projects, blogs }) {
     const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
+    const [showCvModal, setShowCvModal] = useState(false);
     const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
         name: '',
         email: '',
@@ -79,19 +82,29 @@ export default function Welcome({ auth, projects, blogs }) {
                                 {t('welcome_hero_desc')}
                             </motion.p>
 
-                            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
+                            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
                                 <Link 
                                     href="/projects" 
-                                    className="px-8 py-4 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                                    className="px-6 py-4 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold text-xs sm:text-sm tracking-widest uppercase hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
                                 >
                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                     </svg>
                                     {t('btn_explore_code')}
                                 </Link>
+                                <button 
+                                    onClick={() => setShowCvModal(true)}
+                                    type="button"
+                                    className="px-6 py-4 bg-transparent border-2 border-blueprint-bluePrimary dark:border-blueprint-cyan text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-blueprint-bluePrimary/10 dark:hover:bg-blueprint-cyan/10 transition-colors flex items-center justify-center gap-2 group cursor-pointer"
+                                >
+                                    <svg className="w-4 h-4 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    {t('btn_view_cv')}
+                                </button>
                                 <a 
                                     href="#contact" 
-                                    className="px-8 py-4 border-2 border-[#1A1A1A] dark:border-gray-700 text-blueprint-textDark dark:text-white font-bold text-sm tracking-widest uppercase hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center"
+                                    className="px-6 py-4 border-2 border-[#1A1A1A] dark:border-gray-700 text-blueprint-textDark dark:text-white font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center"
                                 >
                                     <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan mr-2">{'>_'}</span> {t('btn_initiate_project')}
                                 </a>
@@ -205,8 +218,8 @@ export default function Welcome({ auth, projects, blogs }) {
                         className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-blueprint-bluePrimary/20 dark:divide-blueprint-cyan/20"
                     >
                         {[
-                            { id: '01', val: '47+', label: 'PROJETS DÉPLOYÉS' },
-                            { id: '02', val: '28', label: 'CLIENTS ACTIFS' },
+                            { id: '01', val: '7+', label: 'PROJETS REALISES' },
+                            { id: '02', val: '5', label: 'CLIENTS ACTIFS' },
                             { id: '03', val: '3+', label: "ANNÉES D'EXP." },
                             { id: '04', val: '100%', label: 'DISPONIBILITÉ' },
                         ].map((stat) => (
@@ -728,6 +741,8 @@ export default function Welcome({ auth, projects, blogs }) {
                     </motion.div>
                 </div>
             </section>
+
+            <CvModal show={showCvModal} onClose={() => setShowCvModal(false)} />
         </BlueprintLayout>
     );
 }
