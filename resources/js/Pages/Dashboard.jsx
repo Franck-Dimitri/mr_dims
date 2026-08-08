@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import AnalyticsChart from '@/Components/Admin/AnalyticsChart';
 
 export default function Dashboard({ stats, chartData, recentMessages, cvStats }) {
     const dashboardStats = stats || { projects: 0, blogs: 0, messages: 0, totalViews: 0 };
     const messagesList = recentMessages || [];
     const cvMetrics = cvStats || { views: 0, downloads: 0, imageViews: 0, total: 0, recent: [] };
-    
-    const [activeTab, setActiveTab] = useState('Tous les messages');
 
     const statCards = [
         { label: 'Vues Globales', value: (dashboardStats.totalViews || 0).toLocaleString(), change: `+${dashboardStats.todayViews || 0} aujourd'hui`, icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z', color: 'text-gray-500' },
@@ -16,9 +15,6 @@ export default function Dashboard({ stats, chartData, recentMessages, cvStats })
         { label: 'Téléchargements CV', value: (cvMetrics.downloads || 0).toString(), change: `${cvMetrics.views || 0} vues modale`, icon: 'M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4', color: 'text-purple-500' },
         { label: 'Nouveaux Messages', value: dashboardStats.messages.toString(), change: 'Contacts récents', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'text-green-500' },
     ];
-
-    const chartBars = chartData?.views || [20, 50, 45, 10, 80, 85, 90, 40, 20];
-    const chartLabels = chartData?.labels || ['01 July', '02 July', '03 July', '04 July', '05 July', '06 July', '07 July', '08 July', '09 July'];
 
     return (
         <AuthenticatedLayout header="Dashboard">
@@ -68,7 +64,26 @@ export default function Dashboard({ stats, chartData, recentMessages, cvStats })
                     ))}
                 </div>
 
-                {/* CV Analytics Dedicated Card & Tracking Section */}
+                {/* CHART.JS ANALYTICS CHART SECTION */}
+                <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-gray-800 p-6 rounded-xl shadow-sm">
+                    <div className="flex justify-between items-center mb-6">
+                        <div>
+                            <h4 className="text-sm font-bold text-gray-900 dark:text-white">Graphique de Fréquentation & Audience (Chart.js)</h4>
+                            <p className="text-xs text-gray-500">Évolution réelle des vues de pages et des visiteurs uniques au cours des 14 derniers jours</p>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/10 text-blue-500 rounded-lg font-medium">
+                                <span className="w-2 h-2 rounded-full bg-blue-500"></span> Vues
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-purple-500/10 text-purple-500 rounded-lg font-medium">
+                                <span className="w-2 h-2 rounded-full bg-purple-500"></span> Visiteurs Uniques
+                            </span>
+                        </div>
+                    </div>
+                    <AnalyticsChart chartData={chartData} />
+                </div>
+
+                {/* CV ANALYTICS DEDICATED CARD (NO EMOJIS - REAL SVG ICONS) */}
                 <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-gray-800 p-6 rounded-xl shadow-sm">
                     <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
                         <div className="flex items-center gap-3">
@@ -89,17 +104,41 @@ export default function Dashboard({ stats, chartData, recentMessages, cvStats })
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                        <div className="p-4 bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-100 dark:border-gray-800">
-                            <span className="text-xs text-gray-500 font-medium block mb-1">👁️ Modale CV Ouverte</span>
-                            <span className="text-xl font-bold text-gray-900 dark:text-white">{cvMetrics.views || 0}</span>
+                        <div className="p-4 bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-3">
+                            <div className="p-2.5 rounded-lg bg-blueprint-cyan/10 text-blueprint-cyan">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span className="text-xs text-gray-500 font-medium block">Modale CV Ouverte</span>
+                                <span className="text-xl font-bold text-gray-900 dark:text-white">{cvMetrics.views || 0}</span>
+                            </div>
                         </div>
-                        <div className="p-4 bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-100 dark:border-gray-800">
-                            <span className="text-xs text-gray-500 font-medium block mb-1">📥 Téléchargements PDF</span>
-                            <span className="text-xl font-bold text-blueprint-bluePrimary dark:text-blueprint-cyan">{cvMetrics.downloads || 0}</span>
+
+                        <div className="p-4 bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-3">
+                            <div className="p-2.5 rounded-lg bg-green-500/10 text-green-500">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span className="text-xs text-gray-500 font-medium block">Téléchargements PDF</span>
+                                <span className="text-xl font-bold text-green-500">{cvMetrics.downloads || 0}</span>
+                            </div>
                         </div>
-                        <div className="p-4 bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-100 dark:border-gray-800">
-                            <span className="text-xs text-gray-500 font-medium block mb-1">🖼️ Aperçus Images</span>
-                            <span className="text-xl font-bold text-purple-500">{cvMetrics.imageViews || 0}</span>
+
+                        <div className="p-4 bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-3">
+                            <div className="p-2.5 rounded-lg bg-purple-500/10 text-purple-400">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span className="text-xs text-gray-500 font-medium block">Aperçus Images</span>
+                                <span className="text-xl font-bold text-purple-400">{cvMetrics.imageViews || 0}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -122,9 +161,24 @@ export default function Dashboard({ stats, chartData, recentMessages, cvStats })
                                                 {new Date(log.created_at).toLocaleString()}
                                             </td>
                                             <td className="py-2.5 px-3 font-semibold">
-                                                {log.event_type === 'download_pdf' && <span className="text-green-500">📥 Téléchargement PDF</span>}
-                                                {log.event_type === 'view_modal' && <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan">👁️ Modale Consultée</span>}
-                                                {log.event_type === 'view_image' && <span className="text-purple-400">🖼️ Aperçu Image</span>}
+                                                {log.event_type === 'download_pdf' && (
+                                                    <span className="inline-flex items-center gap-1.5 text-green-500 font-bold">
+                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                                        Téléchargement PDF
+                                                    </span>
+                                                )}
+                                                {log.event_type === 'view_modal' && (
+                                                    <span className="inline-flex items-center gap-1.5 text-blueprint-cyan font-bold">
+                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                                        Modale Consultée
+                                                    </span>
+                                                )}
+                                                {log.event_type === 'view_image' && (
+                                                    <span className="inline-flex items-center gap-1.5 text-purple-400 font-bold">
+                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                                        Aperçu Image
+                                                    </span>
+                                                )}
                                             </td>
                                             <td className="py-2.5 px-3 font-mono text-[11px]">{log.ip_address}</td>
                                             <td className="py-2.5 px-3 text-gray-500 max-w-xs truncate">{log.user_agent}</td>
