@@ -10,6 +10,48 @@
     }
 }
 
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-100% - var(--gap, 1rem)));
+    }
+}
+
+@keyframes marquee-vertical {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(calc(-100% - var(--gap, 1rem)));
+    }
+}
+
+@keyframes shine-pulse {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.animate-marquee {
+    animation: marquee var(--duration, 40s) linear infinite;
+}
+
+.animate-marquee-vertical {
+    animation: marquee-vertical var(--duration, 40s) linear infinite;
+}
+
+.bg-shine-size {
+    background-size: 300% 300%;
+}
+
 @layer utilities {
     .bg-blueprint-grid {
         background-size: 40px 40px;

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '@/Context/LanguageContext';
 import CvModal from '@/Components/CvModal';
 import CreativePlaygroundSection from '@/Components/Home/CreativePlaygroundSection';
+import TestimonialsSection from '@/Components/Home/TestimonialsSection';
 
 export default function Welcome({ auth, projects, blogs }) {
     const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
@@ -742,6 +743,9 @@ export default function Welcome({ auth, projects, blogs }) {
                     </motion.div>
                 </div>
             </section>
+
+            {/* --- SECTION TÉMOIGNAGES & RETOURS CLIENTS (MARQUEE) --- */}
+            <TestimonialsSection />
 
             {/* --- SECTION HERO / CREATIVE PLAYGROUND (DESIGNALI) --- */}
             <CreativePlaygroundSection onOpenCv={() => setShowCvModal(true)} />
