@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\ProjectVisit;
+use App\Services\TelegramService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Stevebauman\Location\Facades\Location;
@@ -42,7 +43,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified project.
+     * Display the specified project and send real-time Telegram alert.
      */
     public function show(Request $request, $slug)
     {
@@ -70,6 +71,24 @@ class ProjectController extends Controller
         // Save visit ID in session to associate likes during this session
         session(['last_project_visit_' . $project->id => $visit->id]);
 
+        // Send Real-Time Telegram Alert
+        $totalVisits = ProjectVisit::where('project_id', $project->id)->count();
+        $projectUrl = url("/projects/{$project->slug}");
+        $time = now()->format('d/m/Y à H:i:s');
+
+        $telegramMsg = "🚀 <b>[PROJET CONSULTÉ SUR LE PORTFOLIO]</b>\n\n"
+            . "📁 <b>Projet :</b> <code>{$project->title}</code>\n"
+            . "👁️ <b>Nombre total de vues :</b> <code>{$totalVisits}</code>\n"
+            . "📍 <b>IP Visiteur :</b> <code>{$ip}</code> ({$country})\n"
+            . "🔗 <b>Lien :</b> <code>{$projectUrl}</code>\n"
+            . "⏰ <b>Heure :</b> <code>{$time}</code>";
+
+        try {
+            TelegramService::sendMessage($telegramMsg);
+        } catch (\Throwable $e) {
+            // silent catch
+        }
+
         $images = [];
         if ($project->cover_image) {
             $images[] = $project->cover_image;
@@ -80,7 +99,7 @@ class ProjectController extends Controller
         $projectArray = $project->toArray();
         $projectArray['images'] = $images;
 
-        // Fetch other projects (excluding current one) for the list at the bottom
+        // Fetch other projects for the bottom list
         $otherProjects = Project::where('id', '!=', $project->id)
             ->latest()
             ->take(3)
@@ -102,11 +121,11 @@ class ProjectController extends Controller
     }
 
     /**
-     * Like a project.
+     * Like a project visit.
      */
-    public function like($slug)
+    public function like(Request $request, $id)
     {
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::findOrFail($id);
         $project->increment('likes_count');
 
         $visitId = session('last_project_visit_' . $project->id);
@@ -117,6 +136,8 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect()->back();
+        return response()->json([
+            'likes_count' => $project->likes_count,
+        ]);
     }
 }

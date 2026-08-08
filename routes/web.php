@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CvAnalyticsController;
 
 // Sitemap Route
 Route::get('/sitemap.xml', function () {
@@ -21,6 +22,9 @@ Route::get('/sitemap.xml', function () {
         'services' => $services
     ])->header('Content-Type', 'text/xml');
 });
+
+// CV Tracking Endpoint
+Route::post('/api/cv/track', [CvAnalyticsController::class, 'track'])->name('cv.track');
 
 Route::middleware('track.activity')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');

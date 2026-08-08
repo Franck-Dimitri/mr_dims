@@ -1,5 +1,6 @@
 import sys
 import html
+import datetime
 from pathlib import Path
 
 # S'assurer que le dossier telegram-bot est dans le sys.path
@@ -98,63 +99,65 @@ async def deploy_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(
         f"🚀 <b>Lancement du Déploiement Automatique</b> (Branche : <code>{safe_branch}</code>)...\n"
-        f"<i>Veuillez patienter pendant le git pull, les migrations et la compilation front-end.</i>",
+        f"<i>Veuillez patienter pendant le git pull, les migrations et la compilation Vite...</i>",
         parse_mode="HTML"
     )
 
     loop = asyncio.get_running_loop()
-    success, summary = await loop.run_in_executor(None, run_laravel_deployment, branch)
+    success, log_output = await loop.run_in_executor(None, run_laravel_deployment, branch)
 
-    icon = "🎉" if success else "⚠️"
-    status_title = "Déploiement Terminé !" if success else "Déploiement Terminé avec des Avertissements"
-
-    msg = (
-        f"{icon} <b>{status_title}</b>\n\n"
-        f"{summary}"
+    status_icon = "✅" if success else "❌"
+    safe_logs = html.escape(log_output[-3000:])
+    response_msg = (
+        f"{status_icon} <b>Rapport de Déploiement :</b>\n\n"
+        f"<pre>{safe_logs}</pre>"
     )
-    await update.message.reply_text(msg, parse_mode="HTML")
-
-async def uptime_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Commande /uptime : Affichage des ressources système."""
-    if not await is_authorized_and_notify(update, context):
-        return
-
-    res = get_system_resources()
-    hostname = html.escape(str(res['hostname']))
-
-    msg = (
-        f"💻 <b>Ressources Serveur {hostname}</b>\n\n"
-        f"⏱️ <b>Uptime :</b> up {res['uptime']}\n"
-        f"⚙️ <b>Charge CPU (1,5,15m) :</b> {res['cpu_load']}\n"
-        f"🧠 <b>RAM Utilisée :</b> {res['ram_used_gi']}Gi / {res['ram_total_gi']}Gi ({res['ram_percent']}%)\n"
-        f"💾 <b>Disque (/) :</b> {res['disk_used_gi']}G / {res['disk_total_gi']}G ({res['disk_percent']}% utilisé)"
-    )
-    await update.message.reply_text(msg, parse_mode="HTML")
+    await update.message.reply_text(response_msg, parse_mode="HTML")
 
 async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Commande /status : État temps réel des services."""
+    """Commande /status : Rapport des services."""
     if not await is_authorized_and_notify(update, context):
         return
 
     services = check_all_services()
-    active_count = sum(1 for is_act in services.values() if is_act)
-    total_count = len(services)
+    proj_name = html.escape(PROJECT_NAME)
+    msg = f"📊 <b>[Supervision Services] {proj_name}</b>\n\n"
 
-    services_lines = [f"  • <code>{html.escape(srv)}</code> : {'🟢 Actif' if is_act else '🔴 Arrêté'}" for srv, is_act in services.items()]
-    
+    for service, status in services.items():
+        icon = "🟢" if "Active" in status else "🔴"
+        safe_serv = html.escape(service)
+        safe_stat = html.escape(status)
+        msg += f"{icon} <b>{safe_serv} :</b> <code>{safe_stat}</code>\n"
+
+    await update.message.reply_text(msg, parse_mode="HTML")
+
+async def uptime_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Commande /uptime : Ressources système."""
+    if not await is_authorized_and_notify(update, context):
+        return
+
+    resources = get_system_resources()
     msg = (
-        f"📊 <b>Statut Temps Réel des Services ({active_count}/{total_count})</b>\n\n"
-        + "\n".join(services_lines)
+        f"💻 <b>[Ressources Système VPS]</b>\n\n"
+        f"⏱️ <b>Uptime :</b> <code>{html.escape(resources['uptime'])}</code>\n"
+        f"⚙️ <b>Charge CPU :</b> <code>{html.escape(resources['load'])}</code>\n"
+        f"🧠 <b>RAM Utilisée :</b> <code>{resources['ram_used']}Mo / {resources['ram_total']}Mo ({resources['ram_percent']}%)</code>\n"
+        f"💾 <b>Disque Utilisé :</b> <code>{resources['disk_used']}Go / {resources['disk_total']}Go ({resources['disk_percent']}%)</code>"
     )
     await update.message.reply_text(msg, parse_mode="HTML")
 
 async def ssh_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Commande /ssh : Audit SSH."""
+    """Commande /ssh : Sessions d'accès."""
     if not await is_authorized_and_notify(update, context):
         return
 
-    ssh_msg = get_ssh_audit()
-    await update.message.reply_text(ssh_msg, parse_mode="HTML")
+    ssh_info = get_ssh_audit()
+    msg = (
+        f"🔑 <b>[Audit Connexions SSH]</b>\n\n"
+        f"🟢 <b>Sessions Actives :</b>\n<code>{html.escape(ssh_info['active_sessions'])}</code>\n\n"
+        f"📜 <b>Dernières Connexions Réussies :</b>\n<code>{html.escape(ssh_info['recent_logins'])}</code>"
+    )
+    await update.message.reply_text(msg, parse_mode="HTML")
 
 async def db_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Commande /db : Informations sur la base de données."""
@@ -166,37 +169,37 @@ async def db_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if sqlite_file.exists():
             size_mb = round(sqlite_file.stat().st_size / (1024 * 1024), 2)
             msg = (
-                f"🗄️ <b>Base de Données SQLite</b>\n\n"
-                f"📄 <b>Fichier :</b> <code>{html.escape(sqlite_file.name)}</code>\n"
-                f"💾 <b>Taille actuelle :</b> <code>{size_mb} Mo</code>\n"
-                f"🟢 <b>Statut :</b> Accessible & Opérationnelle"
+                f"🗄️ <b>[Base de Données SQLite]</b>\n\n"
+                f"📁 <b>Fichier :</b> <code>{sqlite_file.name}</code>\n"
+                f"💾 <b>Taille :</b> <code>{size_mb} Mo</code>\n"
+                f"🟢 <b>Statut :</b> Accessibilité OK"
             )
         else:
-            msg = f"🗄️ <b>Base de Données SQLite</b>\n🔴 Fichier introuvable à <code>{html.escape(str(sqlite_file))}</code>"
+            msg = f"❌ <b>Base SQLite introuvable :</b> <code>{sqlite_file}</code>"
     else:
-        msg = f"🗄️ <b>Base de Données MySQL</b>\n🟢 Moteur MySQL configuré pour <code>{html.escape(PROJECT_NAME)}</code>."
+        msg = "🗄️ <b>[Base de Données MySQL/MariaDB]</b>\n\nStatut opérationnel."
 
     await update.message.reply_text(msg, parse_mode="HTML")
 
 async def health_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Commande /health : Test HTTP du portfolio."""
+    """Commande /health : Test HTTP."""
     if not await is_authorized_and_notify(update, context):
         return
 
-    health = check_website_health()
+    healthy, status_code, response_time = check_website_health()
     safe_url = html.escape(PROJECT_URL)
-
-    if health["is_up"]:
+    
+    if healthy:
         msg = (
-            f"🌐 <b>Health Check HTTP</b>\n\n"
+            f"🌐 <b>[Santé Web Portfolio]</b>\n\n"
             f"🎯 <b>URL :</b> <code>{safe_url}</code>\n"
-            f"🟢 <b>Statut :</b> <code>200 OK</code>\n"
-            f"⚡ <b>Temps de réponse :</b> <code>{health['response_time_ms']} ms</code>"
+            f"🟢 <b>Code HTTP :</b> <code>{status_code} OK</code>\n"
+            f"⚡ <b>Temps de réponse :</b> <code>{response_time}s</code>"
         )
     else:
-        err = html.escape(str(health.get('error', f"HTTP {health['status_code']}")))
+        err = html.escape(str(status_code))
         msg = (
-            f"🌐 <b>Health Check HTTP</b>\n\n"
+            f"🌐 <b>[Santé Web Portfolio]</b>\n\n"
             f"🎯 <b>URL :</b> <code>{safe_url}</code>\n"
             f"🔴 <b>Statut :</b> Indisponible ({err})"
         )
@@ -270,6 +273,59 @@ async def backup_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif not success and name != "Rotation":
             await update.message.reply_text(f"❌ <b>Erreur Sauvegarde {name} :</b> {html.escape(msg)}", parse_mode="HTML")
 
+async def scheduled_daily_backup(context: ContextTypes.DEFAULT_TYPE):
+    """Tâche planifiée automatique envoyée chaque jour à 02:00 AM sur Telegram."""
+    if not ALLOWED_CHAT_ID:
+        return
+
+    logger.info("Déclenchement de la sauvegarde automatique quotidienne de 02h00 AM...")
+    loop = asyncio.get_running_loop()
+    results = await loop.run_in_executor(None, run_full_backup)
+
+    for name, success, msg, file_path, meta in results:
+        if success and file_path and file_path.exists():
+            proj_title = html.escape(meta.get('project', PROJECT_NAME))
+            date_str = html.escape(meta.get('date', ''))
+            fname_str = html.escape(meta.get('filename', file_path.name))
+            size_mb = meta.get('size_mb', 0)
+
+            card_msg = (
+                f"⏰ <b>[SAUVEGARDE AUTOMATIQUE 02h00 AM] {proj_title}</b>\n\n"
+                f"📅 <b>Date :</b> <code>{date_str}</code>\n"
+                f"📄 <b>Fichier :</b> <code>{fname_str}</code>\n"
+                f"💾 <b>Taille :</b> <code>{size_mb} Mo</code>\n"
+                f"✅ <b>Statut :</b> <code>Sauvegarde automatique réussie</code>"
+            )
+
+            if size_mb <= 45:
+                try:
+                    with open(file_path, "rb") as doc:
+                        await context.bot.send_document(
+                            chat_id=ALLOWED_CHAT_ID,
+                            document=doc,
+                            filename=file_path.name,
+                            caption=card_msg,
+                            parse_mode="HTML"
+                        )
+                except Exception as e:
+                    await context.bot.send_message(
+                        chat_id=ALLOWED_CHAT_ID,
+                        text=f"{card_msg}\n⚠️ Erreur envoi document: {html.escape(str(e))}",
+                        parse_mode="HTML"
+                    )
+            else:
+                await context.bot.send_message(
+                    chat_id=ALLOWED_CHAT_ID,
+                    text=f"{card_msg}\nℹ️ <i>Fichier conservé sur le serveur (>45 Mo).</i>",
+                    parse_mode="HTML"
+                )
+        elif not success and name != "Rotation":
+            await context.bot.send_message(
+                chat_id=ALLOWED_CHAT_ID,
+                text=f"⚠️ <b>ÉCHEC SAUVEGARDE AUTOMATIQUE 02h00 ({name}) :</b> {html.escape(msg)}",
+                parse_mode="HTML"
+            )
+
 async def handle_text_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Redirige les boutons du clavier vers les commandes correspondantes."""
     text = update.message.text.strip() if update.message and update.message.text else ""
@@ -317,7 +373,13 @@ def main():
 
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text_messages))
 
-    logger.info("Bot de supervision initialisé avec fonction /deploy !")
+    # Programmer la sauvegarde automatique quotidienne à 02h00 AM
+    if app.job_queue and ALLOWED_CHAT_ID:
+        backup_time = datetime.time(hour=2, minute=0, second=0)
+        app.job_queue.run_daily(scheduled_daily_backup, time=backup_time)
+        logger.info("Planificateur automatique actif : Sauvegarde auto chaque jour à 02:00 AM.")
+
+    logger.info("Bot de supervision initialisé avec sauvegardes quotidiennes 02h00 AM !")
     app.run_polling()
 
 if __name__ == "__main__":

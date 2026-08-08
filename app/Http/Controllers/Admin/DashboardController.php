@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\Service;
 use App\Models\AnalyticsPageView;
 use App\Models\ProjectVisit;
+use App\Models\CvAnalytic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -112,6 +113,15 @@ class DashboardController extends Controller
         // 9. Messages Inbox
         $recentMessages = Contact::latest()->get();
 
+        // 10. CV Tracking Stats & Analytics
+        $cvStats = [
+            'views' => CvAnalytic::where('event_type', 'view_modal')->count(),
+            'downloads' => CvAnalytic::where('event_type', 'download_pdf')->count(),
+            'imageViews' => CvAnalytic::where('event_type', 'view_image')->count(),
+            'total' => CvAnalytic::count(),
+            'recent' => CvAnalytic::latest()->take(15)->get(),
+        ];
+
         return Inertia::render('Dashboard', [
             'stats' => [
                 'projects' => $totalProjects,
@@ -135,6 +145,7 @@ class DashboardController extends Controller
             'blogsList' => $blogsList,
             'projectVisitStats' => $projectVisitStats,
             'recentMessages' => $recentMessages,
+            'cvStats' => $cvStats,
         ]);
     }
 
