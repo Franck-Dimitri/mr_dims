@@ -6,6 +6,7 @@ import SEO from '@/Components/SEO';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/Context/LanguageContext';
 import CvModal from '@/Components/CvModal';
+import CreativePlaygroundSection from '@/Components/Home/CreativePlaygroundSection';
 
 export default function Welcome({ auth, projects, blogs }) {
     const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
@@ -741,6 +742,9 @@ export default function Welcome({ auth, projects, blogs }) {
                     </motion.div>
                 </div>
             </section>
+
+            {/* --- SECTION HERO / CREATIVE PLAYGROUND (DESIGNALI) --- */}
+            <CreativePlaygroundSection onOpenCv={() => setShowCvModal(true)} />
 
             <CvModal show={showCvModal} onClose={() => setShowCvModal(false)} />
         </BlueprintLayout>

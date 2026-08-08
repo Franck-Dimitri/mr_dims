@@ -15,7 +15,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Outfit', ...defaultTheme.fontFamily.sans],
+                sans: ['Nunito', 'Outfit', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 blueprint: {
