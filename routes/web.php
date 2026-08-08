@@ -49,6 +49,7 @@ use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
 use App\Http\Controllers\Admin\ActivityLogController as AdminActivityLogController;
+use App\Http\Controllers\Admin\SystemControlController;
 
 Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -93,6 +94,12 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(funct
 
     // Admin Activity Logs Route
     Route::get('/activity-logs', [AdminActivityLogController::class, 'index'])->name('admin.activity.index');
+
+    // System Control & Maintenance Routes
+    Route::get('/system/health', [SystemControlController::class, 'getSystemHealth'])->name('admin.system.health');
+    Route::post('/system/deploy', [SystemControlController::class, 'deploy'])->name('admin.system.deploy');
+    Route::post('/system/backup', [SystemControlController::class, 'createBackup'])->name('admin.system.backup');
+    Route::get('/system/backup/download/{filename}', [SystemControlController::class, 'downloadBackup'])->name('admin.system.backup.download');
 });
 
 require __DIR__.'/auth.php';

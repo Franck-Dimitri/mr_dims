@@ -12,6 +12,7 @@ use App\Models\ProjectVisit;
 use App\Models\CvAnalytic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use Carbon\Carbon;
 
@@ -19,7 +20,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Auto-seed sample analytics data if database is empty so analytics dashboard displays rich metrics
+        // Auto-seed sample analytics data if database is empty
         if (AnalyticsPageView::count() === 0) {
             $this->seedSampleAnalyticsData();
         }
@@ -122,6 +123,37 @@ class DashboardController extends Controller
             'recent' => CvAnalytic::latest()->take(15)->get(),
         ];
 
+        // 11. Project Popularity Heatmap Ranking
+        $projectPopularity = Project::all()->map(function ($project) {
+            $visits = ProjectVisit::where('project_id', $project->id)->count();
+            $likes = $project->likes_count ?? 0;
+            $score = ($visits * 2) + ($likes * 5);
+            return [
+                'id' => $project->id,
+                'title' => $project->title,
+                'slug' => $project->slug,
+                'visits' => $visits,
+                'likes' => $likes,
+                'score' => $score,
+            ];
+        })->sortByDesc('score')->values()->take(5);
+
+        // 12. Backup Info
+        $backupDir = storage_path('app/backups');
+        $lastBackup = null;
+        if (File::exists($backupDir)) {
+            $files = File::files($backupDir);
+            if (!empty($files)) {
+                usort($files, fn($a, $b) => $b->getMTime() - $a->getMTime());
+                $latest = $files[0];
+                $lastBackup = [
+                    'filename' => $latest->getFilename(),
+                    'size_mb' => round($latest->getSize() / (1024 * 1024), 2),
+                    'date' => date('d/m/Y à H:i:s', $latest->getMTime()),
+                ];
+            }
+        }
+
         return Inertia::render('Dashboard', [
             'stats' => [
                 'projects' => $totalProjects,
@@ -146,6 +178,8 @@ class DashboardController extends Controller
             'projectVisitStats' => $projectVisitStats,
             'recentMessages' => $recentMessages,
             'cvStats' => $cvStats,
+            'projectPopularity' => $projectPopularity,
+            'lastBackup' => $lastBackup,
         ]);
     }
 
