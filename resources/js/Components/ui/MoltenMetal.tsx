@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Renderer, Program, Mesh, Triangle } from 'ogl';
+import { Renderer, Program, Mesh, Triangle } from 'ogl/src/index.js';
 
 export type MoltenMetalColorMode = 'molten' | 'ember' | 'frost';
 
