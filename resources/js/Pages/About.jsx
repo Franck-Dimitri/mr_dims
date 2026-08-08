@@ -176,16 +176,16 @@ export default function About() {
                                 WORKSPACE: SYS_PROFILE // ID: MR_DIMS
                             </motion.div>
 
-                            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 uppercase font-sans">
-                                <span className="block text-blueprint-textDark dark:text-white">FRANCK</span>
-                                <span className="block text-blueprint-bluePrimary dark:text-blueprint-cyan">DIMITRI</span>
+                            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl font-bold leading-none tracking-tighter mb-6 font-sans">
+                                <span className="block text-blueprint-textDark dark:text-white">Franck</span>
+                                <span className="block text-blueprint-bluePrimary dark:text-blueprint-cyan">Dimitri</span>
                             </motion.h1>
 
-                            <motion.h2 variants={fadeInUp} className="text-sm md:text-base text-gray-500 uppercase tracking-widest mb-6 border-l-2 border-blueprint-bluePrimary dark:border-blueprint-cyan pl-4">
-                                // {lang === 'en' ? 'SOFTWARE ARCHITECT & FULL STACK DEV' : 'ARCHITECTE LOGICIEL & FULL STACK DEV'}
+                            <motion.h2 variants={fadeInUp} className="text-sm md:text-base text-gray-500 tracking-wide mb-6 border-l-2 border-blueprint-bluePrimary dark:border-blueprint-cyan pl-4 font-mono">
+                                // {lang === 'en' ? 'Software Architect & Full Stack Developer' : 'Architecte Logiciel & Développeur Full Stack'}
                             </motion.h2>
 
-                            <motion.p variants={fadeInUp} className="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mb-8 uppercase">
+                            <motion.p variants={fadeInUp} className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mb-8">
                                 {lang === 'en'
                                     ? "My objective is to turn technical complexity into elegant, scalable, and high-performance solutions. Every line of code is a building block of the final architecture."
                                     : "Mon objectif est de transformer la complexité technique en solutions élégantes, performantes et évolutives. Chaque ligne de code est une brique de l'architecture finale."}
@@ -318,7 +318,7 @@ export default function About() {
                             <div key={idx} className="bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 p-8 rounded-none shadow-sm relative">
                                 <span className="text-[10px] text-gray-400 block mb-4">{pil.code}</span>
                                 <h4 className="text-base font-bold text-blueprint-textDark dark:text-white mb-4 uppercase">{pil.title}</h4>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed uppercase">{pil.desc}</p>
+                                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{pil.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -352,7 +352,7 @@ export default function About() {
                                         <span className="text-[9px] bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-1 uppercase">{step.tag}</span>
                                     </div>
                                     <h4 className="text-sm font-bold text-blueprint-textDark dark:text-white uppercase mb-3 leading-snug">{step.title}</h4>
-                                    <p className="text-xs text-gray-600 dark:text-gray-400 uppercase leading-relaxed">{step.desc}</p>
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{step.desc}</p>
                                 </div>
                             </div>
                         ))}

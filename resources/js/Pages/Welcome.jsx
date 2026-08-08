@@ -79,7 +79,7 @@ export default function Welcome({ auth, projects, blogs }) {
                                 </span>
                             </motion.div>
 
-                            <motion.p variants={fadeInUp} className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mb-12 font-mono uppercase tracking-wide opacity-80 whitespace-pre-line">
+                            <motion.p variants={fadeInUp} className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mb-12 opacity-90 whitespace-pre-line">
                                 {t('welcome_hero_desc')}
                             </motion.p>
 

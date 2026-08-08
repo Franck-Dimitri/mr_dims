@@ -20,79 +20,79 @@ export default function TerminalContactSection() {
     };
 
     return (
-        <section id="contact" className="py-24">
+        <section id="contact" className="py-24 font-sans">
             <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl mx-auto bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-8 shadow-xl font-mono">
+                <div className="max-w-4xl mx-auto bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-xl">
                     <div className="flex items-center gap-2 border-b border-gray-200 dark:border-gray-800 pb-4 mb-6">
                         <span className="w-3 h-3 rounded-full bg-red-500"></span>
                         <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
                         <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                        <span className="text-xs text-gray-400 ml-2">INITIATE_CONTACT_TERMINAL.sh</span>
+                        <span className="text-xs text-gray-500 font-mono ml-2">Contact Direct & Devis</span>
                     </div>
 
                     {recentlySuccessful && (
-                        <div className="mb-6 p-4 bg-green-500/10 border border-green-500 text-green-600 dark:text-green-400 text-xs rounded">
-                            [SUCCESS] Votre message a bien été transmis. Je vous réponds sous 24h !
+                        <div className="mb-6 p-4 bg-green-500/10 border border-green-500 text-green-600 dark:text-green-400 text-sm rounded-xl">
+                            Votre message a bien été transmis. Je vous réponds sous 24h !
                         </div>
                     )}
 
                     <form onSubmit={submitContact} className="space-y-6">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-xs text-gray-500 uppercase mb-2">&gt; INPUT_NAME</label>
+                                <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Nom complet ou Entreprise</label>
                                 <input 
                                     type="text" 
                                     value={data.name}
                                     onChange={e => setData('name', e.target.value)}
                                     required
-                                    placeholder="Nom complet ou Entreprise"
-                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded p-3 text-xs text-blueprint-textDark dark:text-white focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:outline-none"
+                                    placeholder="Ex: John Doe / Corp Inc."
+                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3.5 text-sm text-blueprint-textDark dark:text-white focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:outline-none"
                                 />
-                                {errors.name && <span className="text-red-500 text-[10px] mt-1 block">{errors.name}</span>}
+                                {errors.name && <span className="text-red-500 text-xs mt-1 block">{errors.name}</span>}
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 uppercase mb-2">&gt; INPUT_EMAIL</label>
+                                <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Adresse Email</label>
                                 <input 
                                     type="email" 
                                     value={data.email}
                                     onChange={e => setData('email', e.target.value)}
                                     required
-                                    placeholder="adresse@domaine.com"
-                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded p-3 text-xs text-blueprint-textDark dark:text-white focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:outline-none"
+                                    placeholder="contact@domaine.com"
+                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3.5 text-sm text-blueprint-textDark dark:text-white focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:outline-none"
                                 />
-                                {errors.email && <span className="text-red-500 text-[10px] mt-1 block">{errors.email}</span>}
+                                {errors.email && <span className="text-red-500 text-xs mt-1 block">{errors.email}</span>}
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-xs text-gray-500 uppercase mb-2">&gt; INPUT_MESSAGE_SPECIFICATION</label>
+                            <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Cahier des charges ou Message</label>
                             <textarea 
                                 rows="5"
                                 value={data.message}
                                 onChange={e => setData('message', e.target.value)}
                                 required
                                 placeholder="Décrivez votre projet, vos besoins techniques et vos contraintes de délai..."
-                                className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded p-3 text-xs text-blueprint-textDark dark:text-white focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:outline-none"
+                                className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3.5 text-sm text-blueprint-textDark dark:text-white focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:outline-none"
                             ></textarea>
-                            {errors.message && <span className="text-red-500 text-[10px] mt-1 block">{errors.message}</span>}
+                            {errors.message && <span className="text-red-500 text-xs mt-1 block">{errors.message}</span>}
                         </div>
 
                         <div>
-                            <label className="block text-xs text-gray-500 uppercase mb-2">&gt; ATTACH_DOCUMENT (Optionnel: PDF, DOCX, PNG max 2MB)</label>
+                            <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Pièce jointe (Optionnel: PDF, DOCX, PNG max 2MB)</label>
                             <input 
                                 type="file"
                                 onChange={e => setData('attachment', e.target.files[0])}
-                                className="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-blueprint-bluePrimary file:text-white dark:file:bg-blueprint-cyan dark:file:text-gray-900 cursor-pointer"
+                                className="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blueprint-bluePrimary file:text-white dark:file:bg-blueprint-cyan dark:file:text-gray-900 cursor-pointer"
                             />
-                            {errors.attachment && <span className="text-red-500 text-[10px] mt-1 block">{errors.attachment}</span>}
+                            {errors.attachment && <span className="text-red-500 text-xs mt-1 block">{errors.attachment}</span>}
                         </div>
 
                         <button 
                             type="submit" 
                             disabled={processing}
-                            className="w-full py-4 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold text-xs tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-50"
+                            className="w-full py-4 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold text-sm rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 shadow-md"
                         >
-                            {processing ? 'TRANSMISSION EN COURS...' : 'EXECUTE_SEND_MESSAGE()'}
+                            {processing ? 'Transmission en cours...' : 'Envoyer le message'}
                         </button>
                     </form>
                 </div>

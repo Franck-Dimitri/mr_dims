@@ -38,13 +38,13 @@ export default function BlueprintLayout({ children }) {
     };
 
     const navLinks = [
-        { name: t('nav_home') || 'ACCUEIL', href: '/' },
-        { name: t('nav_projects') || 'PROJETS', href: '/projects' },
-        { name: t('nav_about') || 'À PROPOS', href: '/about' },
-        { name: t('nav_services') || 'SERVICES', href: '/services' },
-        { name: t('nav_packs') || 'PACKS', href: '/packs' },
-        { name: t('nav_blog') || 'BLOG', href: '/blog' },
-        { name: t('nav_contact') || 'CONTACT', href: '/contact', isButton: true },
+        { name: t('nav_home') || 'Accueil', href: '/' },
+        { name: t('nav_projects') || 'Projets', href: '/projects' },
+        { name: t('nav_about') || 'À propos', href: '/about' },
+        { name: t('nav_services') || 'Services', href: '/services' },
+        { name: t('nav_packs') || 'Packs', href: '/packs' },
+        { name: t('nav_blog') || 'Blog', href: '/blog' },
+        { name: t('nav_contact') || 'Contact', href: '/contact', isButton: true },
     ];
 
     const isActive = (href) => {
@@ -71,23 +71,23 @@ export default function BlueprintLayout({ children }) {
                         {/* Logo Area */}
                         <div className="flex items-center">
                             <Link href="/" className="flex items-center shrink-0 group">
-                                <span className="font-bold text-lg tracking-wider text-blueprint-textDark dark:text-blueprint-white flex items-center gap-2">
-                                    MR <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan text-sm opacity-70 font-mono">DIM'S</span>
+                                <span className="font-bold text-lg tracking-tight text-blueprint-textDark dark:text-blueprint-white flex items-center gap-2">
+                                    MR <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan text-sm font-bold">DIM'S</span>
                                 </span>
                             </Link>
                         </div>
 
                         {/* Desktop Navigation */}
-                        <nav className="hidden xl:flex items-center space-x-1">
+                        <nav className="hidden xl:flex items-center space-x-1 font-sans">
                             {navLinks.map((link) => (
                                 link.isButton ? (
                                     <div key={link.name} className="pl-4 ml-2">
                                         <Link 
                                             href={link.href} 
-                                            className="flex items-center gap-2 px-5 py-2 bg-[#1A1A1A] border border-gray-800 text-white hover:border-blueprint-bluePrimary dark:hover:border-blueprint-cyan transition-colors text-xs font-bold tracking-widest uppercase font-mono"
+                                            className="flex items-center gap-2 px-5 py-2.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 rounded-xl hover:opacity-90 transition-opacity text-xs font-bold shadow-md"
                                         >
                                             {link.name}
-                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                                             </svg>
                                         </Link>
@@ -96,7 +96,7 @@ export default function BlueprintLayout({ children }) {
                                     <Link 
                                         key={link.name} 
                                         href={link.href} 
-                                        className={`px-4 py-8 text-xs font-bold tracking-widest uppercase relative flex items-center font-mono ${isActive(link.href) ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan' : 'text-gray-500 hover:text-blueprint-textDark dark:hover:text-blueprint-white'}`}
+                                        className={`px-4 py-8 text-xs font-bold relative flex items-center transition-colors ${isActive(link.href) ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan' : 'text-gray-600 dark:text-gray-300 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan'}`}
                                     >
                                         {link.name}
                                         {isActive(link.href) && (
@@ -111,28 +111,28 @@ export default function BlueprintLayout({ children }) {
                         </nav>
 
                         {/* Theme Switcher (Desktop) & Mobile Toggle */}
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 font-sans">
                             
                             {/* Language Toggle */}
-                            <div className="hidden sm:flex items-center border border-gray-200 dark:border-gray-800 rounded-none overflow-hidden text-[10px] font-bold font-mono tracking-widest uppercase">
+                            <div className="hidden sm:flex items-center border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden text-xs font-bold">
                                 <button 
                                     onClick={() => changeLanguage('fr')} 
-                                    className={`px-2.5 py-1.5 transition-colors ${lang === 'fr' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'bg-gray-100 dark:bg-[#1A1A1A] text-gray-500 hover:text-blueprint-textDark dark:hover:text-white'}`}
+                                    className={`px-3 py-1.5 transition-colors ${lang === 'fr' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'bg-gray-100 dark:bg-[#1A1A1A] text-gray-500 hover:text-blueprint-textDark dark:hover:text-white'}`}
                                 >
                                     FR
                                 </button>
                                 <button 
                                     onClick={() => changeLanguage('en')} 
-                                    className={`px-2.5 py-1.5 transition-colors ${lang === 'en' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'bg-gray-100 dark:bg-[#1A1A1A] text-gray-500 hover:text-blueprint-textDark dark:hover:text-white'}`}
+                                    className={`px-3 py-1.5 transition-colors ${lang === 'en' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'bg-gray-100 dark:bg-[#1A1A1A] text-gray-500 hover:text-blueprint-textDark dark:hover:text-white'}`}
                                 >
                                     EN
                                 </button>
                             </div>
 
-                            {/* Theme Switcher (Discreet) */}
+                            {/* Theme Switcher */}
                             <button 
                                 onClick={() => applyTheme(theme === 'dark' ? 'light' : 'dark')}
-                                className="hidden lg:flex items-center justify-center w-8 h-8 rounded-full border border-gray-200 dark:border-gray-800 text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors bg-white dark:bg-[#1A1A1A]"
+                                className="hidden lg:flex items-center justify-center w-9 h-9 rounded-xl border border-gray-200 dark:border-gray-800 text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors bg-white dark:bg-[#1A1A1A]"
                                 title="Basculer le thème"
                             >
                                 {theme === 'dark' ? (
@@ -151,7 +151,7 @@ export default function BlueprintLayout({ children }) {
                                 className="xl:hidden p-2 text-gray-500 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan"
                             >
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
                                 </svg>
                             </button>
                         </div>
@@ -163,14 +163,14 @@ export default function BlueprintLayout({ children }) {
                     <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="xl:hidden absolute top-20 left-0 w-full bg-white dark:bg-[#0B0F19] border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 z-50 py-4 shadow-xl"
+                        className="xl:hidden absolute top-20 left-0 w-full bg-white dark:bg-[#0B0F19] border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 z-50 py-4 shadow-xl font-sans"
                     >
                         <div className="flex flex-col px-4 space-y-2">
                             {navLinks.map((link) => (
                                 <Link 
                                     key={link.name}
                                     href={link.href}
-                                    className={`px-4 py-3 text-sm font-bold tracking-widest uppercase ${isActive(link.href) ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan bg-blueprint-bluePrimary/5 dark:bg-blueprint-cyan/5 border-l-2 border-blueprint-bluePrimary dark:border-blueprint-cyan' : 'text-gray-500 hover:text-blueprint-textDark dark:hover:text-blueprint-white hover:bg-gray-50 dark:hover:bg-white/5'}`}
+                                    className={`px-4 py-3 text-sm font-bold rounded-xl ${isActive(link.href) ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan bg-blueprint-bluePrimary/5 dark:bg-blueprint-cyan/5' : 'text-gray-600 dark:text-gray-300 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan'}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {link.name}
@@ -178,14 +178,9 @@ export default function BlueprintLayout({ children }) {
                             ))}
                             
                             <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col justify-center items-center gap-4">
-                                <div className="flex p-1 bg-gray-100 dark:bg-[#1A1A1A] rounded-none border border-gray-200 dark:border-gray-800 font-mono text-xs">
-                                    <button onClick={() => changeLanguage('fr')} className={`px-4 py-2 text-xs font-bold ${lang === 'fr' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'text-gray-500 hover:text-white'}`}>FR</button>
-                                    <button onClick={() => changeLanguage('en')} className={`px-4 py-2 text-xs font-bold ${lang === 'en' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'text-gray-500 hover:text-white'}`}>EN</button>
-                                </div>
-                                <div className="flex p-1 bg-gray-100 dark:bg-[#1A1A1A] rounded-md">
-                                    <button onClick={() => applyTheme('light')} className={`px-4 py-2 text-xs font-medium rounded-sm ${theme === 'light' ? 'bg-blueprint-bluePrimary text-white' : 'text-gray-500 dark:text-gray-400'}`}>Clair</button>
-                                    <button onClick={() => applyTheme('dark')} className={`px-4 py-2 text-xs font-medium rounded-sm ${theme === 'dark' ? 'bg-blueprint-cyan text-gray-900' : 'text-gray-500 dark:text-gray-400'}`}>Sombre</button>
-                                    <button onClick={() => applyTheme('system')} className={`px-4 py-2 text-xs font-medium rounded-sm ${theme === 'system' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'text-gray-500 dark:text-gray-400'}`}>Système</button>
+                                <div className="flex p-1 bg-gray-100 dark:bg-[#1A1A1A] rounded-xl border border-gray-200 dark:border-gray-800 font-sans text-xs">
+                                    <button onClick={() => changeLanguage('fr')} className={`px-4 py-2 text-xs font-bold rounded-lg ${lang === 'fr' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'text-gray-500'}`}>FR</button>
+                                    <button onClick={() => changeLanguage('en')} className={`px-4 py-2 text-xs font-bold rounded-lg ${lang === 'en' ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900' : 'text-gray-500'}`}>EN</button>
                                 </div>
                             </div>
                         </div>
@@ -199,12 +194,7 @@ export default function BlueprintLayout({ children }) {
             </main>
             
             {/* Footer */}
-            <footer className="relative z-10 bg-[#070A10] border-t border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 text-gray-400 pt-16 pb-8 overflow-hidden">
-                {/* Background Large Text */}
-                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[15vw] font-bold tracking-tighter opacity-[0.02] dark:opacity-[0.03] text-white whitespace-nowrap pointer-events-none select-none">
-                    MR DIM'S
-                </div>
-
+            <footer className="relative z-10 bg-[#070A10] border-t border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 text-gray-400 pt-16 pb-8 overflow-hidden font-sans">
                 <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.div 
                         initial={{ opacity: 0, y: 30 }}
@@ -215,62 +205,60 @@ export default function BlueprintLayout({ children }) {
                     >
                         {/* Brand & Info */}
                         <div className="md:col-span-5 lg:col-span-4">
-                            <div className="flex items-center mb-6">
-                                <span className="font-bold text-md tracking-wider text-white opacity-40">
-                                    MR DIM'S - MBOUOM DIMITRI
+                            <div className="flex items-center mb-4">
+                                <span className="font-bold text-base text-white">
+                                    Mr Dim's — Franck Dimitri
                                 </span>
                             </div>
-                            <p className="text-sm leading-relaxed opacity-70 mb-8 max-w-xs">
-                                Système de design, architecture de marque et interfaces numériques. Conception structurée pour un impact maximal.
+                            <p className="text-sm leading-relaxed text-gray-400 mb-6 max-w-xs">
+                                Architecture web, ingénierie logicielle et développement d'applications sur-mesure pour vos projets.
                             </p>
                             
-                            <ul className="space-y-3 font-mono text-xs tracking-wide">
-                                <li className="flex items-center gap-3 hover:text-white transition-colors">
-                                    <div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan"></div>
+                            <ul className="space-y-2.5 text-xs text-gray-300 font-sans">
+                                <li className="flex items-center gap-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-blueprint-bluePrimary dark:bg-blueprint-cyan"></div>
                                     +237 676 383 986
                                 </li>
-                                <li className="flex items-center gap-3 hover:text-white transition-colors">
-                                    <div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan"></div>
-                                    FRANCKDIMITRI009@GMAIL.COM
+                                <li className="flex items-center gap-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-blueprint-bluePrimary dark:bg-blueprint-cyan"></div>
+                                    franckdimitri009@gmail.com
                                 </li>
-                                <li className="flex items-center gap-3 hover:text-white transition-colors">
-                                    <div className="w-1.5 h-1.5 bg-blueprint-bluePrimary dark:bg-blueprint-cyan"></div>
-                                    YAOUNDÉ, CAMEROUN
+                                <li className="flex items-center gap-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-blueprint-bluePrimary dark:bg-blueprint-cyan"></div>
+                                    Yaoundé, Cameroun
                                 </li>
                             </ul>
                         </div>
 
                         {/* Navigation Links */}
                         <div className="md:col-span-3 md:col-start-7 lg:col-start-7 lg:col-span-2">
-                            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 border-b border-gray-800 pb-4">
-                                Index Plateforme
+                            <h4 className="text-white text-xs font-bold mb-6 border-b border-gray-800 pb-4">
+                                Navigation
                             </h4>
-                            <ul className="space-y-4 text-xs font-bold uppercase tracking-wider">
-                                <li><Link href="/" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Accueil</Link></li>
-                                <li><Link href="/projects" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Projets</Link></li>
-                                <li><Link href="/about" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">À Propos</Link></li>
-                                <li><Link href="/services" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Services</Link></li>
-                                <li><Link href="/packs" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Packs</Link></li>
-                                <li><Link href="/blog" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Blog</Link></li>
-                                <li><Link href="/contact" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Contact</Link></li>
+                            <ul className="space-y-3 text-xs font-medium">
+                                <li><Link href="/" className="hover:text-blueprint-cyan transition-colors">Accueil</Link></li>
+                                <li><Link href="/projects" className="hover:text-blueprint-cyan transition-colors">Projets</Link></li>
+                                <li><Link href="/about" className="hover:text-blueprint-cyan transition-colors">À propos</Link></li>
+                                <li><Link href="/services" className="hover:text-blueprint-cyan transition-colors">Services</Link></li>
+                                <li><Link href="/packs" className="hover:text-blueprint-cyan transition-colors">Packs</Link></li>
+                                <li><Link href="/blog" className="hover:text-blueprint-cyan transition-colors">Blog</Link></li>
+                                <li><Link href="/contact" className="hover:text-blueprint-cyan transition-colors">Contact</Link></li>
                             </ul>
                         </div>
 
                         {/* Legal & Resources */}
                         <div className="md:col-span-3 lg:col-span-3">
-                            <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 border-b border-gray-800 pb-4">
-                                Légal & Ressources
+                            <h4 className="text-white text-xs font-bold mb-6 border-b border-gray-800 pb-4">
+                                Ressources & Accès
                             </h4>
-                            <ul className="space-y-4 text-xs font-bold uppercase tracking-wider mb-8">
-                                <li><Link href="#" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Mentions Légales</Link></li>
-                                <li><Link href="#" className="hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors">Confidentialité</Link></li>
-                                <li><a href="https://github.com/Franck-Dimitri" target="_blank" rel="noreferrer" className="text-gray-500 hover:text-white transition-colors">— Github</a></li>
+                            <ul className="space-y-3 text-xs font-medium mb-8">
+                                <li><a href="https://github.com/Franck-Dimitri" target="_blank" rel="noreferrer" className="hover:text-blueprint-cyan transition-colors">Dépôt GitHub</a></li>
                                 <li className="pt-4 mt-4 border-t border-gray-800">
-                                    <Link href={route('login')} className="text-gray-600 hover:text-blueprint-bluePrimary dark:hover:text-blueprint-cyan transition-colors flex items-center gap-2">
-                                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <Link href={route('login')} className="text-gray-400 hover:text-blueprint-cyan transition-colors flex items-center gap-2">
+                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                         </svg>
-                                        Connexion Admin
+                                        Espace Administration
                                     </Link>
                                 </li>
                             </ul>
@@ -278,20 +266,13 @@ export default function BlueprintLayout({ children }) {
                     </motion.div>
 
                     {/* Bottom Bar */}
-                    <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase">
+                    <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-sans text-gray-500">
                         <div>
-                            &copy; {new Date().getFullYear()} MR DIM'S - MBOUOM DIMITRI. TOUS DROITS RÉSERVÉS.
+                            &copy; {new Date().getFullYear()} Mr Dim's — Franck Dimitri. Tous droits réservés.
                         </div>
-                        <div className="flex flex-col sm:flex-row items-center gap-6">
-                            <div className="flex items-center font-mono font-bold text-[10px]">
-                                <button className="text-blueprint-bluePrimary dark:text-blueprint-cyan border-b border-blueprint-bluePrimary dark:border-blueprint-cyan pb-0.5">FR</button>
-                                <span className="mx-2 text-gray-700">/</span>
-                                <button className="text-gray-500 hover:text-gray-300 transition-colors pb-0.5">EN</button>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                Système Opérationnel
-                            </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                            Système Opérationnel
                         </div>
                     </div>
                 </div>

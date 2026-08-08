@@ -10,7 +10,7 @@ export default function Packs() {
 
     const packages = [
         {
-            title: "STARTER MVP",
+            title: "Starter MVP",
             price: "250 000 FCFA",
             desc: lang === 'en'
                 ? "Ideal for launching a fast landing page or a high-performance showcase website."
@@ -28,11 +28,11 @@ export default function Packs() {
                 "Optimisation SEO & Performances",
                 "Livraison en 7 à 10 jours",
             ],
-            badge: lang === 'en' ? "FAST LAUNCH" : "LANCEMENT RAPIDE",
+            badge: lang === 'en' ? "Fast Launch" : "Lancement Rapide",
             isPopular: false,
         },
         {
-            title: "PROFESSIONAL WEBAPP",
+            title: "Professional WebApp",
             price: "600 000 FCFA",
             desc: lang === 'en'
                 ? "Complete web platform with authentication, admin dashboard, and custom API."
@@ -52,12 +52,12 @@ export default function Packs() {
                 "Analytics & Traçabilité avancée",
                 "Support & Garantie 3 mois",
             ],
-            badge: lang === 'en' ? "MOST POPULAR" : "PLUS POPULAIRE",
+            badge: lang === 'en' ? "Most Popular" : "Le Plus Populaire",
             isPopular: true,
         },
         {
-            title: "ENTERPRISE SAAS",
-            price: lang === 'en' ? "CUSTOM QUOTE" : "SUR DEVIS",
+            title: "Enterprise SaaS",
+            price: lang === 'en' ? "Custom Quote" : "Sur Devis",
             desc: lang === 'en'
                 ? "Complex architecture, microservices, payment gateways, and real-time features."
                 : "Architecture complexe, microservices, intégrations bancaires et fonctionnalités temps réel.",
@@ -76,7 +76,7 @@ export default function Packs() {
                 "Audit de Sécurité & Stress Test",
                 "Maintenance & Support 1 an",
             ],
-            badge: lang === 'en' ? "CUSTOM BUILT" : "SUR-MESURE",
+            badge: lang === 'en' ? "Custom Built" : "Sur-Mesure",
             isPopular: false,
         },
     ];
@@ -85,17 +85,17 @@ export default function Packs() {
         <BlueprintLayout>
             <SEO title={lang === 'en' ? "Packs & Estimator - Software Engineering" : "Packs & Estimator - Ingénierie Logicielle"} />
 
-            <div className="py-24 relative z-10 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 font-mono">
+            <div className="py-24 relative z-10 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 font-sans">
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <div className="flex items-center justify-center gap-2 text-xs text-blueprint-bluePrimary dark:text-blueprint-cyan tracking-widest uppercase mb-2">
+                    <div className="flex items-center justify-center gap-2 text-xs text-blueprint-bluePrimary dark:text-blueprint-cyan tracking-wider font-mono mb-2">
                         <div className="w-2 h-2 rounded-none bg-green-500 animate-pulse"></div>
-                        MODULE: {lang === 'en' ? "PRICING & ARCHITECTURAL QUOTE" : "TARIFICATION & DEVIS ARCHITECTURAL"}
+                        MODULE: {lang === 'en' ? "Pricing & Architectural Quote" : "Tarification & Devis Architectural"}
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-tighter text-blueprint-textDark dark:text-white mb-4">
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-blueprint-textDark dark:text-white mb-4 font-sans">
                         {t('packs_title')}
                     </h1>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 uppercase tracking-widest">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
                         {t('packs_subtitle')}
                     </p>
                 </div>
@@ -105,7 +105,7 @@ export default function Packs() {
                     {packages.map((pkg, idx) => (
                         <div 
                             key={idx} 
-                            className={`bg-white dark:bg-[#0B0F19] border rounded-none p-8 flex flex-col justify-between relative shadow-xl font-mono ${pkg.isPopular ? 'border-blueprint-bluePrimary dark:border-blueprint-cyan' : 'border-gray-200 dark:border-gray-800'}`}
+                            className={`bg-white dark:bg-[#0B0F19] border rounded-2xl p-8 flex flex-col justify-between relative shadow-xl font-sans ${pkg.isPopular ? 'border-blueprint-bluePrimary dark:border-blueprint-cyan' : 'border-gray-200 dark:border-gray-800'}`}
                         >
                             {/* Crosshair corners */}
                             <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t-2 border-l-2 border-blueprint-bluePrimary dark:border-blueprint-cyan"></div>
@@ -114,15 +114,15 @@ export default function Packs() {
                             <div className="absolute bottom-0 right-0 w-2.5 h-2.5 border-b-2 border-r-2 border-blueprint-bluePrimary dark:border-blueprint-cyan"></div>
 
                             {pkg.isPopular && (
-                                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 text-[9px] font-bold px-3 py-1 rounded-none uppercase tracking-widest">
+                                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 text-[10px] font-bold px-3 py-1 rounded-full font-mono">
                                     [ {pkg.badge} ]
                                 </span>
                             )}
                             <div>
-                                <span className="text-[10px] text-gray-400 uppercase tracking-widest block mb-2">[ {pkg.badge} ]</span>
+                                <span className="text-[11px] text-gray-400 font-mono block mb-2">[ {pkg.badge} ]</span>
                                 <h3 className="text-xl font-bold text-blueprint-textDark dark:text-white mb-2">{pkg.title}</h3>
-                                <div className="text-2xl font-bold text-blueprint-bluePrimary dark:text-blueprint-cyan mb-4">{pkg.price}</div>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 mb-6 leading-relaxed uppercase">{pkg.desc}</p>
+                                <div className="text-2xl font-extrabold text-blueprint-bluePrimary dark:text-blueprint-cyan mb-4 font-sans">{pkg.price}</div>
+                                <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">{pkg.desc}</p>
                                 <ul className="space-y-3 mb-8 text-xs text-gray-700 dark:text-gray-300">
                                     {pkg.features.map((feat, fIdx) => (
                                         <li key={fIdx} className="flex items-center gap-2">
@@ -134,7 +134,7 @@ export default function Packs() {
                             </div>
                             <Link 
                                 href={`/contact?prefill=${encodeURIComponent(lang === 'en' ? `Hello Mr Dim's, I would like to order the ${pkg.title} pack.` : `Bonjour Mr Dim's, je souhaite commander le pack ${pkg.title}.`)}`}
-                                className={`w-full py-4 text-center font-bold text-xs uppercase tracking-widest rounded-none transition-colors ${pkg.isPopular ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 hover:opacity-90' : 'bg-[#1A1A1A] border border-gray-800 text-white hover:border-blueprint-bluePrimary dark:hover:border-blueprint-cyan'}`}
+                                className={`w-full py-3.5 text-center font-bold text-xs rounded-xl transition-all ${pkg.isPopular ? 'bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 hover:opacity-90 shadow-md' : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-blueprint-bluePrimary hover:text-white dark:hover:bg-blueprint-cyan dark:hover:text-gray-900'}`}
                             >
                                 {t('btn_select_pack')}
                             </Link>

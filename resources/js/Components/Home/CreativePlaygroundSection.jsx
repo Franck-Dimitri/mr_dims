@@ -57,11 +57,11 @@ export default function CreativePlaygroundSection({ onOpenCv }) {
             <Plus strokeWidth={3} className="text-blueprint-bluePrimary dark:text-blueprint-cyan absolute -right-4 -top-4 h-8 w-8" />
             <Plus strokeWidth={3} className="text-blueprint-bluePrimary dark:text-blueprint-cyan absolute -bottom-4 -right-4 h-8 w-8" />
 
-            <h2 className="flex flex-col text-center text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl text-blueprint-textDark dark:text-white uppercase">
+            <h2 className="flex flex-col text-center text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl text-blueprint-textDark dark:text-white">
               <span>
-                {lang === "en" ? "ENGINEERING YOUR VISION INTO " : "PROPULSEZ VOS PROJETS AVEC "}
+                {lang === "en" ? "Engineering Your Vision into " : "Propulsez vos projets avec "}
                 <span className="text-blueprint-bluePrimary dark:text-blueprint-cyan">
-                  {lang === "en" ? "DIGITAL REALITY." : "EXCELLENCE."}
+                  {lang === "en" ? "Digital Reality." : "Excellence."}
                 </span>
               </span>
             </h2>
@@ -71,8 +71,8 @@ export default function CreativePlaygroundSection({ onOpenCv }) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
               </span>
-              <p className="text-xs font-mono font-bold text-green-500 tracking-widest uppercase">
-                {lang === "en" ? "SYSTEM READY / AVAILABLE FOR FREELANCE & CONTRACTS" : "DISPONIBLE POUR PROJETS & MISSION FREELANCE"}
+              <p className="text-xs font-mono font-bold text-green-500 tracking-wider">
+                {lang === "en" ? "System Ready / Available for Freelance & Contracts" : "Disponible pour projets & missions freelance"}
               </p>
             </div>
           </div>
