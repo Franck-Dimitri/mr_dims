@@ -119,45 +119,52 @@ async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized_and_notify(update, context):
         return
 
-    services = check_all_services()
-    proj_name = html.escape(PROJECT_NAME)
-    msg = f"📊 <b>[Supervision Services] {proj_name}</b>\n\n"
+    try:
+        services = check_all_services()
+        proj_name = html.escape(PROJECT_NAME)
+        msg = f"📊 <b>[Supervision Services] {proj_name}</b>\n\n"
 
-    for service, status in services.items():
-        icon = "🟢" if "Active" in status else "🔴"
-        safe_serv = html.escape(service)
-        safe_stat = html.escape(status)
-        msg += f"{icon} <b>{safe_serv} :</b> <code>{safe_stat}</code>\n"
+        for service, is_active in services.items():
+            icon = "🟢" if is_active else "🔴"
+            stat_text = "Active (Running)" if is_active else "Inactive / Stopped"
+            safe_serv = html.escape(str(service))
+            msg += f"{icon} <b>{safe_serv} :</b> <code>{stat_text}</code>\n"
 
-    await update.message.reply_text(msg, parse_mode="HTML")
+        await update.message.reply_text(msg, parse_mode="HTML")
+    except Exception as e:
+        logger.error(f"Erreur status_command: {e}")
+        await update.message.reply_text(f"❌ <b>Erreur /status :</b> {html.escape(str(e))}", parse_mode="HTML")
 
 async def uptime_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Commande /uptime : Ressources système."""
     if not await is_authorized_and_notify(update, context):
         return
 
-    resources = get_system_resources()
-    msg = (
-        f"💻 <b>[Ressources Système VPS]</b>\n\n"
-        f"⏱️ <b>Uptime :</b> <code>{html.escape(resources['uptime'])}</code>\n"
-        f"⚙️ <b>Charge CPU :</b> <code>{html.escape(resources['load'])}</code>\n"
-        f"🧠 <b>RAM Utilisée :</b> <code>{resources['ram_used']}Mo / {resources['ram_total']}Mo ({resources['ram_percent']}%)</code>\n"
-        f"💾 <b>Disque Utilisé :</b> <code>{resources['disk_used']}Go / {resources['disk_total']}Go ({resources['disk_percent']}%)</code>"
-    )
-    await update.message.reply_text(msg, parse_mode="HTML")
+    try:
+        res = get_system_resources()
+        msg = (
+            f"💻 <b>[Ressources Système VPS — {html.escape(str(res.get('hostname', 'Linux')))}]</b>\n\n"
+            f"⏱️ <b>Uptime :</b> <code>{html.escape(str(res.get('uptime', 'N/A')))}</code>\n"
+            f"⚙️ <b>Charge CPU :</b> <code>{res.get('cpu_percent', 0)}% (Load: {html.escape(str(res.get('cpu_load', 'N/A')))})</code>\n"
+            f"🧠 <b>RAM Utilisée :</b> <code>{res.get('ram_used_gi', 0)}Go / {res.get('ram_total_gi', 0)}Go ({res.get('ram_percent', 0)}%)</code>\n"
+            f"💾 <b>Disque Utilisé :</b> <code>{res.get('disk_used_gi', 0)}Go / {res.get('disk_total_gi', 0)}Go ({res.get('disk_percent', 0)}%)</code>"
+        )
+        await update.message.reply_text(msg, parse_mode="HTML")
+    except Exception as e:
+        logger.error(f"Erreur uptime_command: {e}")
+        await update.message.reply_text(f"❌ <b>Erreur /uptime :</b> {html.escape(str(e))}", parse_mode="HTML")
 
 async def ssh_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Commande /ssh : Sessions d'accès."""
     if not await is_authorized_and_notify(update, context):
         return
 
-    ssh_info = get_ssh_audit()
-    msg = (
-        f"🔑 <b>[Audit Connexions SSH]</b>\n\n"
-        f"🟢 <b>Sessions Actives :</b>\n<code>{html.escape(ssh_info['active_sessions'])}</code>\n\n"
-        f"📜 <b>Dernières Connexions Réussies :</b>\n<code>{html.escape(ssh_info['recent_logins'])}</code>"
-    )
-    await update.message.reply_text(msg, parse_mode="HTML")
+    try:
+        msg = get_ssh_audit()
+        await update.message.reply_text(msg, parse_mode="HTML")
+    except Exception as e:
+        logger.error(f"Erreur ssh_command: {e}")
+        await update.message.reply_text(f"❌ <b>Erreur /ssh :</b> {html.escape(str(e))}", parse_mode="HTML")
 
 async def db_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Commande /db : Informations sur la base de données."""
@@ -186,24 +193,28 @@ async def health_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized_and_notify(update, context):
         return
 
-    healthy, status_code, response_time = check_website_health()
-    safe_url = html.escape(PROJECT_URL)
-    
-    if healthy:
-        msg = (
-            f"🌐 <b>[Santé Web Portfolio]</b>\n\n"
-            f"🎯 <b>URL :</b> <code>{safe_url}</code>\n"
-            f"🟢 <b>Code HTTP :</b> <code>{status_code} OK</code>\n"
-            f"⚡ <b>Temps de réponse :</b> <code>{response_time}s</code>"
-        )
-    else:
-        err = html.escape(str(status_code))
-        msg = (
-            f"🌐 <b>[Santé Web Portfolio]</b>\n\n"
-            f"🎯 <b>URL :</b> <code>{safe_url}</code>\n"
-            f"🔴 <b>Statut :</b> Indisponible ({err})"
-        )
-    await update.message.reply_text(msg, parse_mode="HTML")
+    try:
+        health_info = check_website_health()
+        safe_url = html.escape(PROJECT_URL)
+        
+        if health_info.get("is_up"):
+            msg = (
+                f"🌐 <b>[Santé Web Portfolio]</b>\n\n"
+                f"🎯 <b>URL :</b> <code>{safe_url}</code>\n"
+                f"🟢 <b>Code HTTP :</b> <code>{health_info.get('status_code')} OK</code>\n"
+                f"⚡ <b>Temps de réponse :</b> <code>{health_info.get('response_time_ms')} ms</code>"
+            )
+        else:
+            err = html.escape(str(health_info.get("error") or health_info.get("status_code") or "Indisponible"))
+            msg = (
+                f"🌐 <b>[Santé Web Portfolio]</b>\n\n"
+                f"🎯 <b>URL :</b> <code>{safe_url}</code>\n"
+                f"🔴 <b>Statut :</b> Indisponible ({err})"
+            )
+        await update.message.reply_text(msg, parse_mode="HTML")
+    except Exception as e:
+        logger.error(f"Erreur health_command: {e}")
+        await update.message.reply_text(f"❌ <b>Erreur /health :</b> {html.escape(str(e))}", parse_mode="HTML")
 
 async def logs_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Commande /logs : Consultation dynamique des logs."""
