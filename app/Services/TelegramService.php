@@ -12,8 +12,8 @@ class TelegramService
      */
     public static function sendMessage(string $message): bool
     {
-        $botToken = env('TELEGRAM_BOT_TOKEN', '8466581165:AAFxKL5Qzm8tmnWnIFx3f0LKiayEM6UI6Jg');
-        $chatId = env('TELEGRAM_CHAT_ID', '5304699380');
+        $botToken = config('services.telegram-bot.token') ?? env('TELEGRAM_BOT_TOKEN');
+        $chatId = config('services.telegram-bot.chat_id') ?? env('TELEGRAM_CHAT_ID');
 
         if (empty($botToken) || empty($chatId)) {
             return false;
