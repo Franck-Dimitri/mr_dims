@@ -22,6 +22,17 @@
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
+        @media only screen and (max-width: 600px) {
+            .container {
+                margin: 0 !important;
+                border-radius: 0 !important;
+                border: none !important;
+                width: 100% !important;
+            }
+            .content {
+                padding: 20px !important;
+            }
+        }
         .header {
             background-color: #4F46E5;
             padding: 40px 30px;

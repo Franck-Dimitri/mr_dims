@@ -273,7 +273,7 @@ class PrivateOfferController extends Controller
 
         $signature = $request->header('X-Hub-Signature');
         $payload = $request->getContent();
-        $secret = config('services.hrskills_pay.secret_key');
+        $secret = config('services.hrskills_pay.webhook_secret') ?? config('services.hrskills_pay.secret_key');
 
         // Optional signature verification
         if ($signature && $secret) {
