@@ -112,9 +112,9 @@ class PrivateOfferController extends Controller
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'required|email|max:255',
             'customer_phone' => 'required|string|max:30',
-            'country' => 'required|string|max:100',
+            'country' => 'required|string|in:Cameroun',
             'city' => 'required|string|max:100',
-            'payment_method' => 'required|string|in:orange_money,mtn_momo,wave',
+            'payment_method' => 'required|string|in:orange_money,mtn_momo',
             'notes' => 'nullable|string|max:500',
         ]);
 

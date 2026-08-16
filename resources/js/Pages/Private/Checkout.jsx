@@ -9,8 +9,8 @@ export default function Checkout({ product, token, orderHash, waitingPayment }) 
         customer_name: '',
         customer_email: '',
         customer_phone: '',
-        country: "Côte d'Ivoire",
-        city: 'Abidjan',
+        country: "Cameroun",
+        city: 'Douala',
         payment_method: 'orange_money',
         notes: '',
     });
@@ -62,8 +62,8 @@ export default function Checkout({ product, token, orderHash, waitingPayment }) 
     const paymentMethods = [
         {
             id: 'orange_money',
-            name: 'Orange Money',
-            description: 'Paiement instantané via Orange Money (USSD / QR Code)',
+            name: 'Orange Money Cameroun',
+            description: 'Paiement instantané via Orange Money Cameroun (USSD)',
             badge: 'Orange Money',
             brandBg: 'bg-[#FF7900]',
             brandBorder: 'border-[#FF7900]',
@@ -73,8 +73,8 @@ export default function Checkout({ product, token, orderHash, waitingPayment }) 
         },
         {
             id: 'mtn_momo',
-            name: 'MTN Mobile Money',
-            description: 'Paiement instantané via MTN MoMo Pay',
+            name: 'MTN Mobile Money Cameroun',
+            description: 'Paiement instantané via MTN MoMo Cameroun',
             badge: 'MTN MoMo',
             brandBg: 'bg-[#FFCC00] text-slate-900',
             brandBorder: 'border-[#FFCC00]',
@@ -82,43 +82,10 @@ export default function Checkout({ product, token, orderHash, waitingPayment }) 
             lightBg: 'bg-yellow-50',
             disabled: false,
         },
-        {
-            id: 'wave',
-            name: 'Wave Digital',
-            description: 'Paiement sans frais via Wave App / QR Code',
-            badge: 'Wave 0%',
-            brandBg: 'bg-[#00AEEF]',
-            brandBorder: 'border-[#00AEEF]',
-            textColor: 'text-[#00AEEF]',
-            lightBg: 'bg-cyan-50',
-            disabled: false,
-        },
-        {
-            id: 'card',
-            name: 'Carte Bancaire (Visa / MasterCard)',
-            description: 'Indisponible pour le moment dans votre pays',
-            badge: 'Bientôt disponible',
-            brandBg: 'bg-slate-400',
-            brandBorder: 'border-slate-200',
-            textColor: 'text-slate-400',
-            lightBg: 'bg-slate-50',
-            disabled: true,
-        },
     ];
 
     const popularCountries = [
-        "Côte d'Ivoire",
-        "Sénégal",
-        "Cameroun",
-        "Mali",
-        "Burkina Faso",
-        "Bénin",
-        "Togo",
-        "Guinée",
-        "Congo",
-        "Gabon",
-        "France",
-        "Autre Pays"
+        "Cameroun"
     ];
 
     return (
