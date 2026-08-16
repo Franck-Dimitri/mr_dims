@@ -19,32 +19,36 @@ class HRSkillsPayService
         $this->secretKey = config('services.hrskills_pay.secret_key') ?? '';
     }
 
-    /**
-     * Retrieve a cached Transaction Token (JWT) or request a new one from HR-Skills Pay.
-     */
     public function getTransactionToken(): ?string
     {
-        return Cache::remember('hrskills_pay_transaction_token', 2400, function () {
-            try {
-                $response = Http::withHeaders([
-                    'Authorization' => "Bearer {$this->publicKey}",
-                    'Content-Type' => 'application/json',
-                ])->post("{$this->baseUrl}/v1/auth/transaction-token", [
-                    'api_secret' => $this->secretKey,
-                ]);
+        $cachedToken = Cache::get('hrskills_pay_transaction_token');
+        if ($cachedToken) {
+            return $cachedToken;
+        }
 
-                if ($response->successful()) {
-                    $data = $response->json();
-                    return $data['transaction_token'] ?? null;
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => "Bearer {$this->publicKey}",
+                'Content-Type' => 'application/json',
+            ])->post("{$this->baseUrl}/v1/auth/transaction-token", [
+                'api_secret' => $this->secretKey,
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                $token = $data['transaction_token'] ?? null;
+                if ($token) {
+                    Cache::put('hrskills_pay_transaction_token', $token, 2400); // 40 minutes cache
+                    return $token;
                 }
-
-                Log::error('HR-Skills Pay Auth Error: ' . $response->body());
-                return null;
-            } catch (\Exception $e) {
-                Log::error('HR-Skills Pay Auth Exception: ' . $e->getMessage());
-                return null;
             }
-        });
+
+            Log::error('HR-Skills Pay Auth Error: ' . $response->body());
+            return null;
+        } catch (\Exception $e) {
+            Log::error('HR-Skills Pay Auth Exception: ' . $e->getMessage());
+            return null;
+        }
     }
 
     /**
