@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\PrivateProduct;
 use App\Models\PrivateOrder;
+use App\Models\PrivateProductVisit;
 use App\Services\HRSkillsPayService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class PrivateOfferController extends Controller
 {
@@ -28,6 +31,8 @@ class PrivateOfferController extends Controller
             ->orderBy('is_featured', 'desc')
             ->orderBy('id', 'desc')
             ->get();
+
+        $this->trackVisit($request);
 
         $response = Inertia::render('Private/Index', [
             'products' => $products,
@@ -50,6 +55,7 @@ class PrivateOfferController extends Controller
             ->firstOrFail();
 
         $product->increment('views_count');
+        $this->trackVisit($request, $product->id);
 
         $relatedProducts = PrivateProduct::where('is_active', true)
             ->where('id', '!=', $product->id)
@@ -349,5 +355,91 @@ class PrivateOfferController extends Controller
         $fileName = Str::slug($product->title) . '.' . $extension;
 
         return \Illuminate\Support\Facades\Storage::disk('local')->download($product->file_path, $fileName);
+    }
+
+    /**
+     * Track client IP and Geolocation.
+     */
+    protected function trackVisit(Request $request, ?int $productId = null)
+    {
+        try {
+            $ip = $request->ip();
+
+            if ($ip === '127.0.0.1' || $ip === '::1' || !$ip) {
+                $countryCode = 'CI';
+                $countryName = "Côte d'Ivoire";
+            } else {
+                $geo = Cache::remember("ip-geo-{$ip}", 86400 * 30, function () use ($ip, $request) {
+                    $cfCountry = $request->header('CF-IPCountry');
+                    if ($cfCountry) {
+                        $code = strtoupper($cfCountry);
+                        return [
+                            'code' => $code,
+                            'name' => $this->getCountryNameByCode($code)
+                        ];
+                    }
+
+                    try {
+                        $apiResponse = Http::timeout(1.5)->get("https://ipapi.co/{$ip}/json/");
+                        if ($apiResponse->successful()) {
+                            $data = $apiResponse->json();
+                            return [
+                                'code' => $data['country_code'] ?? 'XX',
+                                'name' => $data['country_name'] ?? 'Unknown'
+                            ];
+                        }
+                    } catch (\Exception $e) {
+                        Log::warning("Geolocation lookup failed for IP {$ip}: " . $e->getMessage());
+                    }
+
+                    return ['code' => 'XX', 'name' => 'Unknown'];
+                });
+
+                $countryCode = $geo['code'];
+                $countryName = $geo['name'];
+            }
+
+            PrivateProductVisit::create([
+                'private_product_id' => $productId,
+                'ip_address' => $ip,
+                'country_code' => $countryCode,
+                'country_name' => $countryName,
+                'user_agent' => Str::limit($request->userAgent(), 255),
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error("Failed to track private product visit: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Map country code to name.
+     */
+    protected function getCountryNameByCode(string $code): string
+    {
+        $countries = [
+            'CI' => "Côte d'Ivoire",
+            'FR' => 'France',
+            'SN' => 'Sénégal',
+            'CM' => 'Cameroun',
+            'GA' => 'Gabon',
+            'BE' => 'Belgique',
+            'CA' => 'Canada',
+            'US' => 'États-Unis',
+            'MA' => 'Maroc',
+            'DZ' => 'Algérie',
+            'TN' => 'Tunisie',
+            'TG' => 'Togo',
+            'BJ' => 'Bénin',
+            'BF' => 'Burkina Faso',
+            'ML' => 'Mali',
+            'CG' => 'Congo-Brazzaville',
+            'CD' => 'Congo-Kinshasa',
+            'NE' => 'Niger',
+            'GN' => 'Guinée',
+            'MG' => 'Madagascar',
+        ];
+
+        return $countries[strtoupper($code)] ?? 'Autre/Inconnu';
     }
 }

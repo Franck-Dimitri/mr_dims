@@ -19,11 +19,11 @@ export default function Create({ auth }) {
         is_featured: false,
         features: [''],
         curriculum: [{ title: '', duration: '' }],
-        images: [],
+        cover_image: null,
         digital_file: null
     });
 
-    const [imagePreviews, setImagePreviews] = useState([]);
+    const [imagePreview, setImagePreview] = useState(null);
     const [fileError, setFileError] = useState(null);
 
     const handleFeatureChange = (index, value) => {
@@ -56,34 +56,26 @@ export default function Create({ auth }) {
         setData('curriculum', newCurriculum);
     };
 
-    const handleImagesChange = (e) => {
-        const files = Array.from(e.target.files);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
         setFileError(null);
 
-        if (files.length === 0) {
-            setData('images', []);
-            setImagePreviews([]);
+        if (!file) {
+            setData('cover_image', null);
+            setImagePreview(null);
             return;
         }
 
-        if (files.length > 5) {
-            setFileError("Vous pouvez uploader un maximum de 5 images.");
-            return;
-        }
-
-        setData('images', files);
-
-        // Generate previews
-        const previews = files.map(file => URL.createObjectURL(file));
-        setImagePreviews(previews);
+        setData('cover_image', file);
+        setImagePreview(URL.createObjectURL(file));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setFileError(null);
 
-        if (data.images.length === 0) {
-            setFileError("Vous devez sélectionner au moins 1 image de couverture.");
+        if (!data.cover_image) {
+            setFileError("Veuillez sélectionner une image de couverture.");
             return;
         }
 
@@ -243,34 +235,31 @@ export default function Create({ auth }) {
                             {errors.description_markdown && <p className="text-red-500 mt-1">{errors.description_markdown}</p>}
                         </div>
 
-                        {/* Local Images Upload (1 to 5) */}
+                        {/* Local Cover Image Upload (Strictly 1) */}
                         <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4">
                             <label className="block text-slate-800 font-bold flex items-center gap-1.5">
                                 <ImageIcon className="w-4 h-4 text-indigo-500" />
-                                <span>Images du produit (De 1 à 5 fichiers locaux) <span className="text-red-500">*</span></span>
+                                <span>Image de Couverture (Fichier unique) <span className="text-red-500">*</span></span>
                             </label>
                             
                             <input
                                 type="file"
-                                multiple
                                 accept="image/*"
-                                onChange={handleImagesChange}
+                                onChange={handleImageChange}
                                 className="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 cursor-pointer"
                             />
                             
-                            {imagePreviews.length > 0 && (
-                                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
-                                    {imagePreviews.map((url, idx) => (
-                                        <div key={idx} className="relative aspect-video rounded-lg overflow-hidden border border-slate-200 shadow-xs">
-                                            <img src={url} className="w-full h-full object-cover" alt="Aperçu" />
-                                            <span className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-indigo-600 text-white font-extrabold text-[8px] rounded uppercase shadow-sm">
-                                                {idx === 0 ? 'Couverture' : `Image ${idx + 1}`}
-                                            </span>
-                                        </div>
-                                    ))}
+                            {imagePreview && (
+                                <div className="pt-2">
+                                    <div className="relative w-48 aspect-video rounded-lg overflow-hidden border border-slate-200 shadow-xs">
+                                        <img src={imagePreview} className="w-full h-full object-cover" alt="Aperçu de la couverture" />
+                                        <span className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-indigo-600 text-white font-extrabold text-[8px] rounded uppercase shadow-sm">
+                                            Couverture
+                                        </span>
+                                    </div>
                                 </div>
                             )}
-                            {errors.images && <p className="text-red-500 mt-1">{errors.images}</p>}
+                            {errors.cover_image && <p className="text-red-500 mt-1">{errors.cover_image}</p>}
                         </div>
 
                         {/* Access Settings & Digital File Upload */}

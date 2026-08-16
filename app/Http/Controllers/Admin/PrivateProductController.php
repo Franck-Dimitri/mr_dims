@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PrivateProduct;
 use App\Models\PrivateOrder;
+use App\Models\PrivateProductVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class PrivateProductController extends Controller
 {
@@ -49,6 +51,46 @@ class PrivateProductController extends Controller
             ];
         });
 
+        // 1. Traffic statistics by country
+        $countryStats = DB::table('private_product_visits')
+            ->select('country_code', 'country_name', DB::raw('count(*) as views_count'))
+            ->groupBy('country_code', 'country_name')
+            ->orderBy('views_count', 'desc')
+            ->take(6)
+            ->get();
+
+        // 2. Latest visits with IP & Country information
+        $latestVisits = PrivateProductVisit::with('product')
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get()
+            ->map(function ($visit) {
+                return [
+                    'id' => $visit->id,
+                    'ip_address' => $visit->ip_address,
+                    'country_code' => $visit->country_code,
+                    'country_name' => $visit->country_name,
+                    'product_title' => $visit->product ? $visit->product->title : 'Catalogue Principal',
+                    'date' => $visit->created_at->diffForHumans(),
+                ];
+            });
+
+        // 3. 15-day page views trend chart data
+        $viewsChartLabels = [];
+        $viewsChartData = [];
+        for ($i = 14; $i >= 0; $i--) {
+            $date = now()->subDays($i)->format('Y-m-d');
+            $label = now()->subDays($i)->format('d M');
+            $count = PrivateProductVisit::whereDate('created_at', $date)->count();
+            $viewsChartLabels[] = $label;
+            $viewsChartData[] = $count;
+        }
+
+        $viewsChart = [
+            'labels' => $viewsChartLabels,
+            'views' => $viewsChartData,
+        ];
+
         return Inertia::render('Admin/PrivateProducts/Index', [
             'products' => $products,
             'stats' => [
@@ -60,6 +102,9 @@ class PrivateProductController extends Controller
                 'conversion_rate' => $overallConversionRate,
             ],
             'chartData' => $chartData,
+            'countryStats' => $countryStats,
+            'latestVisits' => $latestVisits,
+            'viewsChart' => $viewsChart,
         ]);
     }
 
@@ -91,9 +136,8 @@ class PrivateProductController extends Controller
             'is_featured' => 'boolean',
             'features' => 'nullable|array',
             'curriculum' => 'nullable|array',
-            // Image uploads
-            'images' => 'required|array|min:1|max:5',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            // Image upload (Strictly 1 local image)
+            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             // Digital file upload
             'digital_file' => 'required_if:access_type,direct_download|nullable|file|max:102400',
         ]);
@@ -103,17 +147,12 @@ class PrivateProductController extends Controller
         $validated['token'] = Str::slug($validated['title']) . '-' . Str::random(6);
         $validated['ad_spend'] = $validated['ad_spend'] ?? 0;
 
-        // Handle Images upload
-        $imagePaths = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('products/images', 'public');
-                $imagePaths[] = '/storage/' . $path;
-            }
+        // Handle Image upload
+        if ($request->hasFile('cover_image')) {
+            $path = $request->file('cover_image')->store('products/images', 'public');
+            $validated['cover_image'] = '/storage/' . $path;
+            $validated['images'] = ['/storage/' . $path];
         }
-
-        $validated['cover_image'] = $imagePaths[0] ?? null;
-        $validated['images'] = $imagePaths;
 
         // Handle Secure digital file upload
         if ($request->hasFile('digital_file') && $validated['access_type'] === 'direct_download') {
@@ -156,26 +195,29 @@ class PrivateProductController extends Controller
             'is_featured' => 'boolean',
             'features' => 'nullable|array',
             'curriculum' => 'nullable|array',
-            // Image uploads are optional on update
-            'images' => 'nullable|array|max:5',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            // Image upload is optional on update (Strictly 1 local image)
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             // Digital file upload is optional on update
             'digital_file' => 'nullable|file|max:102400',
         ]);
 
-        // Handle Images upload
-        if ($request->hasFile('images')) {
-            $imagePaths = [];
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('products/images', 'public');
-                $imagePaths[] = '/storage/' . $path;
+        // Handle Image upload with replacement
+        if ($request->hasFile('cover_image')) {
+            // Delete previous image if exists
+            if ($privateProduct->cover_image) {
+                $oldPath = str_replace('/storage/', '', $privateProduct->cover_image);
+                Storage::disk('public')->delete($oldPath);
             }
-            $validated['cover_image'] = $imagePaths[0];
-            $validated['images'] = $imagePaths;
+            $path = $request->file('cover_image')->store('products/images', 'public');
+            $validated['cover_image'] = '/storage/' . $path;
+            $validated['images'] = ['/storage/' . $path];
         }
 
         // Handle Secure digital file upload
         if ($request->hasFile('digital_file') && $validated['access_type'] === 'direct_download') {
+            if ($privateProduct->file_path) {
+                Storage::disk('local')->delete($privateProduct->file_path);
+            }
             $path = $request->file('digital_file')->store('private/products/files', 'local');
             $validated['file_path'] = $path;
         }
@@ -191,11 +233,9 @@ class PrivateProductController extends Controller
     public function destroy(PrivateProduct $privateProduct)
     {
         // Delete uploaded files if they exist
-        if ($privateProduct->images) {
-            foreach ($privateProduct->images as $img) {
-                $cleanPath = str_replace('/storage/', '', $img);
-                Storage::disk('public')->delete($cleanPath);
-            }
+        if ($privateProduct->cover_image) {
+            $cleanPath = str_replace('/storage/', '', $privateProduct->cover_image);
+            Storage::disk('public')->delete($cleanPath);
         }
 
         if ($privateProduct->file_path) {
