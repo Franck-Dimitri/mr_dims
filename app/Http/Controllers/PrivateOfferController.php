@@ -226,13 +226,23 @@ class PrivateOfferController extends Controller
                 $apiStatus = strtoupper($result['status']);
 
                 if ($apiStatus === 'SUCCESS') {
-                    $order->update([
-                        'payment_status' => 'completed',
-                        'paid_at' => now(),
-                    ]);
+                    if ($order->payment_status !== 'completed') {
+                        $order->update([
+                            'payment_status' => 'completed',
+                            'paid_at' => now(),
+                        ]);
 
-                    // Increment product sales count
-                    $order->product->increment('sales_count');
+                        // Increment product sales count
+                        $order->product->increment('sales_count');
+
+                        // Send Email Invoice & Download Link
+                        try {
+                            \Illuminate\Support\Facades\Mail::to($order->customer_email)
+                                ->send(new \App\Mail\DigitalProductPurchased($order));
+                        } catch (\Exception $mailEx) {
+                            Log::error("Failed to send polling order success email: " . $mailEx->getMessage());
+                        }
+                    }
 
                     return response()->json(['status' => 'SUCCESS']);
                 }
@@ -298,6 +308,14 @@ class PrivateOfferController extends Controller
                         'paid_at' => now(),
                     ]);
                     $order->product->increment('sales_count');
+
+                    // Send Email Invoice & Download Link
+                    try {
+                        \Illuminate\Support\Facades\Mail::to($order->customer_email)
+                            ->send(new \App\Mail\DigitalProductPurchased($order));
+                    } catch (\Exception $mailEx) {
+                        Log::error("Failed to send webhook order success email: " . $mailEx->getMessage());
+                    }
                 }
             } elseif ($event === 'payment.failed' || $status === 'FAILED') {
                 $order->update([
