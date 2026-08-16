@@ -10,8 +10,8 @@ export default function Packs() {
 
     const packages = [
         {
-            title: "Starter MVP",
-            price: "250 000 FCFA",
+            title: "Pack Starter",
+            price: "165 500 FCFA",
             desc: lang === 'en'
                 ? "Ideal for launching a fast landing page or a high-performance showcase website."
                 : "Idéal pour lancer rapidement une landing page moderne ou un site vitrine haute performance.",

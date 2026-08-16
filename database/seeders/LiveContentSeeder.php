@@ -136,7 +136,7 @@ class LiveContentSeeder extends Seeder
                 'excerpt' => 'Un site web élégant et rapide pour présenter votre entreprise ou vos services au monde entier.',
                 'description_markdown' => "Idéal pour les petites entreprises ou les indépendants qui souhaitent une présence en ligne professionnelle sans complexité.\n\n- Design premium et responsive (adapté aux mobiles et tablettes)\n- Optimisation SEO de base pour Google\n- Intégration de vos réseaux sociaux\n- Hébergement et configuration du nom de domaine",
                 'tech_stack' => ['HTML/CSS', 'Tailwind CSS', 'JavaScript', 'Laravel'],
-                'base_price' => 150000.00,
+                'base_price' => 165500.00,
                 'is_active' => true,
             ],
             [

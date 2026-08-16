@@ -21,10 +21,10 @@ export default {
                 blueprint: {
                     white: '#FFFFFF',
                     gridLight: '#F8FAFC',
-                    bluePrimary: '#2563EB',
-                    textDark: '#0F172A',
+                    bluePrimary: '#008cffff',
+                    textDark: '#008cffff',
                     darkNight: '#0B0F19',
-                    cyan: '#06b6d4', // Cyan électrique
+                    cyan: '#00d9ffff', // Cyan électrique
                     textLight: '#E2E8F0',
                 }
             },

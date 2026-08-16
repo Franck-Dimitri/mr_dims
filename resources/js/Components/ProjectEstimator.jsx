@@ -8,7 +8,7 @@ export default function ProjectEstimator() {
     const [support, setSupport] = useState('3months');
 
     const projectTypes = [
-        { id: 'vitrine', label: lang === 'en' ? 'PORTFOLIO / SHOWCASE SITE' : 'SITE VITRINE / PORTFOLIO', basePrice: 250000 },
+        { id: 'vitrine', label: lang === 'en' ? 'PORTFOLIO / SHOWCASE SITE' : 'SITE VITRINE / PORTFOLIO', basePrice: 165500 },
         { id: 'webapp', label: lang === 'en' ? 'CUSTOM WEB APP (SAAS)' : 'WEB APP SUR-MESURE (SAAS)', basePrice: 600000 },
         { id: 'ecommerce', label: lang === 'en' ? 'E-COMMERCE PLATFORM' : 'PLATEFORME E-COMMERCE', basePrice: 500000 },
         { id: 'api', label: lang === 'en' ? 'BACKEND API & MICROSERVICES' : 'API BACKEND & MICROSERVICES', basePrice: 400000 },

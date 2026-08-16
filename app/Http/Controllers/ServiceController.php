@@ -31,8 +31,14 @@ class ServiceController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
+        $otherServices = Service::where('is_active', true)
+            ->where('id', '!=', $service->id)
+            ->take(3)
+            ->get();
+
         return Inertia::render('Services/Show', [
             'service' => $service,
+            'otherServices' => $otherServices,
         ]);
     }
 }
