@@ -14,9 +14,9 @@ class HRSkillsPayService
 
     public function __construct()
     {
-        $this->baseUrl = config('services.hrskills_pay.base_url', 'https://api.hrskills-pay.com');
-        $this->publicKey = config('services.hrskills_pay.public_key', '');
-        $this->secretKey = config('services.hrskills_pay.secret_key', '');
+        $this->baseUrl = config('services.hrskills_pay.base_url') ?? 'https://api.hrskills-pay.com';
+        $this->publicKey = config('services.hrskills_pay.public_key') ?? '';
+        $this->secretKey = config('services.hrskills_pay.secret_key') ?? '';
     }
 
     /**
