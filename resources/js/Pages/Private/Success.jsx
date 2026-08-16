@@ -61,9 +61,9 @@ export default function Success({ order, product }) {
                         {/* Direct Access/Download Button */}
                         <div className="pt-2">
                             <a
-                                href={product.access_url || "https://drive.google.com"}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href={isDrive ? (product.access_url || "https://drive.google.com") : route('private.download', order.order_hash)}
+                                target={isDrive ? "_blank" : undefined}
+                                rel={isDrive ? "noopener noreferrer" : undefined}
                                 className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg uppercase tracking-wider"
                             >
                                 {isDrive ? (

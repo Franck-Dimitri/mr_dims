@@ -321,4 +321,33 @@ class PrivateOfferController extends Controller
 
         return $response;
     }
+
+    /**
+     * Download secure digital resource file.
+     */
+    public function downloadResource($order_hash)
+    {
+        $order = PrivateOrder::with('product')
+            ->where('order_hash', $order_hash)
+            ->firstOrFail();
+
+        if ($order->payment_status !== 'completed') {
+            abort(403, "Le paiement de cette commande n'a pas été validé.");
+        }
+
+        $product = $order->product;
+
+        if ($product->access_type !== 'direct_download' || !$product->file_path) {
+            abort(404, "Cette ressource n'est pas disponible en téléchargement direct.");
+        }
+
+        if (!\Illuminate\Support\Facades\Storage::disk('local')->exists($product->file_path)) {
+            abort(404, "Le fichier de ressource est introuvable sur le serveur.");
+        }
+
+        $extension = pathinfo($product->file_path, PATHINFO_EXTENSION);
+        $fileName = Str::slug($product->title) . '.' . $extension;
+
+        return \Illuminate\Support\Facades\Storage::disk('local')->download($product->file_path, $fileName);
+    }
 }

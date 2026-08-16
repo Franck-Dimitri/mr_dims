@@ -8,6 +8,7 @@ use App\Models\PrivateOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class PrivateProductController extends Controller
 {
@@ -21,7 +22,7 @@ class PrivateProductController extends Controller
             ->get();
 
         // Calculate Global Financial Analytics
-        $totalOrdersRevenue = PrivateOrder::where('status', 'completed')->sum('amount');
+        $totalOrdersRevenue = PrivateOrder::where('payment_status', 'completed')->sum('amount');
         
         // Fallback to estimated revenue from product sales_count if test orders are minimal
         $estimatedProductsRevenue = $products->sum(function ($p) {
@@ -31,7 +32,7 @@ class PrivateProductController extends Controller
         $totalRevenue = max($totalOrdersRevenue, $estimatedProductsRevenue);
         $totalAdSpend = $products->sum('ad_spend');
         $netProfit = $totalRevenue - $totalAdSpend;
-        $totalSales = max(PrivateOrder::where('status', 'completed')->count(), $products->sum('sales_count'));
+        $totalSales = max(PrivateOrder::where('payment_status', 'completed')->count(), $products->sum('sales_count'));
         $totalViews = $products->sum('views_count');
         $overallConversionRate = $totalViews > 0 ? round(($totalSales / $totalViews) * 100, 2) : 0;
 
@@ -63,6 +64,14 @@ class PrivateProductController extends Controller
     }
 
     /**
+     * Show creation form.
+     */
+    public function create()
+    {
+        return Inertia::render('Admin/PrivateProducts/Create');
+    }
+
+    /**
      * Store a newly created digital product in storage.
      */
     public function store(Request $request)
@@ -74,27 +83,57 @@ class PrivateProductController extends Controller
             'original_price' => 'nullable|numeric|min:0',
             'ad_spend' => 'nullable|numeric|min:0',
             'access_type' => 'required|in:drive,direct_download',
-            'access_url' => 'required|string|max:1000',
+            'access_url' => 'required_if:access_type,drive|nullable|string|max:1000',
             'tagline' => 'required|string|max:500',
             'description_markdown' => 'nullable|string',
-            'cover_image' => 'nullable|string|max:1000',
-            'preview_video_url' => 'nullable|string|max:1000',
-            'access_details' => 'nullable|string|max:1000',
-            'features' => 'nullable|array',
-            'curriculum' => 'nullable|array',
             'badge_text' => 'nullable|string|max:50',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
+            'features' => 'nullable|array',
+            'curriculum' => 'nullable|array',
+            // Image uploads
+            'images' => 'required|array|min:1|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            // Digital file upload
+            'digital_file' => 'required_if:access_type,direct_download|nullable|file|max:102400',
         ]);
 
+        // Generate Obfuscated Slug & Access Token
         $validated['slug'] = Str::slug($validated['title']) . '-' . Str::random(5);
         $validated['token'] = Str::slug($validated['title']) . '-' . Str::random(6);
         $validated['ad_spend'] = $validated['ad_spend'] ?? 0;
-        $validated['cover_image'] = $validated['cover_image'] ?? 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80';
+
+        // Handle Images upload
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products/images', 'public');
+                $imagePaths[] = '/storage/' . $path;
+            }
+        }
+
+        $validated['cover_image'] = $imagePaths[0] ?? null;
+        $validated['images'] = $imagePaths;
+
+        // Handle Secure digital file upload
+        if ($request->hasFile('digital_file') && $validated['access_type'] === 'direct_download') {
+            $path = $request->file('digital_file')->store('private/products/files', 'local');
+            $validated['file_path'] = $path;
+        }
 
         PrivateProduct::create($validated);
 
-        return redirect()->back()->with('success', 'Produit digital créé avec succès !');
+        return redirect()->route('admin.private-products.index')->with('success', 'Produit digital créé avec succès !');
+    }
+
+    /**
+     * Show editing form.
+     */
+    public function edit(PrivateProduct $privateProduct)
+    {
+        return Inertia::render('Admin/PrivateProducts/Edit', [
+            'product' => $privateProduct,
+        ]);
     }
 
     /**
@@ -109,22 +148,41 @@ class PrivateProductController extends Controller
             'original_price' => 'nullable|numeric|min:0',
             'ad_spend' => 'nullable|numeric|min:0',
             'access_type' => 'required|in:drive,direct_download',
-            'access_url' => 'required|string|max:1000',
+            'access_url' => 'required_if:access_type,drive|nullable|string|max:1000',
             'tagline' => 'required|string|max:500',
             'description_markdown' => 'nullable|string',
-            'cover_image' => 'nullable|string|max:1000',
-            'preview_video_url' => 'nullable|string|max:1000',
-            'access_details' => 'nullable|string|max:1000',
-            'features' => 'nullable|array',
-            'curriculum' => 'nullable|array',
             'badge_text' => 'nullable|string|max:50',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
+            'features' => 'nullable|array',
+            'curriculum' => 'nullable|array',
+            // Image uploads are optional on update
+            'images' => 'nullable|array|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            // Digital file upload is optional on update
+            'digital_file' => 'nullable|file|max:102400',
         ]);
+
+        // Handle Images upload
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products/images', 'public');
+                $imagePaths[] = '/storage/' . $path;
+            }
+            $validated['cover_image'] = $imagePaths[0];
+            $validated['images'] = $imagePaths;
+        }
+
+        // Handle Secure digital file upload
+        if ($request->hasFile('digital_file') && $validated['access_type'] === 'direct_download') {
+            $path = $request->file('digital_file')->store('private/products/files', 'local');
+            $validated['file_path'] = $path;
+        }
 
         $privateProduct->update($validated);
 
-        return redirect()->back()->with('success', 'Produit digital mis à jour avec succès !');
+        return redirect()->route('admin.private-products.index')->with('success', 'Produit digital mis à jour avec succès !');
     }
 
     /**
@@ -132,8 +190,20 @@ class PrivateProductController extends Controller
      */
     public function destroy(PrivateProduct $privateProduct)
     {
+        // Delete uploaded files if they exist
+        if ($privateProduct->images) {
+            foreach ($privateProduct->images as $img) {
+                $cleanPath = str_replace('/storage/', '', $img);
+                Storage::disk('public')->delete($cleanPath);
+            }
+        }
+
+        if ($privateProduct->file_path) {
+            Storage::disk('local')->delete($privateProduct->file_path);
+        }
+
         $privateProduct->delete();
 
-        return redirect()->back()->with('success', 'Produit digital supprimé avec succès.');
+        return redirect()->route('admin.private-products.index')->with('success', 'Produit digital supprimé avec succès.');
     }
 }

@@ -1,88 +1,21 @@
 import React, { useState } from 'react';
-import { Head, useForm, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { 
     ShoppingBag, DollarSign, TrendingUp, TrendingDown, Eye, Plus, Edit2, Trash2, 
-    Link as LinkIcon, CheckCircle2, ShieldCheck, Sparkles, ExternalLink, HardDrive, Download, Copy, RefreshCw, X
+    Link as LinkIcon, CheckCircle2, ShieldCheck, Sparkles, HardDrive, Download, Copy
 } from 'lucide-react';
 
-export default function Index({ auth, products, stats, chartData }) {
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [editingProduct, setEditingProduct] = useState(null);
+export default function Index({ auth, products, stats }) {
     const [copiedToken, setCopiedToken] = useState(null);
 
     const formatFCFA = (amount) => {
         return new Intl.NumberFormat('fr-FR').format(amount || 0) + ' FCFA';
     };
 
-    const { data, setData, post, put, delete: destroy, processing, errors, reset } = useForm({
-        title: '',
-        category: 'formation_video',
-        price: 100,
-        original_price: 25000,
-        ad_spend: 0,
-        access_type: 'drive',
-        access_url: '',
-        tagline: '',
-        description_markdown: '',
-        cover_image: '',
-        preview_video_url: '',
-        access_details: '',
-        badge_text: '',
-        is_active: true,
-        is_featured: false,
-    });
-
-    const openCreateModal = () => {
-        reset();
-        setEditingProduct(null);
-        setIsCreateModalOpen(true);
-    };
-
-    const openEditModal = (product) => {
-        setEditingProduct(product);
-        setData({
-            title: product.title,
-            category: product.category,
-            price: product.price,
-            original_price: product.original_price || '',
-            ad_spend: product.ad_spend || 0,
-            access_type: product.access_type || 'drive',
-            access_url: product.access_url || '',
-            tagline: product.tagline,
-            description_markdown: product.description_markdown || '',
-            cover_image: product.cover_image || '',
-            preview_video_url: product.preview_video_url || '',
-            access_details: product.access_details || '',
-            badge_text: product.badge_text || '',
-            is_active: product.is_active,
-            is_featured: product.is_featured,
-        });
-        setIsCreateModalOpen(true);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (editingProduct) {
-            put(route('admin.private-products.update', editingProduct.id), {
-                onSuccess: () => {
-                    setIsCreateModalOpen(false);
-                    reset();
-                },
-            });
-        } else {
-            post(route('admin.private-products.store'), {
-                onSuccess: () => {
-                    setIsCreateModalOpen(false);
-                    reset();
-                },
-            });
-        }
-    };
-
     const handleDelete = (productId) => {
         if (confirm('Voulez-vous vraiment supprimer ce produit digital ?')) {
-            destroy(route('admin.private-products.destroy', productId));
+            router.delete(route('admin.private-products.destroy', productId));
         }
     };
 
@@ -111,13 +44,13 @@ export default function Index({ auth, products, stats, chartData }) {
                         </p>
                     </div>
 
-                    <button
-                        onClick={openCreateModal}
+                    <Link
+                        href={route('admin.private-products.create')}
                         className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-xs rounded-xl flex items-center gap-2 transition-all shadow-md shadow-indigo-500/20"
                     >
                         <Plus className="w-4 h-4" />
                         <span>Créer un Produit Digital</span>
-                    </button>
+                    </Link>
                 </div>
 
                 {/* KPI Financial Cards */}
@@ -267,13 +200,13 @@ export default function Index({ auth, products, stats, chartData }) {
                                                         <Copy className="w-4 h-4" />
                                                     )}
                                                 </button>
-                                                <button
-                                                    onClick={() => openEditModal(product)}
-                                                    className="p-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-indigo-600 dark:text-cyan-400 rounded-lg transition-colors"
+                                                <Link
+                                                    href={route('admin.private-products.edit', product.id)}
+                                                    className="p-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-indigo-600 dark:text-cyan-400 rounded-lg transition-colors inline-block"
                                                     title="Éditer"
                                                 >
                                                     <Edit2 className="w-4 h-4" />
-                                                </button>
+                                                </Link>
                                                 <button
                                                     onClick={() => handleDelete(product.id)}
                                                     className="p-2 bg-red-50 hover:bg-red-100 dark:bg-red-500/10 text-red-600 rounded-lg transition-colors"
@@ -289,218 +222,6 @@ export default function Index({ auth, products, stats, chartData }) {
                         </table>
                     </div>
                 </div>
-
-                {/* Create/Edit Product Modal */}
-                {isCreateModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm overflow-y-auto">
-                        <div className="bg-white dark:bg-[#0E131F] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl space-y-6 my-8">
-                            
-                            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
-                                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                    <ShoppingBag className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
-                                    <span>{editingProduct ? 'Modifier le Produit Digital' : 'Créer un Nouveau Produit Digital'}</span>
-                                </h3>
-                                <button
-                                    onClick={() => setIsCreateModalOpen(false)}
-                                    className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-white"
-                                >
-                                    <X className="w-5 h-5" />
-                                </button>
-                            </div>
-
-                            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-                                
-                                {/* Title */}
-                                <div>
-                                    <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                        Titre du Produit <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={data.title}
-                                        onChange={(e) => setData('title', e.target.value)}
-                                        placeholder="Ex: Masterclass CapCut Pro & Presets"
-                                        className="w-full px-3.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none text-xs"
-                                    />
-                                </div>
-
-                                {/* Category & Price Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                    <div>
-                                        <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                            Catégorie <span className="text-red-500">*</span>
-                                        </label>
-                                        <select
-                                            value={data.category}
-                                            onChange={(e) => setData('category', e.target.value)}
-                                            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs"
-                                        >
-                                            <option value="formation_video">Formation Vidéo</option>
-                                            <option value="template_design">Design & Templates</option>
-                                            <option value="ebook_guide">Ebook & Guide PDF</option>
-                                            <option value="pack_ressources">Pack Ressources</option>
-                                            <option value="template_system">Système & Solution</option>
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                            Prix Vente (FCFA) <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            type="number"
-                                            required
-                                            value={data.price}
-                                            onChange={(e) => setData('price', e.target.value)}
-                                            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                            Dépense Pub (FCFA)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            value={data.ad_spend}
-                                            onChange={(e) => setData('ad_spend', e.target.value)}
-                                            placeholder="Ex: 15000"
-                                            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Access Type Selection (Drive vs Direct Download) */}
-                                <div className="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
-                                    <label className="block text-slate-800 dark:text-slate-200 font-bold">
-                                        Type d'Accès après Achat <span className="text-red-500">*</span>
-                                    </label>
-                                    <div className="flex items-center gap-4">
-                                        <label className="flex items-center gap-2 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="access_type"
-                                                value="drive"
-                                                checked={data.access_type === 'drive'}
-                                                onChange={(e) => setData('access_type', e.target.value)}
-                                                className="text-indigo-600"
-                                            />
-                                            <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1">
-                                                <HardDrive className="w-3.5 h-3.5 text-blue-500" /> Dossier Google Drive
-                                            </span>
-                                        </label>
-
-                                        <label className="flex items-center gap-2 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="access_type"
-                                                value="direct_download"
-                                                checked={data.access_type === 'direct_download'}
-                                                onChange={(e) => setData('access_type', e.target.value)}
-                                                className="text-indigo-600"
-                                            />
-                                            <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1">
-                                                <Download className="w-3.5 h-3.5 text-emerald-500" /> Téléchargement Direct
-                                            </span>
-                                        </label>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
-                                            Lien de la Ressource (URL Drive ou Lien Fichier) <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            type="url"
-                                            required
-                                            value={data.access_url}
-                                            onChange={(e) => setData('access_url', e.target.value)}
-                                            placeholder="https://drive.google.com/... ou https://domaine.com/fichier.pdf"
-                                            className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Tagline */}
-                                <div>
-                                    <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                        Accroche courte (Tagline) <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={data.tagline}
-                                        onChange={(e) => setData('tagline', e.target.value)}
-                                        placeholder="Ex: Découvrez comment maîtriser CapCut et créer des vidéos virales."
-                                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs"
-                                    />
-                                </div>
-
-                                {/* Description Markdown */}
-                                <div>
-                                    <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                        Description détaillée (Markdown)
-                                    </label>
-                                    <textarea
-                                        rows="4"
-                                        value={data.description_markdown}
-                                        onChange={(e) => setData('description_markdown', e.target.value)}
-                                        placeholder="### Qu'allez-vous apprendre dans cette formation ?..."
-                                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs font-mono"
-                                    />
-                                </div>
-
-                                {/* Image Cover & Badge */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <div>
-                                        <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                            URL Image de Couverture
-                                        </label>
-                                        <input
-                                            type="url"
-                                            value={data.cover_image}
-                                            onChange={(e) => setData('cover_image', e.target.value)}
-                                            placeholder="https://images.unsplash.com/..."
-                                            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
-                                            Badge Texte
-                                        </label>
-                                        <input
-                                            type="text"
-                                            value={data.badge_text}
-                                            onChange={(e) => setData('badge_text', e.target.value)}
-                                            placeholder="Ex: MINI-MASTERCLASS"
-                                            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white text-xs"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Buttons */}
-                                <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsCreateModalOpen(false)}
-                                        className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl"
-                                    >
-                                        Annuler
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        disabled={processing}
-                                        className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md"
-                                    >
-                                        {editingProduct ? 'Enregistrer les modifications' : 'Créer le produit'}
-                                    </button>
-                                </div>
-
-                            </form>
-
-                        </div>
-                    </div>
-                )}
 
             </div>
         </AuthenticatedLayout>

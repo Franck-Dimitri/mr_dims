@@ -92,10 +92,12 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(funct
     // Admin Digital Products & Financial Tracking Module
     Route::resource('private-products', AdminPrivateProductController::class)->names([
         'index' => 'admin.private-products.index',
+        'create' => 'admin.private-products.create',
         'store' => 'admin.private-products.store',
+        'edit' => 'admin.private-products.edit',
         'update' => 'admin.private-products.update',
         'destroy' => 'admin.private-products.destroy',
-    ])->except(['create', 'show', 'edit']);
+    ])->except(['show']);
 
     // Admin Messages Routes
     Route::get('/messages', [AdminMessageController::class, 'index'])->name('admin.messages.index');
@@ -124,6 +126,7 @@ Route::prefix('p')->group(function () {
     Route::post('/checkout/{slug}/{token}', [PrivateOfferController::class, 'processCheckout'])->name('private.process_checkout');
     Route::post('/webhooks/hrskills-pay', [PrivateOfferController::class, 'handleWebhook'])->name('private.webhook');
     Route::get('/success/{order_hash}', [PrivateOfferController::class, 'success'])->name('private.success');
+    Route::get('/download/{order_hash}', [PrivateOfferController::class, 'downloadResource'])->name('private.download');
 });
 
 require __DIR__.'/auth.php';
