@@ -8,11 +8,10 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\CvController;
-use App\Http\Controllers\EstimateController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\CvAnalyticsController;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
@@ -25,29 +24,31 @@ use App\Http\Controllers\Admin\PrivateProductController as AdminPrivateProductCo
 | Public Portfolio Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
+// Sitemap Route
+Route::get('/sitemap.xml', function () {
+    $projects = \App\Models\Project::all();
+    $blogs = \App\Models\Blog::all();
+    return response()->view('sitemap', [
+        'projects' => $projects,
+        'blogs' => $blogs,
+    ])->header('Content-Type', 'text/xml');
+});
 
-// Projects Routes
-Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+// CV Tracking Endpoint
+Route::post('/api/cv/track', [CvAnalyticsController::class, 'track'])->name('cv.track');
 
-// Services & Packs Routes
-Route::get('/packs', [ServiceController::class, 'index'])->name('packs.index');
-
-// Blog Routes
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::post('/blog/{slug}/comments', [BlogController::class, 'storeComment'])->name('blog.comments.store');
-
-// Contact & Estimation Routes
-Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-Route::post('/estimate', [EstimateController::class, 'store'])->name('estimate.store');
-
-// CV Routes
-Route::get('/cv/view', [CvController::class, 'view'])->name('cv.view');
-Route::get('/cv/download', [CvController::class, 'download'])->name('cv.download');
+Route::middleware('track.activity')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', function () { return Inertia::render('About'); })->name('about');
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/packs', function () { return Inertia::render('Packs'); })->name('packs');
+    Route::get('/contact', function () { return Inertia::render('Contact'); })->name('contact');
+    Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+    Route::post('/blog/{slug}/comment', [BlogController::class, 'storeComment'])->middleware('throttle:5,1')->name('blog.comment.store');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +56,7 @@ Route::get('/cv/download', [CvController::class, 'download'])->name('cv.download
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

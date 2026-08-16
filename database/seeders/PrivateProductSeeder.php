@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\PrivateProduct;
-use Illuminate\Support\Str;
 
 class PrivateProductSeeder extends Seeder
 {
@@ -24,40 +23,40 @@ class PrivateProductSeeder extends Seeder
                 'ad_spend' => 15000.00,
                 'access_type' => 'drive',
                 'access_url' => 'https://drive.google.com/drive/folders/capcut-masterclass-demo',
-                'badge_text' => 'MINI-MASTERCLASS',
+                'badge_text' => 'PACK VIDÉO',
                 'tagline' => 'Exploitez 100% des fonctions Pro de CapCut (PC & Mobile) et accédez à plus de 150 presets de transitions, titres et sous-titres dynamiques.',
                 'cover_image' => 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80',
                 'preview_video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
                 'description_markdown' => "### Créez des vidéos virales sur TikTok, Reels et Shorts sans abonnement mensuel !
 
-Dans ce pack complet de 1h45 + ressources créateurs, découvrez comment maîtriser le logiciel **CapCut** sur ordinateur et téléphone pour produire des vidéos captivantes.
+Dans ce pack complet de ressources pour créateurs, découvrez comment maîtriser le logiciel **CapCut** sur ordinateur et téléphone pour produire des vidéos captivantes.
 
-#### 🎯 Ce que vous allez obtenir :
-1. **Module 1 : Prise en main & réglages 4K 60fps** sans perte de qualité.
-2. **Module 2 : Montage dynamique & découpes rythmées** (suivi de mouvement, keyframes, masques).
-3. **Module 3 : Sous-titres animés automatiques** style Alex Hormozi avec animations mot par mot.
-4. **Module 4 : Color Grading & Mixage Audio Clean** pour un rendu cinématique.
+#### 🎯 Ce que contient cette ressource :
+1. **Fichier Vidéo HD (1h45)** : Prise en main, montage rythmé, animations de texte avancées.
+2. **Pack de Presets & Transitions** : Titres et transitions animés éditables.
+3. **Pack Audio Sound FX** : Plus de 50 effets sonores de transition (Swoosh, Glitch, Pops).
+4. **Overlays Visuels** : Textures rétro, fuites de lumière et poussière de film 4K.
 
-#### 🎁 Bonus inclus dans le dossier Drive :
-- Pack de 50+ FX sonores (Swoosh, Pop, Impact, Whoosh).
-- 100+ Overlays de textures, fuites de lumière et grains de film.",
+#### 🎁 Bonus inclus dans le dossier de téléchargement :
+- Guide PDF des raccourcis clavier CapCut PC/Mac.
+- Accès à vie aux futures mises à jour du dossier.",
                 'features' => [
-                    "1h45 de vidéo HD accessible à vie sur Google Drive",
-                    "Guide étape par étape PC, Mac, iOS & Android",
-                    "Pack de 150+ Presets & FX Sonores inclus",
-                    "Mises à jour gratuites des futurs dossiers"
+                    "Vidéo explicative HD accessible en ligne",
+                    "Guide pratique étape par étape pour tous les supports",
+                    "Pack de 150+ Presets & FX Sonores libres de droits",
+                    "Téléchargement direct et permanent"
                 ],
                 'curriculum' => [
-                    ["title" => "Module 1 : Configuration & Exportation 4K 60fps", "duration" => "15 min"],
-                    ["title" => "Module 2 : Keyframes, Cuts & Effets Dynamic", "duration" => "30 min"],
-                    ["title" => "Module 3 : Sous-titrage Automatique Stylisé", "duration" => "35 min"],
-                    ["title" => "Module 4 : Colorimétrie & Mixage Audio", "duration" => "25 min"]
+                    ["title" => "Fichier vidéo MP4 : Masterclass CapCut Pro (1h45)", "duration" => "Format HD 1080p"],
+                    ["title" => "Pack de Presets (.prfpset) : 150+ Transitions & Effets", "duration" => "Archive ZIP 15 Mo"],
+                    ["title" => "Kit audio (.wav) : 50+ FX Sonores pour montage dynamique", "duration" => "Archive ZIP 45 Mo"],
+                    ["title" => "Guide des raccourcis clavier CapCut", "duration" => "Fichier PDF"]
                 ],
-                'access_details' => "Accès direct au dossier Google Drive sécurisé contenant les modules vidéo et l'ensemble des fichiers de presets.",
+                'access_details' => "Accès direct au dossier Google Drive sécurisé contenant la masterclass vidéo et l'ensemble des fichiers de presets.",
                 'is_active' => true,
                 'is_featured' => true,
-                'sales_count' => 48,
-                'views_count' => 312,
+                'sales_count' => 0,
+                'views_count' => 0,
             ],
             [
                 'title' => 'Pack 500+ Templates Canva Pro pour Réseaux Sociaux & Carrousels Instagram',
@@ -87,21 +86,22 @@ Ce pack contient 500+ modèles Canva éditables directement dans votre compte gr
 - 100% modifiable sur mobile ou ordinateur.
 - Polices, couleurs et visuels interchangeables en 1 clic.",
                 'features' => [
-                    "500+ Templates Canva prêt à l'emploi",
+                    "500+ Templates Canva éditables",
                     "Compatible Canva Gratuit & Canva Pro",
-                    "Guide vidéo d'utilisation et personnalisation rapide",
+                    "Notice PDF d'importation rapide en 1 clic",
                     "Accès permanent et réutilisable à l'infini"
                 ],
                 'curriculum' => [
-                    ["title" => "Liens d'accès directs aux modèles Canva", "duration" => "Accès permanent"],
-                    ["title" => "Tutoriel vidéo : Modifier les polices et couleurs", "duration" => "10 min"],
-                    ["title" => "Guide d'exportation pour qualité maximale", "duration" => "PDF Guide"]
+                    ["title" => "Modèles de Carrousels Instagram (150 Templates)", "duration" => "Format Carré & Portrait"],
+                    ["title" => "Modèles de Stories & Reels Covers (100 Templates)", "duration" => "Format Vertical 9:16"],
+                    ["title" => "Bannières & Posts promotionnels (150 Templates)", "duration" => "Format Carré & Paysage"],
+                    ["title" => "Miniatures YouTube (100 Templates Canva)", "duration" => "Format Paysage 16:9"]
                 ],
-                'access_details' => "Liens d'intégration directe Canva + dossier Drive de secours.",
+                'access_details' => "Liens d'intégration directe Canva + dossier Drive de secours contenant les modèles.",
                 'is_active' => true,
                 'is_featured' => true,
-                'sales_count' => 62,
-                'views_count' => 450,
+                'sales_count' => 0,
+                'views_count' => 0,
             ],
             [
                 'title' => 'Ebook PDF & Guide Pratique : Prospection Client & Devis Signants Freelance',
@@ -113,7 +113,7 @@ Ce pack contient 500+ modèles Canva éditables directement dans votre compte gr
                 'ad_spend' => 8000.00,
                 'access_type' => 'direct_download',
                 'access_url' => 'https://example.com/downloads/ebook-prospection-freelance.pdf',
-                'badge_text' => 'EBOOK PDF + TEMPLATES',
+                'badge_text' => 'LIVRE NUMÉRIQUE',
                 'tagline' => 'Le guide pratique pour trouver des clients qualifiés, rédiger des propositions commerciales irrésistibles et valider vos acomptes.',
                 'cover_image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
                 'preview_video_url' => null,
@@ -122,26 +122,26 @@ Ce pack contient 500+ modèles Canva éditables directement dans votre compte gr
 Un guide étape par étape rédigé à partir d'expériences réelles de consulting et de vente de services digitaux.
 
 #### 📘 Au sommaire de cet Ebook (94 pages + annexes) :
-1. **Positionnement Stratégique** : Passer de prestataire à consultant incontournable.
-2. **Scripts de Prospection LinkedIn & Email** : Les messages exacts pour décrocher des rendez-vous.
+1. **Positionnement Stratégique** : Passer de simple exécutant à conseiller indispensable.
+2. **Scripts de Prospection LinkedIn & Email** : Les structures exactes pour décrocher des rendez-vous.
 3. **Trame de Devis & Contrats** : Modèle Word/PDF réutilisable pour sécuriser vos acomptes de 50%.
 4. **Techniques de Négociation** : Répondre aux objections de prix avec aplomb.",
                 'features' => [
                     "Ebook PDF complet de 94 pages (lecture PC & Mobile)",
-                    "Modèles Word/PDF de devis et contrat juridiquement bordés",
+                    "Modèles Word/PDF de devis et contrat éditables",
                     "Scripts de prospection LinkedIn & d'approche commerciale",
                     "Téléchargement direct immédiat"
                 ],
                 'curriculum' => [
-                    ["title" => "Ebook PDF principal : Guide complet de prospection", "duration" => "94 pages"],
-                    ["title" => "Pack de Modèles Word / PDF Devis & Contrats", "duration" => "Archive ZIP"],
-                    ["title" => "Scripts d'emails d'approche client", "duration" => "Fichier TXT"]
+                    ["title" => "Guide pratique PDF : Prospection & Devis Freelance", "duration" => "Livre de 94 pages"],
+                    ["title" => "Modèle Word / Excel : Devis & Contrats éditables", "duration" => "Fichier DOCX / XLSX"],
+                    ["title" => "Scripts textuels : Relance client & LinkedIn", "duration" => "Fichier TXT"]
                 ],
-                'access_details' => "Téléchargement immédiat du livre numérique PDF et du dossier d'annexes.",
+                'access_details' => "Téléchargement immédiat du livre numérique PDF et de son dossier d'annexes et modèles.",
                 'is_active' => true,
                 'is_featured' => false,
-                'sales_count' => 38,
-                'views_count' => 280,
+                'sales_count' => 0,
+                'views_count' => 0,
             ],
             [
                 'title' => 'Pack 1000+ Overlays, LUTs Cinéma & FX Sonores pour Vidéastes',
@@ -153,7 +153,7 @@ Un guide étape par étape rédigé à partir d'expériences réelles de consult
                 'ad_spend' => 20000.00,
                 'access_type' => 'drive',
                 'access_url' => 'https://drive.google.com/drive/folders/videomaker-bundle-demo',
-                'badge_text' => 'RESSOURCES VIDÉO',
+                'badge_text' => 'PACK RESSOURCES',
                 'tagline' => 'Le méga-pack de ressources créatives indispensables pour sublimer vos montages sur Premiere Pro, Final Cut, CapCut et DaVinci Resolve.',
                 'cover_image' => 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1200&q=80',
                 'preview_video_url' => null,
@@ -173,15 +173,16 @@ Ce bundle regroupe l'essentiel des effets visuels et sonores les plus recherché
                     "Utilisation commerciale autorisée"
                 ],
                 'curriculum' => [
-                    ["title" => "Dossier 1 : LUTs Cinématographiques (.cube)", "duration" => "250+ fichiers"],
-                    ["title" => "Dossier 2 : Sound Effects & Mixage Audio (.wav)", "duration" => "300+ fichiers"],
-                    ["title" => "Dossier 3 : Overlays & Fuites de lumière 4K (.mp4)", "duration" => "200+ fichiers"]
+                    ["title" => "Effets Sonores (300+ Sound FX pour monteurs)", "duration" => "Format WAV Haute Qualité"],
+                    ["title" => "LUTs Cinéma (250+ Fichiers de colorimétrie)", "duration" => "Fichiers .CUBE"],
+                    ["title" => "Overlays vidéo (200+ Textures, Glitch & Grain)", "duration" => "Fichiers MP4 4K"],
+                    ["title" => "Bruits de fond & Ambiances sonores", "duration" => "250+ Fichiers WAV"]
                 ],
-                'access_details' => "Lien permanent d'accès au dossier Google Drive partagé.",
+                'access_details' => "Lien permanent d'accès au dossier Google Drive partagé contenant le méga-pack.",
                 'is_active' => true,
                 'is_featured' => true,
-                'sales_count' => 89,
-                'views_count' => 590,
+                'sales_count' => 0,
+                'views_count' => 0,
             ],
             [
                 'title' => 'System.io & Notion Template All-In-One : Système de Vente pour Solopreneur',
@@ -193,7 +194,7 @@ Ce bundle regroupe l'essentiel des effets visuels et sonores les plus recherché
                 'ad_spend' => 12000.00,
                 'access_type' => 'drive',
                 'access_url' => 'https://drive.google.com/drive/folders/solopreneur-system-demo',
-                'badge_text' => 'SYSTÈME & PRODUCTIVITÉ',
+                'badge_text' => 'TEMPLATE & SYSTEM',
                 'tagline' => 'Installez votre tunnel de vente automatisé et gérez l\'intégralité de vos projets, clients et contenus depuis un espace Notion optimisé.',
                 'cover_image' => 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
                 'preview_video_url' => null,
@@ -212,15 +213,15 @@ Un système complet clé en main pour structurer votre activité de vente de pro
                     "Accès illimité et réutilisable"
                 ],
                 'curriculum' => [
-                    ["title" => "Lien de duplication du Workspace Notion Business OS", "duration" => "Accès 1-Click"],
-                    ["title" => "Lien d'importation du Tunnel de Vente System.io", "duration" => "Accès 1-Click"],
-                    ["title" => "Tutoriel vidéo de déploiement express", "duration" => "20 min"]
+                    ["title" => "Workspace Notion : OS Business complet", "duration" => "Lien de duplication direct"],
+                    ["title" => "Tunnel de Vente System.io : Duplicable", "duration" => "Lien d'importation direct"],
+                    ["title" => "Guide de déploiement PDF & vidéo tutoriel", "duration" => "Fichier PDF & Vidéo MP4"]
                 ],
-                'access_details' => "Liens de duplication directe pour Notion et System.io + guide vidéo.",
+                'access_details' => "Liens de duplication directe pour Notion et System.io + guide de configuration rapide.",
                 'is_active' => true,
                 'is_featured' => false,
-                'sales_count' => 45,
-                'views_count' => 310,
+                'sales_count' => 0,
+                'views_count' => 0,
             ],
         ];
 

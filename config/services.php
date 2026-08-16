@@ -40,4 +40,10 @@ return [
         'chat_id' => env('TELEGRAM_CHAT_ID'),
     ],
 
+    'hrskills_pay' => [
+        'base_url' => env('HRSKILLS_PAY_BASE_URL', 'https://api.hrskills-pay.com'),
+        'public_key' => env('HRSKILLS_PAY_PUBLIC_KEY'),
+        'secret_key' => env('HRSKILLS_PAY_SECRET_KEY'),
+    ],
+
 ];

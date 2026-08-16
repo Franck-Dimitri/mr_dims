@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Head } from '@inertiajs/react';
-import { ShoppingBag, ShieldCheck, Sparkles, BookOpen, Code2, Video, Package, Layers, Sparkle } from 'lucide-react';
+import { ShoppingBag, ShieldCheck, BookOpen, Video, Package, Layers } from 'lucide-react';
 
 export default function PrivateOfferLayout({ children, title, accessToken }) {
     const categories = [
@@ -12,7 +12,7 @@ export default function PrivateOfferLayout({ children, title, accessToken }) {
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
-            <Head title={title ? `${title} - MR_DIMS Ressources Digitales` : 'MR_DIMS Ressources Digitales'} />
+            <Head title={title ? `${title} - Ressources Digitales` : 'Ressources Digitales'} />
 
             {/* HEADER (Strict Light Theme) */}
             <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
@@ -32,7 +32,7 @@ export default function PrivateOfferLayout({ children, title, accessToken }) {
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 flex items-center gap-2">
-                                        MR_DIMS <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-100">Ressources Digitales</span>
+                                        Ressources Digitales
                                     </span>
                                     <span className="text-[10px] font-medium text-slate-500">
                                         Boutique de ressources numériques premium
@@ -96,7 +96,7 @@ export default function PrivateOfferLayout({ children, title, accessToken }) {
                         <div className="space-y-3">
                             <div className="flex items-center gap-2 font-extrabold text-sm text-slate-900">
                                 <ShoppingBag className="w-4 h-4 text-indigo-600" />
-                                <span>MR_DIMS Ressources Digitales</span>
+                                <span>Ressources Digitales</span>
                             </div>
                             <p className="text-slate-600 leading-relaxed text-[11px]">
                                 Boutique en ligne de produits digitaux pour créateurs de contenu, vidéastes, freelances et solopreneurs : Packs graphiques, formations vidéo, ebooks et modèles prêts à l'emploi.
@@ -169,7 +169,7 @@ export default function PrivateOfferLayout({ children, title, accessToken }) {
                     {/* Bottom Bar */}
                     <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
                         <div>
-                            &copy; {new Date().getFullYear()} MR_DIMS Ressources Digitales. Tous droits réservés.
+                            &copy; {new Date().getFullYear()} Ressources Digitales. Tous droits réservés.
                         </div>
                         <div className="flex items-center gap-4 font-medium">
                             <span>Livraison Numérique Immédiate</span>

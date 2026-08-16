@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { Sparkles, ShieldCheck, ArrowRight, Eye, ShoppingBag, Star, Download, Search, Filter, Lock } from 'lucide-react';
+import { Sparkles, ArrowRight, Eye, Package, BookOpen, Video, Layers, Search } from 'lucide-react';
 import PrivateOfferLayout from '@/Layouts/PrivateOfferLayout';
 
 export default function Vault({ products, selectedCategory, token }) {
@@ -42,7 +42,7 @@ export default function Vault({ products, selectedCategory, token }) {
                     </div>
 
                     <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-                        Ressources Digitales, Packs & Masterclass Prêtes à l'Emploi
+                        Ressources Digitales, Packs & Guides Prêts à l'Emploi
                     </h1>
 
                     <p className="mt-3 text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
@@ -97,15 +97,15 @@ export default function Vault({ products, selectedCategory, token }) {
                                         alt={product.title}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
 
                                     {/* Category Badge */}
-                                    <span className="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur-md text-indigo-700 font-extrabold text-[10px] rounded-lg uppercase tracking-wider border border-white/40 shadow-xs">
+                                    <span className="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur-md text-indigo-700 font-extrabold text-[10px] rounded-lg uppercase tracking-wider border border-slate-200 shadow-xs">
                                         {product.badge_text || product.category.replace('_', ' ')}
                                     </span>
 
                                     {/* Price Badge */}
-                                    <div className="absolute bottom-3 right-3 bg-slate-900/90 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 text-white text-xs font-extrabold">
+                                    <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-xl border border-slate-200 text-indigo-600 text-xs font-extrabold shadow-sm">
                                         {formatFCFA(product.price)}
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@ export default function Vault({ products, selectedCategory, token }) {
                     </div>
                 ) : (
                     <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 text-xs">
-                        Aucun produit ne correspond à votre recherche pour le moment.
+                        Aucune ressource ne correspond à votre recherche pour le moment.
                     </div>
                 )}
 
