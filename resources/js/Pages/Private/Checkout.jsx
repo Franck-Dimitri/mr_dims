@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Link } from '@inertiajs/react';
-import { motion } from 'framer-motion';
-import { ShieldCheck, CheckCircle2, ArrowRight, ArrowLeft, User, Mail, Phone, Globe, MapPin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShieldCheck, CheckCircle2, ArrowRight, ArrowLeft, User, Mail, Phone, Globe, MapPin, Loader2, Sparkles } from 'lucide-react';
 import PrivateOfferLayout from '@/Layouts/PrivateOfferLayout';
 
-export default function Checkout({ product, token }) {
+export default function Checkout({ product, token, orderHash, waitingPayment }) {
     const { data, setData, post, processing, errors } = useForm({
         customer_name: '',
         customer_email: '',
@@ -15,6 +15,8 @@ export default function Checkout({ product, token }) {
         notes: '',
     });
 
+    const [pollError, setPollError] = useState(null);
+
     const formatFCFA = (amount) => {
         return new Intl.NumberFormat('fr-FR').format(amount) + ' FCFA';
     };
@@ -23,6 +25,39 @@ export default function Checkout({ product, token }) {
         e.preventDefault();
         post(`/p/checkout/${product.slug}/${token}`);
     };
+
+    // Polling logic when payment is pending
+    useEffect(() => {
+        if (!waitingPayment || !orderHash) return;
+
+        let pollInterval = setInterval(() => {
+            fetch(`/p/checkout/status/${orderHash}`)
+                .then((res) => res.json())
+                .then((resData) => {
+                    if (resData.status === 'SUCCESS') {
+                        clearInterval(pollInterval);
+                        window.location.href = `/p/success/${orderHash}`;
+                    } else if (resData.status === 'FAILED') {
+                        clearInterval(pollInterval);
+                        setPollError("Le paiement a échoué ou a expiré. Veuillez vérifier votre solde et réessayer.");
+                    }
+                })
+                .catch((err) => {
+                    console.error('Error polling status:', err);
+                });
+        }, 5000);
+
+        // Auto-timeout after 6 minutes (timeout is 10 min on server)
+        let timeoutId = setTimeout(() => {
+            clearInterval(pollInterval);
+            setPollError("Délai d'attente dépassé. Si vous avez été débité, veuillez nous contacter.");
+        }, 360000);
+
+        return () => {
+            clearInterval(pollInterval);
+            clearTimeout(timeoutId);
+        };
+    }, [waitingPayment, orderHash]);
 
     const paymentMethods = [
         {
@@ -34,6 +69,7 @@ export default function Checkout({ product, token }) {
             brandBorder: 'border-[#FF7900]',
             textColor: 'text-[#FF7900]',
             lightBg: 'bg-orange-50',
+            disabled: false,
         },
         {
             id: 'mtn_momo',
@@ -44,6 +80,7 @@ export default function Checkout({ product, token }) {
             brandBorder: 'border-[#FFCC00]',
             textColor: 'text-yellow-600',
             lightBg: 'bg-yellow-50',
+            disabled: false,
         },
         {
             id: 'wave',
@@ -54,16 +91,18 @@ export default function Checkout({ product, token }) {
             brandBorder: 'border-[#00AEEF]',
             textColor: 'text-[#00AEEF]',
             lightBg: 'bg-cyan-50',
+            disabled: false,
         },
         {
             id: 'card',
             name: 'Carte Bancaire (Visa / MasterCard)',
-            description: 'Règlement sécurisé par carte internationale (SSL 256 bits)',
-            badge: 'Visa / MasterCard',
-            brandBg: 'bg-indigo-600',
-            brandBorder: 'border-indigo-600',
-            textColor: 'text-indigo-600',
-            lightBg: 'bg-indigo-50',
+            description: 'Indisponible pour le moment dans votre pays',
+            badge: 'Bientôt disponible',
+            brandBg: 'bg-slate-400',
+            brandBorder: 'border-slate-200',
+            textColor: 'text-slate-400',
+            lightBg: 'bg-slate-50',
+            disabled: true,
         },
     ];
 
@@ -84,7 +123,7 @@ export default function Checkout({ product, token }) {
 
     return (
         <PrivateOfferLayout title={`Commande: ${product.title}`} accessToken={token}>
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
                 
                 {/* Back Link */}
                 <div className="mb-6">
@@ -99,7 +138,7 @@ export default function Checkout({ product, token }) {
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                     
-                    {/* Left Column: Comprehensive Checkout Form (7 Cols) */}
+                    {/* Left Column: Checkout Form (7 Cols) */}
                     <div className="lg:col-span-7 space-y-6">
                         <div className="bg-white border border-slate-200 p-6 sm:p-8 rounded-2xl shadow-sm">
                             
@@ -168,7 +207,7 @@ export default function Checkout({ product, token }) {
                                             required
                                             value={data.customer_phone}
                                             onChange={(e) => setData('customer_phone', e.target.value)}
-                                            placeholder="Ex: +225 07 00 00 00 00"
+                                            placeholder="Ex: 0700000000"
                                             className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-600 text-xs"
                                         />
                                     </div>
@@ -226,7 +265,7 @@ export default function Checkout({ product, token }) {
 
                                 </div>
 
-                                {/* Payment Method Selection with Official Logos & Colors */}
+                                {/* Payment Method Selection */}
                                 <div className="pt-4 border-t border-slate-100">
                                     <label className="block text-slate-800 font-bold mb-3">
                                         Choisissez votre mode de paiement <span className="text-red-500">*</span>
@@ -238,11 +277,13 @@ export default function Checkout({ product, token }) {
                                             return (
                                                 <div
                                                     key={method.id}
-                                                    onClick={() => setData('payment_method', method.id)}
-                                                    className={`p-4 border-2 rounded-xl cursor-pointer transition-all flex items-center justify-between ${
-                                                        isSelected
-                                                            ? `${method.brandBorder} ${method.lightBg} shadow-xs font-semibold`
-                                                            : 'border-slate-200 bg-slate-50/50 hover:border-slate-300'
+                                                    onClick={() => !method.disabled && setData('payment_method', method.id)}
+                                                    className={`p-4 border-2 rounded-xl transition-all flex items-center justify-between ${
+                                                        method.disabled
+                                                            ? 'opacity-40 cursor-not-allowed border-slate-100 bg-slate-50'
+                                                            : isSelected
+                                                            ? `${method.brandBorder} ${method.lightBg} shadow-xs font-semibold cursor-pointer`
+                                                            : 'border-slate-200 bg-slate-50/50 hover:border-slate-300 cursor-pointer'
                                                     }`}
                                                 >
                                                     <div className="flex items-center gap-3">
@@ -334,6 +375,79 @@ export default function Checkout({ product, token }) {
                     </div>
 
                 </div>
+
+                {/* Animated Light-Theme Pending Payment Modal */}
+                <AnimatePresence>
+                    {waitingPayment && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4"
+                        >
+                            <motion.div
+                                initial={{ scale: 0.95, y: 10 }}
+                                animate={{ scale: 1, y: 0 }}
+                                exit={{ scale: 0.95, y: 10 }}
+                                className="bg-white border border-slate-200 p-8 rounded-3xl max-w-md w-full shadow-2xl text-center space-y-6"
+                            >
+                                <div className="flex justify-center relative">
+                                    <div className="w-16 h-16 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 animate-pulse">
+                                        <Loader2 className="w-8 h-8 animate-spin" />
+                                    </div>
+                                    <div className="absolute top-0 right-0 p-1">
+                                        <Sparkles className="w-4 h-4 text-indigo-500 animate-bounce" />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <h3 className="text-lg font-bold text-slate-900">
+                                        Paiement Mobile Money en cours...
+                                    </h3>
+                                    <div className="px-4 py-1.5 bg-indigo-50 text-indigo-700 font-extrabold text-[10px] rounded-full uppercase tracking-wider inline-block">
+                                        Référence : {orderHash}
+                                    </div>
+                                </div>
+
+                                {pollError ? (
+                                    <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-xs text-red-600 font-medium">
+                                        {pollError}
+                                        <div className="mt-3">
+                                            <a
+                                                href={`/p/checkout/${product.slug}/${token}`}
+                                                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold inline-block text-[11px] shadow-sm uppercase tracking-wider"
+                                            >
+                                                Réessayer
+                                            </a>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4 text-xs text-slate-600 leading-relaxed font-medium">
+                                        <p>
+                                            Un message de confirmation USSD / Push a été envoyé sur votre téléphone. 
+                                            <strong> Veuillez y saisir votre code PIN secret</strong> pour valider le montant de <span className="text-indigo-600 font-bold">{formatFCFA(product.price)}</span>.
+                                        </p>
+                                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-[11px] leading-normal text-slate-500">
+                                            Ne fermez pas cette page. Notre système validera et débloquera automatiquement votre accès dès détection du débit.
+                                        </div>
+                                    </div>
+                                )}
+
+                                {!pollError && (
+                                    <div className="pt-2">
+                                        <a
+                                            href={`/p/checkout/${product.slug}/${token}`}
+                                            className="text-xs font-semibold text-slate-400 hover:text-slate-600 underline"
+                                        >
+                                            Annuler et modifier les informations
+                                        </a>
+                                    </div>
+                                )}
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
             </div>
         </PrivateOfferLayout>
     );

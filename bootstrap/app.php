@@ -18,6 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\NotifyTelegramVisitor::class,
         ]);
 
+        $middleware->validateCsrfTokens(except: [
+            'p/webhooks/*',
+        ]);
+
         $middleware->alias([
             'mr_dims' => \App\Http\Middleware\CheckMrDimsRole::class,
             'track.activity' => \App\Http\Middleware\TrackPortfolioActivity::class,

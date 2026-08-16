@@ -147,7 +147,7 @@ export default function Index({ products, accessToken }) {
                                     </div>
 
                                     <Link
-                                        href={`/p/offer/${product.slug}/${accessToken}`}
+                                        href={`/p/offer/${product.slug}/${product.token}`}
                                         className="px-4 py-2.5 bg-slate-900 hover:bg-indigo-600 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
                                     >
                                         <span>DÉCOUVRIR</span>

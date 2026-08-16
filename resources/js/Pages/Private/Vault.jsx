@@ -136,7 +136,7 @@ export default function Vault({ products, selectedCategory, token }) {
                                     {/* Action Buttons */}
                                     <div className="pt-2 flex items-center gap-2">
                                         <Link
-                                            href={`/p/offer/${product.slug}/${token}`}
+                                            href={`/p/offer/${product.slug}/${product.token}`}
                                             className="flex-1 py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl text-center transition-colors flex items-center justify-center gap-1.5 border border-slate-200"
                                         >
                                             <Eye className="w-3.5 h-3.5 text-slate-500" />
@@ -144,7 +144,7 @@ export default function Vault({ products, selectedCategory, token }) {
                                         </Link>
 
                                         <Link
-                                            href={`/p/checkout/${product.slug}/${token}`}
+                                            href={`/p/checkout/${product.slug}/${product.token}`}
                                             className="flex-1 py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl text-center transition-all shadow-md shadow-indigo-500/20 flex items-center justify-center gap-1.5"
                                         >
                                             <span>Acheter ({formatFCFA(product.price)})</span>

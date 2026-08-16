@@ -119,8 +119,10 @@ use App\Http\Controllers\PrivateOfferController;
 Route::prefix('p')->group(function () {
     Route::get('/vault/{token?}', [PrivateOfferController::class, 'index'])->name('private.index');
     Route::get('/offer/{slug}/{token}', [PrivateOfferController::class, 'show'])->name('private.show');
+    Route::get('/checkout/status/{order_hash}', [PrivateOfferController::class, 'checkStatus'])->name('private.status');
     Route::get('/checkout/{slug}/{token}', [PrivateOfferController::class, 'checkout'])->name('private.checkout');
     Route::post('/checkout/{slug}/{token}', [PrivateOfferController::class, 'processCheckout'])->name('private.process_checkout');
+    Route::post('/webhooks/hrskills-pay', [PrivateOfferController::class, 'handleWebhook'])->name('private.webhook');
     Route::get('/success/{order_hash}', [PrivateOfferController::class, 'success'])->name('private.success');
 });
 
