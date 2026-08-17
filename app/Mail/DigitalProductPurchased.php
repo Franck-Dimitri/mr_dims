@@ -30,7 +30,6 @@ class DigitalProductPurchased extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(config('mail.from.address'), 'Ressources Digitales'),
             subject: 'Votre facture & accès : ' . $this->order->product->title,
         );
     }
