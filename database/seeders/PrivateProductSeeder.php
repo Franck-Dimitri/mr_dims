@@ -9,217 +9,187 @@ class PrivateProductSeeder extends Seeder
 {
     public function run(): void
     {
-        // Clean existing records to guarantee fresh non-coding products
+        // Clean existing records to guarantee fresh products
         PrivateProduct::query()->delete();
 
         $products = [
             [
-                'title' => 'Masterclass CapCut Pro & Pack 150+ Transitions & Effets Animés',
-                'slug' => 'masterclass-capcut-pro-pack-presets-video',
-                'token' => 'capcut-pro-v88a9',
+                'title' => 'Comment monter des vidéos professionnelles avec CapCut Pro gratuitement',
+                'slug' => 'monter-videos-professionnelles-capcut-pro',
+                'token' => 'capcut-pro-v1',
                 'category' => 'formation_video',
-                'price' => 100.00,
-                'original_price' => 25000.00,
-                'ad_spend' => 15000.00,
+                'price' => 2800.00,
+                'original_price' => 15000.00,
+                'ad_spend' => 0.00,
                 'access_type' => 'drive',
-                'access_url' => 'https://drive.google.com/drive/folders/capcut-masterclass-demo',
-                'badge_text' => 'PACK VIDÉO',
-                'tagline' => 'Exploitez 100% des fonctions Pro de CapCut (PC & Mobile) et accédez à plus de 150 presets de transitions, titres et sous-titres dynamiques.',
+                'access_url' => 'https://drive.google.com/drive/folders/votre-dossier-capcut-pro-ici',
+                'badge_text' => 'FORMATION VIDÉO',
+                'tagline' => 'Dominez le montage vidéo sur smartphone et PC. Créez des transitions fluides, des effets accrocheurs et des textes animés pour booster vos réseaux.',
                 'cover_image' => 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80',
-                'preview_video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                'description_markdown' => "### Créez des vidéos virales sur TikTok, Reels et Shorts sans abonnement mensuel !
-
-Dans ce pack complet de ressources pour créateurs, découvrez comment maîtriser le logiciel **CapCut** sur ordinateur et téléphone pour produire des vidéos captivantes.
-
-#### 🎯 Ce que contient cette ressource :
-1. **Fichier Vidéo HD (1h45)** : Prise en main, montage rythmé, animations de texte avancées.
-2. **Pack de Presets & Transitions** : Titres et transitions animés éditables.
-3. **Pack Audio Sound FX** : Plus de 50 effets sonores de transition (Swoosh, Glitch, Pops).
-4. **Overlays Visuels** : Textures rétro, fuites de lumière et poussière de film 4K.
-
-#### 🎁 Bonus inclus dans le dossier de téléchargement :
-- Guide PDF des raccourcis clavier CapCut PC/Mac.
-- Accès à vie aux futures mises à jour du dossier.",
-                'features' => [
-                    "Vidéo explicative HD accessible en ligne",
-                    "Guide pratique étape par étape pour tous les supports",
-                    "Pack de 150+ Presets & FX Sonores libres de droits",
-                    "Téléchargement direct et permanent"
-                ],
-                'curriculum' => [
-                    ["title" => "Fichier vidéo MP4 : Masterclass CapCut Pro (1h45)", "duration" => "Format HD 1080p"],
-                    ["title" => "Pack de Presets (.prfpset) : 150+ Transitions & Effets", "duration" => "Archive ZIP 15 Mo"],
-                    ["title" => "Kit audio (.wav) : 50+ FX Sonores pour montage dynamique", "duration" => "Archive ZIP 45 Mo"],
-                    ["title" => "Guide des raccourcis clavier CapCut", "duration" => "Fichier PDF"]
-                ],
-                'access_details' => "Accès direct au dossier Google Drive sécurisé contenant la masterclass vidéo et l'ensemble des fichiers de presets.",
-                'is_active' => true,
-                'is_featured' => true,
-                'sales_count' => 0,
-                'views_count' => 0,
-            ],
-            [
-                'title' => 'Pack 500+ Templates Canva Pro pour Réseaux Sociaux & Carrousels Instagram',
-                'slug' => 'pack-500-templates-canva-pro-reseaux-sociaux',
-                'token' => 'canva-pack-c77y3',
-                'category' => 'template_design',
-                'price' => 100.00,
-                'original_price' => 19500.00,
-                'ad_spend' => 10000.00,
-                'access_type' => 'drive',
-                'access_url' => 'https://drive.google.com/drive/folders/canva-templates-demo',
-                'badge_text' => 'PACK GRAPHISME',
-                'tagline' => 'Économisez des dizaines d\'heures de création. Modèles Canva 100% personnalisables pour carrousels, stories, posts et miniatures YouTube.',
-                'cover_image' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
                 'preview_video_url' => null,
-                'description_markdown' => "### Donnez un look haut de gamme à vos réseaux sociaux en 3 clics !
+                'description_markdown' => "### Créez des vidéos virales à fort impact sur TikTok, Reels et Shorts !
+                
+Dans cette formation complète et pratique, apprenez à maîtriser le logiciel **CapCut** (sur PC/Mac et Mobile) pour concevoir des vidéos au rendu professionnel sans y passer des heures.
 
-Ce pack contient 500+ modèles Canva éditables directement dans votre compte gratuit ou Pro Canva.
+#### 🎯 Ce que vous allez apprendre :
+1. **Montage dynamique** : Rythmer vos plans, couper les silences et animer l'écran.
+2. **Transitions et Effets** : Ajouter des effets professionnels (Zoom, Pan, Glow) et des bruitages synchronisés.
+3. **Sous-titres stylisés** : Générer et animer des sous-titres captivants qui retiennent l'attention.
+4. **Correction colorimétrique** : Rendre vos vidéos éclatantes et de haute qualité.
 
-#### 🎨 Contenu du kit de création :
-- **150 Modèles de Carrousels Instagram** orientés valeur & éducation.
-- **100 Templates de Stories & Reels Covers** à fort taux de clic.
-- **150 Bannières & Posts promotionnels** (promotions, offres, annonces).
-- **100 Miniatures YouTube Virales** avec typographies percutantes.
-
-#### ⚡ Pourquoi ce pack est indispensable :
-- 100% modifiable sur mobile ou ordinateur.
-- Polices, couleurs et visuels interchangeables en 1 clic.",
+#### 📦 Fichiers inclus dans votre accès :
+- Masterclass vidéo chapitrée (1h30).
+- Pack de transitions et d'overlays libres de droits.
+- Guide PDF des raccourcis clavier.",
                 'features' => [
-                    "500+ Templates Canva éditables",
-                    "Compatible Canva Gratuit & Canva Pro",
-                    "Notice PDF d'importation rapide en 1 clic",
-                    "Accès permanent et réutilisable à l'infini"
+                    "Masterclass vidéo complète (Accès à vie)",
+                    "Méthodes applicables sur PC, Mac et Smartphone",
+                    "Pack de transitions et effets audio/visuels inclus",
+                    "Mises à jour gratuites régulières"
                 ],
                 'curriculum' => [
-                    ["title" => "Modèles de Carrousels Instagram (150 Templates)", "duration" => "Format Carré & Portrait"],
-                    ["title" => "Modèles de Stories & Reels Covers (100 Templates)", "duration" => "Format Vertical 9:16"],
-                    ["title" => "Bannières & Posts promotionnels (150 Templates)", "duration" => "Format Carré & Paysage"],
-                    ["title" => "Miniatures YouTube (100 Templates Canva)", "duration" => "Format Paysage 16:9"]
+                    ["title" => "Module 1 : Prise en main et découpe dynamique", "duration" => "15 min"],
+                    ["title" => "Module 2 : Transitions, Effets et Masques", "duration" => "25 min"],
+                    ["title" => "Module 3 : Textes animés et sous-titres automatiques", "duration" => "20 min"],
+                    ["title" => "Module 4 : Étalonnage et Sound Design pro", "duration" => "30 min"]
                 ],
-                'access_details' => "Liens d'intégration directe Canva + dossier Drive de secours contenant les modèles.",
+                'access_details' => "Accès direct au dossier Google Drive contenant les vidéos de formation et les ressources téléchargeables.",
                 'is_active' => true,
                 'is_featured' => true,
                 'sales_count' => 0,
                 'views_count' => 0,
             ],
             [
-                'title' => 'Ebook PDF & Guide Pratique : Prospection Client & Devis Signants Freelance',
-                'slug' => 'ebook-prospection-client-devis-freelance',
-                'token' => 'freelance-ebook-f44z1',
+                'title' => 'Documents et ressources freelance en design graphique pour facturer 5 fois plus cher',
+                'slug' => 'documents-ressources-freelance-design-graphique',
+                'token' => 'freelance-design-v2',
                 'category' => 'ebook_guide',
-                'price' => 100.00,
-                'original_price' => 30000.00,
-                'ad_spend' => 8000.00,
-                'access_type' => 'direct_download',
-                'access_url' => 'https://example.com/downloads/ebook-prospection-freelance.pdf',
-                'badge_text' => 'LIVRE NUMÉRIQUE',
-                'tagline' => 'Le guide pratique pour trouver des clients qualifiés, rédiger des propositions commerciales irrésistibles et valider vos acomptes.',
+                'price' => 5500.00,
+                'original_price' => 25000.00,
+                'ad_spend' => 0.00,
+                'access_type' => 'drive',
+                'access_url' => 'https://drive.google.com/drive/folders/votre-dossier-freelance-ici',
+                'badge_text' => 'KIT FREELANCE',
+                'tagline' => 'Le kit complet des freelances d\'élite. Modèles de devis signants, contrats de prestation sécurisés, grilles tarifaires et scripts de vente.',
                 'cover_image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
                 'preview_video_url' => null,
-                'description_markdown' => "### Ne bradez plus vos prestations de services !
+                'description_markdown' => "### Arrêtez de brader votre talent et passez à la vitesse supérieure !
 
-Un guide étape par étape rédigé à partir d'expériences réelles de consulting et de vente de services digitaux.
+Ce kit complet contient l'intégralité des documents contractuels, stratégiques et commerciaux dont vous avez besoin pour structurer votre activité de designer freelance et signer des projets à forte valeur.
 
-#### 📘 Au sommaire de cet Ebook (94 pages + annexes) :
-1. **Positionnement Stratégique** : Passer de simple exécutant à conseiller indispensable.
-2. **Scripts de Prospection LinkedIn & Email** : Les structures exactes pour décrocher des rendez-vous.
-3. **Trame de Devis & Contrats** : Modèle Word/PDF réutilisable pour sécuriser vos acomptes de 50%.
-4. **Techniques de Négociation** : Répondre aux objections de prix avec aplomb.",
+#### 💼 Contenu détaillé de la boîte à outils :
+1. **Modèle de Devis & CGV** : Des documents épurés et rassurants qui justifient vos tarifs.
+2. **Contrat de Prestation** : Un contrat type rédigé pour sécuriser vos acomptes et protéger vos droits d'auteur.
+3. **Calculateur de TJM** : Un simulateur Excel pour définir vos tarifs journaliers réels et vos marges.
+4. **Scripts d'entretien** : La trame exacte de questions à poser en appel découverte pour convaincre vos prospects sans forcer.
+
+#### 🎁 Bonus inclus :
+- Guide PDF sur le positionnement de marque personnelle pour attirer des clients qualifiés sans démarcher activement.",
                 'features' => [
-                    "Ebook PDF complet de 94 pages (lecture PC & Mobile)",
-                    "Modèles Word/PDF de devis et contrat éditables",
-                    "Scripts de prospection LinkedIn & d'approche commerciale",
-                    "Téléchargement direct immédiat"
+                    "Modèles Word/Excel 100% modifiables et réutilisables",
+                    "Contrats juridiques simplifiés et protecteurs",
+                    "Scripts de relance et traitement des objections de prix",
+                    "Accès permanent et téléchargement instantané"
                 ],
                 'curriculum' => [
-                    ["title" => "Guide pratique PDF : Prospection & Devis Freelance", "duration" => "Livre de 94 pages"],
-                    ["title" => "Modèle Word / Excel : Devis & Contrats éditables", "duration" => "Fichier DOCX / XLSX"],
-                    ["title" => "Scripts textuels : Relance client & LinkedIn", "duration" => "Fichier TXT"]
+                    ["title" => "Guide PDF : Facturer à la valeur en Freelance (45 pages)", "duration" => "Lecture 1h"],
+                    ["title" => "Modèle Word : Contrat de Prestation sécurisé", "duration" => "Fichier éditables (.docx)"],
+                    ["title" => "Modèle Excel : Calculateur de TJM et Budget", "duration" => "Fichier éditables (.xlsx)"],
+                    ["title" => "Scripts textuels : Réponses aux objections de prix", "duration" => "Fichier PDF"]
                 ],
-                'access_details' => "Téléchargement immédiat du livre numérique PDF et de son dossier d'annexes et modèles.",
-                'is_active' => true,
-                'is_featured' => false,
-                'sales_count' => 0,
-                'views_count' => 0,
-            ],
-            [
-                'title' => 'Pack 1000+ Overlays, LUTs Cinéma & FX Sonores pour Vidéastes',
-                'slug' => 'pack-1000-overlays-luts-cinema-fx-sonores',
-                'token' => 'videomaker-pack-v99b2',
-                'category' => 'pack_ressources',
-                'price' => 100.00,
-                'original_price' => 35000.00,
-                'ad_spend' => 20000.00,
-                'access_type' => 'drive',
-                'access_url' => 'https://drive.google.com/drive/folders/videomaker-bundle-demo',
-                'badge_text' => 'PACK RESSOURCES',
-                'tagline' => 'Le méga-pack de ressources créatives indispensables pour sublimer vos montages sur Premiere Pro, Final Cut, CapCut et DaVinci Resolve.',
-                'cover_image' => 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1200&q=80',
-                'preview_video_url' => null,
-                'description_markdown' => "### Donnez un style hollywoodien et dynamique à toutes vos productions vidéo !
-
-Ce bundle regroupe l'essentiel des effets visuels et sonores les plus recherchés par les monteurs et créateurs de contenu.
-
-#### 🍿 Ce que contient ce bundle géant :
-- **300+ FX Sonores Premium** (Whoosh, Riser, Glitch, Pass-by, Impact, Cinematic Bass).
-- **250+ LUTs Colorimétriques** (Vlog, Teal & Orange, Moody Dark, Vintage Film).
-- **200+ Overlays Glitch, Grain 4K & Fuites de lumière**.
-- **250+ Bruits de fond et ambiances sonores libres de droits**.",
-                'features' => [
-                    "Plus de 1000 fichiers multimédias HD & 4K libres de droits",
-                    "Compatible CapCut, Premiere Pro, FCPX, DaVinci Resolve",
-                    "Fichiers organisés par dossiers clairs dans Google Drive",
-                    "Utilisation commerciale autorisée"
-                ],
-                'curriculum' => [
-                    ["title" => "Effets Sonores (300+ Sound FX pour monteurs)", "duration" => "Format WAV Haute Qualité"],
-                    ["title" => "LUTs Cinéma (250+ Fichiers de colorimétrie)", "duration" => "Fichiers .CUBE"],
-                    ["title" => "Overlays vidéo (200+ Textures, Glitch & Grain)", "duration" => "Fichiers MP4 4K"],
-                    ["title" => "Bruits de fond & Ambiances sonores", "duration" => "250+ Fichiers WAV"]
-                ],
-                'access_details' => "Lien permanent d'accès au dossier Google Drive partagé contenant le méga-pack.",
+                'access_details' => "Accès permanent au dossier Google Drive regroupant tous les templates de contrats, fiches de calcul et guides commerciaux.",
                 'is_active' => true,
                 'is_featured' => true,
                 'sales_count' => 0,
                 'views_count' => 0,
             ],
             [
-                'title' => 'System.io & Notion Template All-In-One : Système de Vente pour Solopreneur',
-                'slug' => 'systeme-vente-solopreneur-notion-systemio',
-                'token' => 'solopreneur-system-s55t9',
-                'category' => 'template_system',
-                'price' => 100.00,
-                'original_price' => 45000.00,
-                'ad_spend' => 12000.00,
+                'title' => 'Pack de templates et mockups flyer en design graphique',
+                'slug' => 'pack-templates-mockups-flyer-design-graphique',
+                'token' => 'flyer-templates-v3',
+                'category' => 'template_design',
+                'price' => 6000.00,
+                'original_price' => 25000.00,
+                'ad_spend' => 0.00,
                 'access_type' => 'drive',
-                'access_url' => 'https://drive.google.com/drive/folders/solopreneur-system-demo',
-                'badge_text' => 'TEMPLATE & SYSTEM',
-                'tagline' => 'Installez votre tunnel de vente automatisé et gérez l\'intégralité de vos projets, clients et contenus depuis un espace Notion optimisé.',
-                'cover_image' => 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80',
+                'access_url' => 'https://drive.google.com/drive/folders/votre-dossier-flyers-ici',
+                'badge_text' => 'PACK TEMPLATES',
+                'tagline' => 'Sublimez vos présentations clients avec des flyers professionnels. Templates de flyers éditables et mockups photoréalistes en haute résolution.',
+                'cover_image' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
                 'preview_video_url' => null,
-                'description_markdown' => "### Automatisez vos ventes et votre organisation sans vous éparpiller !
+                'description_markdown' => "### Divisez par deux votre temps de conception graphique !
 
-Un système complet clé en main pour structurer votre activité de vente de produits digitaux ou de services.
+Un ensemble massif de templates de flyers éditables sous Photoshop et de mockups professionnels de haute qualité pour présenter vos travaux sous leur meilleur jour et déclencher des coups de cœur clients.
 
-#### ⚙️ Inclus dans ce pack d'automatisation :
-1. **Template Notion Business OS** : Suivi des revenus, CRM client, calendrier éditorial et gestion de projets.
-2. **Tunnel de Vente System.io dupliquable** : Page de capture, page de vente et séquence d'emails automatiques.
-3. **Guide de Configuration pas à pas** pour connecter le tout en moins d'une heure.",
+#### 🎨 Ce que comprend ce pack :
+- **Templates de Flyers (25 fichiers PSD éditables)** : Fichiers organisés en calques structurés (styles événements, soirées, corporate, immobilier, restauration).
+- **Mockups Premium (10 PSD)** : Des mises en situation réelles (papier texturé, reflets, ombres réalistes) avec objets dynamiques pour insérer vos créations en un clic.
+- **Dossier typographique** : Liens et fichiers de polices modernes gratuites utilisées dans les designs.
+
+#### ⚡ Caractéristiques techniques :
+- Format A5 (standard impression).
+- Résolution 300 DPI, profils de couleurs CMJN (prêt pour impression).
+- Entièrement modifiable et personnalisable.",
                 'features' => [
-                    "Espace Notion dupliquable en 1 clic",
-                    "Tunnel de vente System.io prêt à importer",
-                    "Séquences d'emails de relance automatiques rédigées",
-                    "Accès illimité et réutilisable"
+                    "25 Templates de Flyers PSD éditables",
+                    "10 Mockups de présentation réalistes avec Objets Dynamiques",
+                    "Résolution professionnelle 300 DPI prête pour impression",
+                    "Polices de caractères gratuites et modernes incluses"
                 ],
                 'curriculum' => [
-                    ["title" => "Workspace Notion : OS Business complet", "duration" => "Lien de duplication direct"],
-                    ["title" => "Tunnel de Vente System.io : Duplicable", "duration" => "Lien d'importation direct"],
-                    ["title" => "Guide de déploiement PDF & vidéo tutoriel", "duration" => "Fichier PDF & Vidéo MP4"]
+                    ["title" => "Templates de Flyers Événementiels (15 fichiers PSD)", "duration" => "Format A5 / 300 DPI"],
+                    ["title" => "Templates de Flyers Corporate (10 fichiers PSD)", "duration" => "Format A5 / CMJN"],
+                    ["title" => "Mockups de mise en situation (10 fichiers PSD)", "duration" => "Mockups Smart Object"],
+                    ["title" => "Dossier de polices de caractères libres de droits", "duration" => "Fichiers .OTF / .TTF"]
                 ],
-                'access_details' => "Liens de duplication directe pour Notion et System.io + guide de configuration rapide.",
+                'access_details' => "Lien de téléchargement direct vers le dossier de stockage contenant tous les fichiers PSD et ressources d'accompagnement.",
                 'is_active' => true,
-                'is_featured' => false,
+                'is_featured' => true,
+                'sales_count' => 0,
+                'views_count' => 0,
+            ],
+            [
+                'title' => 'Pack ultime de ressources graphiques pour concepteurs',
+                'slug' => 'pack-ultime-ressources-graphiques-concepteurs',
+                'token' => 'ultime-ressources-v4',
+                'category' => 'pack_ressources',
+                'price' => 7000.00,
+                'original_price' => 30000.00,
+                'ad_spend' => 0.00,
+                'access_type' => 'drive',
+                'access_url' => 'https://drive.google.com/drive/folders/votre-dossier-pack-ultime-ici',
+                'badge_text' => 'PACK RESSOURCES',
+                'tagline' => 'La bibliothèque définitive pour graphistes et créatifs. Milliers d\'images HD, textures, icônes vectorielles, dégradés et éléments de conception.',
+                'cover_image' => 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1200&q=80',
+                'preview_video_url' => null,
+                'description_markdown' => "### Le pack ultime pour ne plus jamais manquer de ressources !
+
+Vous y trouverez des milliers d'éléments graphiques bruts indispensables pour concevoir des logos, bannières, affiches, packagings ou sites internet originaux.
+
+#### 💎 Contenu exceptionnel du bundle :
+1. **1000+ Icônes Vectorielles** : Pack d'icônes SVG et PNG transparents, classés par thématiques (tech, finance, business, voyage, lifestyle).
+2. **200+ Textures HD & Overlays** : Grains de papier, effets grunge, bruits de film argentique et fuites de lumière pour donner du caractère à vos visuels.
+3. **500+ Palettes & Dégradés** : Fichiers prêts à importer dans Illustrator et Photoshop pour des agencements de couleurs percutants.
+4. **50 Éléments 3D Premium** : Illustrations 3D haute qualité au format PNG transparent pour moderniser vos interfaces ou visuels marketing.
+
+#### ⚡ Pourquoi choisir ce pack :
+- Gain de temps énorme sur tous vos projets.
+- Fichiers légers, parfaitement classés et triés par dossier.",
+                'features' => [
+                    "Plus de 1500 ressources éditables de qualité premium",
+                    "Formats standards compatibles Photoshop, Illustrator, Figma, Canva",
+                    "Textures et illustrations 3D haute résolution",
+                    "Licence d'utilisation commerciale sans attribution requise"
+                ],
+                'curriculum' => [
+                    ["title" => "Bibliothèque d'icônes vectorielles (1000+ SVG)", "duration" => "Archive ZIP 80 Mo"],
+                    ["title" => "Overlays et textures haute définition (200+ fichiers)", "duration" => "Archive ZIP 250 Mo"],
+                    ["title" => "Palettes de dégradés et fichiers de couleurs (.GRD)", "duration" => "Fichiers Photoshop / Illustrator"],
+                    ["title" => "Kit d'illustrations 3D de haute qualité (50 éléments)", "duration" => "Fichiers .PNG transparents / .BLEND"]
+                ],
+                'access_details' => "Dossier d'accès Google Drive partagé de façon permanente avec option de téléchargement groupé ou individuel.",
+                'is_active' => true,
+                'is_featured' => true,
                 'sales_count' => 0,
                 'views_count' => 0,
             ],
