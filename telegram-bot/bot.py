@@ -18,7 +18,7 @@ from config import TELEGRAM_BOT_TOKEN, ALLOWED_CHAT_ID, PROJECT_NAME, PROJECT_UR
 from modules.monitor import get_system_resources, check_all_services, check_website_health
 from modules.backup import run_full_backup
 from modules.security import execute_whitelisted_command, get_ssh_audit, get_service_logs
-from modules.deploy import run_laravel_deployment
+from modules.deploy import run_laravel_deployment, run_laravel_seeding, run_laravel_pull_cache
 
 # Setup logging
 logging.basicConfig(format='%(asctime)s - Bot - %(levelname)s - %(message)s', level=logging.INFO)
@@ -58,10 +58,11 @@ def main_keyboard():
     """Génère le menu clavier interactif sous la barre de saisie."""
     keyboard = [
         [KeyboardButton("📊 /status"), KeyboardButton("💻 /uptime")],
+        [KeyboardButton("🌱 /seed"), KeyboardButton("📥 /pull")],
         [KeyboardButton("🔑 /ssh"), KeyboardButton("🗄️ /db")],
         [KeyboardButton("🌐 /health"), KeyboardButton("💾 /backup")],
-        [KeyboardButton("🚀 /deploy"), KeyboardButton("📜 /logs")],
-        [KeyboardButton("🔄 /restart"), KeyboardButton("❓ /help")]
+        [KeyboardButton("🚀 /deploy"), KeyboardButton("🔄 /restart")],
+        [KeyboardButton("❓ /help")]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
@@ -77,7 +78,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"🛡️ <b>{proj_name} — Bot Sécurité & Supervision</b>\n\n"
         f"Bonjour {first_name} !\n"
         f"Voici les commandes d'administration disponibles :\n\n"
-        f"🚀 <b>/deploy</b> — Git pull, migrations BD & build front-end\n"
+        f"🚀 <b>/deploy</b> — Déploiement complet (Git pull, migrations, npm build)\n"
+        f"🌱 <b>/seed</b> — Relancer les migrations & insérer les seeders (Private Products)\n"
+        f"📥 <b>/pull</b> — Faire un git pull & nettoyer/optimiser le cache\n"
         f"📊 <b>/status</b> — État de santé des services principaux\n"
         f"💻 <b>/uptime</b> — CPU, RAM, Charge & Disque du serveur\n"
         f"🔑 <b>/ssh</b> — Sessions SSH actives & connexions récentes\n"
@@ -105,12 +108,58 @@ async def deploy_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     loop = asyncio.get_running_loop()
     success, log_output = await loop.run_in_executor(None, run_laravel_deployment, branch)
-
+ 
     status_icon = "✅" if success else "❌"
     safe_logs = html.escape(log_output[-3000:])
     response_msg = (
         f"{status_icon} <b>Rapport de Déploiement :</b>\n\n"
         f"<pre>{safe_logs}</pre>"
+    )
+    await update.message.reply_text(response_msg, parse_mode="HTML")
+
+async def seed_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Commande /seed : Relance les migrations et effectue le seeding."""
+    if not await is_authorized_and_notify(update, context):
+        return
+
+    await update.message.reply_text(
+        "⏳ <b>Exécution des Migrations & Seeders...</b>\n"
+        "<i>Mise à jour des tables et des produits dans la base de données...</i>",
+        parse_mode="HTML"
+    )
+
+    loop = asyncio.get_running_loop()
+    success, log_output = await loop.run_in_executor(None, run_laravel_seeding)
+
+    status_icon = "✅" if success else "❌"
+    safe_logs = html.escape(log_output)
+    response_msg = (
+        f"{status_icon} <b>Rapport de Seeding :</b>\n\n"
+        f"{safe_logs}"
+    )
+    await update.message.reply_text(response_msg, parse_mode="HTML")
+
+async def pull_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Commande /pull : Git pull et nettoyage/optimisation de cache."""
+    if not await is_authorized_and_notify(update, context):
+        return
+
+    branch = context.args[0] if context.args else "main"
+    safe_branch = html.escape(branch)
+
+    await update.message.reply_text(
+        f"⏳ <b>Mise à jour Git & Cache (Branche : <code>{safe_branch}</code>)...</b>",
+        parse_mode="HTML"
+    )
+
+    loop = asyncio.get_running_loop()
+    success, log_output = await loop.run_in_executor(None, run_laravel_pull_cache, branch)
+
+    status_icon = "✅" if success else "❌"
+    safe_logs = html.escape(log_output)
+    response_msg = (
+        f"{status_icon} <b>Rapport Git Pull & Cache :</b>\n\n"
+        f"{safe_logs}"
     )
     await update.message.reply_text(response_msg, parse_mode="HTML")
 
@@ -343,6 +392,10 @@ async def handle_text_messages(update: Update, context: ContextTypes.DEFAULT_TYP
     
     if "/deploy" in text:
         await deploy_command(update, context)
+    elif "/seed" in text:
+        await seed_command(update, context)
+    elif "/pull" in text:
+        await pull_command(update, context)
     elif "/status" in text:
         await status_command(update, context)
     elif "/uptime" in text:
@@ -373,6 +426,8 @@ def main():
     # Handlers
     app.add_handler(CommandHandler(["start", "help"], help_command))
     app.add_handler(CommandHandler("deploy", deploy_command))
+    app.add_handler(CommandHandler("seed", seed_command))
+    app.add_handler(CommandHandler("pull", pull_command))
     app.add_handler(CommandHandler("status", status_command))
     app.add_handler(CommandHandler("uptime", uptime_command))
     app.add_handler(CommandHandler("ssh", ssh_command))

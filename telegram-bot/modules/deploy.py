@@ -45,3 +45,75 @@ def run_laravel_deployment(branch="main"):
 
     summary = "\n\n".join(logs)
     return overall_success, summary
+
+
+def run_laravel_seeding():
+    """
+    Exécute la séquence de migration et d'insertion (seeding) :
+    1. php artisan migrate --force
+    2. php artisan db:seed --class=PrivateProductSeeder --force
+    """
+    if not PROJECT_PATH.exists():
+        return False, f"Dossier du projet introuvable : <code>{PROJECT_PATH}</code>"
+
+    steps = [
+        ("Migrations Laravel", f"php {PROJECT_PATH}/artisan migrate --force"),
+        ("Seeding Private Products", f"php {PROJECT_PATH}/artisan db:seed --class=PrivateProductSeeder --force")
+    ]
+
+    logs = []
+    overall_success = True
+
+    for step_name, cmd in steps:
+        try:
+            res = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=120)
+            output = res.stdout.strip() or res.stderr.strip() or "OK"
+            
+            if res.returncode == 0:
+                logs.append(f"✅ <b>{step_name}</b>\n<pre>{html.escape(output[-600:])}</pre>")
+            else:
+                logs.append(f"❌ <b>{step_name}</b> (Code {res.returncode})\n<pre>{html.escape(output[-600:])}</pre>")
+                overall_success = False
+        except Exception as e:
+            logs.append(f"❌ <b>{step_name}</b> : Exception: {html.escape(str(e))}")
+            overall_success = False
+
+    summary = "\n\n".join(logs)
+    return overall_success, summary
+
+
+def run_laravel_pull_cache(branch="main"):
+    """
+    Exécute la séquence de pull et d'optimisation du cache :
+    1. git pull origin <branch>
+    2. php artisan optimize:clear
+    3. php artisan optimize
+    """
+    if not PROJECT_PATH.exists():
+        return False, f"Dossier du projet introuvable : <code>{PROJECT_PATH}</code>"
+
+    steps = [
+        ("Git Pull", f"git -C {PROJECT_PATH} pull origin {branch}"),
+        ("Nettoyage Cache (optimize:clear)", f"php {PROJECT_PATH}/artisan optimize:clear"),
+        ("Optimisation Cache (optimize)", f"php {PROJECT_PATH}/artisan optimize")
+    ]
+
+    logs = []
+    overall_success = True
+
+    for step_name, cmd in steps:
+        try:
+            res = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=120)
+            output = res.stdout.strip() or res.stderr.strip() or "OK"
+            
+            if res.returncode == 0:
+                logs.append(f"✅ <b>{step_name}</b>\n<pre>{html.escape(output[-600:])}</pre>")
+            else:
+                logs.append(f"❌ <b>{step_name}</b> (Code {res.returncode})\n<pre>{html.escape(output[-600:])}</pre>")
+                overall_success = False
+        except Exception as e:
+            logs.append(f"❌ <b>{step_name}</b> : Exception: {html.escape(str(e))}")
+            overall_success = False
+
+    summary = "\n\n".join(logs)
+    return overall_success, summary
