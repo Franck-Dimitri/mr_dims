@@ -9,6 +9,7 @@ export default function BlueprintLayout({ children }) {
     const { url } = usePage();
     const [theme, setTheme] = useState('system');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [showCookieBanner, setShowCookieBanner] = useState(false);
     const { lang, changeLanguage, t } = useLanguage() || { lang: 'fr', changeLanguage: () => {}, t: (k) => k };
 
     useEffect(() => {
@@ -16,7 +17,16 @@ export default function BlueprintLayout({ children }) {
         if (storedTheme) {
             setTheme(storedTheme);
         }
+        const cookieConsent = localStorage.getItem('cookie_consent');
+        if (!cookieConsent) {
+            setShowCookieBanner(true);
+        }
     }, []);
+
+    const handleCookieConsent = (accepted) => {
+        localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+        setShowCookieBanner(false);
+    };
 
     const applyTheme = (newTheme) => {
         setTheme(newTheme);
@@ -293,6 +303,56 @@ export default function BlueprintLayout({ children }) {
                     </div>
                 </div>
             </footer>
+
+            {/* Cookie Consent Banner */}
+            <AnimatePresence>
+                {showCookieBanner && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className="fixed bottom-6 right-6 z-50 max-w-sm w-[calc(100vw-3rem)] bg-white/95 dark:bg-blueprint-darkNight/95 border border-gray-200/80 dark:border-gray-800/80 p-5 rounded-2xl shadow-2xl backdrop-blur-md font-sans"
+                    >
+                        <div className="flex gap-4">
+                            <div className="p-2.5 bg-blueprint-bluePrimary/10 dark:bg-blueprint-cyan/10 rounded-xl h-fit">
+                                <svg className="w-6 h-6 text-blueprint-bluePrimary dark:text-blueprint-cyan shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5Z" />
+                                    <path d="M8.5 8.5v.01" />
+                                    <path d="M16 15.5v.01" />
+                                    <path d="M12 12v.01" />
+                                    <path d="M11 17v.01" />
+                                    <path d="M7 14v.01" />
+                                </svg>
+                            </div>
+                            <div className="flex-grow">
+                                <h4 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-1">
+                                    {lang === 'en' ? 'Cookies & Privacy' : 'Cookies & Confidentialité'}
+                                </h4>
+                                <p className="text-[11px] text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                                    {lang === 'en' 
+                                        ? 'We use cookies to analyze traffic and enhance your browsing experience.' 
+                                        : "J'utilise des cookies pour analyser le trafic et améliorer votre expérience sur mon portfolio."}
+                                </p>
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        onClick={() => handleCookieConsent(true)}
+                                        className="px-4 py-2 bg-blueprint-bluePrimary dark:bg-blueprint-cyan text-white dark:text-gray-900 font-bold text-[10px] uppercase tracking-wider rounded-lg hover:opacity-90 transition-opacity"
+                                    >
+                                        {lang === 'en' ? 'Accept' : 'Accepter'}
+                                    </button>
+                                    <button
+                                        onClick={() => handleCookieConsent(false)}
+                                        className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white font-bold text-[10px] uppercase tracking-wider transition-colors"
+                                    >
+                                        {lang === 'en' ? 'Decline' : 'Refuser'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
