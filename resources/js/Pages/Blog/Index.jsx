@@ -66,10 +66,12 @@ export default function Index({ blogs }) {
                                                 </div>
                                             )}
                                             
-                                            {/* Date Badge */}
-                                            <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm border border-white/10 px-3 py-1 font-mono text-[10px] text-white rounded-full flex items-center gap-2">
+                                            {/* Date & Reading Time Badge */}
+                                            <div className="absolute top-4 left-4 bg-black/75 backdrop-blur-md border border-white/10 px-3 py-1 font-mono text-[10px] text-white rounded-full flex items-center gap-2">
                                                 <svg className="w-3 h-3 text-blueprint-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                                                {new Date(blog.published_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                                <span>{new Date(blog.published_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                                                <span>•</span>
+                                                <span className="text-blueprint-cyan">{Math.max(1, Math.ceil(((blog.markdown_content || '').trim().split(/\s+/).length || 0) / 190))} min</span>
                                             </div>
                                         </div>
 

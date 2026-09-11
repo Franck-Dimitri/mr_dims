@@ -42,8 +42,8 @@ export default function Index({ auth, products, stats, countryStats, latestVisit
     };
 
     return (
-        <AuthenticatedLayout user={auth.user} header="Suivi Financier & Gestion des Produits Digitaux">
-            <Head title="Admin - Produits Digitaux & Finances" />
+        <AuthenticatedLayout user={auth.user} header="Portefeuille & Suivi Financier">
+            <Head title="Admin - Portefeuille & Finances" />
 
             <div className="py-6 mx-auto px-4 sm:px-6 lg:px-8 space-y-8 font-sans">
                 
@@ -51,11 +51,11 @@ export default function Index({ auth, products, stats, countryStats, latestVisit
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-blueprint-bluePrimary/5 dark:bg-blueprint-cyan/5 p-6 rounded-2xl border border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20">
                     <div>
                         <h1 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-                            <ShoppingBag className="w-6 h-6 text-indigo-600 dark:text-cyan-400" />
-                            <span>Gestion des Produits Digitaux & Tracking Ventes</span>
+                            <DollarSign className="w-6 h-6 text-indigo-600 dark:text-cyan-400" />
+                            <span>Portefeuille & Suivi Financier</span>
                         </h1>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                            Suivez vos revenus, vos dépenses publicitaires (Pub), et créez de nouvelles offres numériques en 1 clic.
+                            Suivez vos revenus, vos dépenses publicitaires (Pub), et gérez vos flux financiers en 1 clic.
                         </p>
                     </div>
 
@@ -64,7 +64,7 @@ export default function Index({ auth, products, stats, countryStats, latestVisit
                         className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-xs rounded-xl flex items-center gap-2 transition-all shadow-md shadow-indigo-500/20"
                     >
                         <Plus className="w-4 h-4" />
-                        <span>Créer un Produit Digital</span>
+                        <span>Ajouter une Entrée / Produit</span>
                     </Link>
                 </div>
 
@@ -249,17 +249,6 @@ export default function Index({ auth, products, stats, countryStats, latestVisit
                                                 </td>
                                                 <td className="py-4 px-4 text-right">
                                                     <div className="flex items-center justify-end gap-2">
-                                                        <button
-                                                            onClick={() => copySalesLink(product)}
-                                                            className="p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors"
-                                                            title="Copier le lien de vente"
-                                                        >
-                                                            {copiedToken === product.id ? (
-                                                                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                                                            ) : (
-                                                                <Copy className="w-4 h-4" />
-                                                            )}
-                                                        </button>
                                                         <Link
                                                             href={route('admin.private-products.edit', product.id)}
                                                             className="p-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-indigo-600 dark:text-cyan-400 rounded-lg transition-colors inline-block"

@@ -116,16 +116,4 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'mr_dims'])->group(funct
     Route::get('/system/backup/download/{filename}', [SystemControlController::class, 'downloadBackup'])->name('admin.system.backup.download');
 });
 
-// Private Digital Sales Module (Obfuscated Routes with noindex)
-use App\Http\Controllers\PrivateOfferController;
-Route::prefix('p')->group(function () {
-    Route::get('/vault/{token?}', [PrivateOfferController::class, 'index'])->name('private.index');
-    Route::get('/offer/{slug}/{token}', [PrivateOfferController::class, 'show'])->name('private.show');
-    Route::get('/checkout/status/{order_hash}', [PrivateOfferController::class, 'checkStatus'])->name('private.status');
-    Route::get('/checkout/{slug}/{token}', [PrivateOfferController::class, 'checkout'])->name('private.checkout');
-    Route::post('/checkout/{slug}/{token}', [PrivateOfferController::class, 'processCheckout'])->name('private.process_checkout');
-    Route::post('/webhooks/hrskills-pay', [PrivateOfferController::class, 'handleWebhook'])->name('private.webhook');
-    Route::get('/success/{order_hash}', [PrivateOfferController::class, 'success'])->name('private.success');
-    Route::get('/download/{order_hash}', [PrivateOfferController::class, 'downloadResource'])->name('private.download');
-});
 require __DIR__.'/auth.php';

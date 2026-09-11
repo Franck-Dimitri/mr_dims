@@ -51,14 +51,14 @@ def run_laravel_seeding():
     """
     Exécute la séquence de migration et d'insertion (seeding) :
     1. php artisan migrate --force
-    2. php artisan db:seed --class=PrivateProductSeeder --force
+    2. php artisan db:seed --force
     """
     if not PROJECT_PATH.exists():
         return False, f"Dossier du projet introuvable : <code>{PROJECT_PATH}</code>"
 
     steps = [
         ("Migrations Laravel", f"php {PROJECT_PATH}/artisan migrate --force"),
-        ("Seeding Private Products", f"php {PROJECT_PATH}/artisan db:seed --class=PrivateProductSeeder --force")
+        ("Seeding Database", f"php {PROJECT_PATH}/artisan db:seed --force")
     ]
 
     logs = []

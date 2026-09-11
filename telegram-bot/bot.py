@@ -79,7 +79,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Bonjour {first_name} !\n"
         f"Voici les commandes d'administration disponibles :\n\n"
         f"🚀 <b>/deploy</b> — Déploiement complet (Git pull, migrations, npm build)\n"
-        f"🌱 <b>/seed</b> — Relancer les migrations & insérer les seeders (Private Products)\n"
+        f"🌱 <b>/seed</b> — Relancer les migrations & insérer les données de base\n"
         f"📥 <b>/pull</b> — Faire un git pull & nettoyer/optimiser le cache\n"
         f"📊 <b>/status</b> — État de santé des services principaux\n"
         f"💻 <b>/uptime</b> — CPU, RAM, Charge & Disque du serveur\n"
@@ -124,7 +124,7 @@ async def seed_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(
         "⏳ <b>Exécution des Migrations & Seeders...</b>\n"
-        "<i>Mise à jour des tables et des produits dans la base de données...</i>",
+        "<i>Mise à jour des tables et des données de base...</i>",
         parse_mode="HTML"
     )
 
