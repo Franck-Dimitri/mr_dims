@@ -25,3 +25,18 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Python & Virtual Environments
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+telegram-bot/.env
+
+# Backups & Archives
+*.tar.gz
+*.gz
+*.sqlite.gz
+portfolio_*.gz
+/var/backups
