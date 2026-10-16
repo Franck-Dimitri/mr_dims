@@ -83,7 +83,11 @@ export default function Packs() {
 
     return (
         <BlueprintLayout>
-            <SEO title={lang === 'en' ? "Packs & Estimator - Software Engineering" : "Packs & Estimator - Ingénierie Logicielle"} />
+            <SEO 
+                title={lang === 'en' ? "Development Packages & Cost Estimator" : "Packs & Simulateur de Devis Logiciel"} 
+                description={lang === 'en' ? "Transparent software development packages, MVP pricing, and interactive cost estimator for custom web apps by Franck Dimitri (Mr Dim's)." : "Tarifs transparents de développement logiciel, packs MVP, SaaS et simulateur interactif de devis pour applications web par Franck Dimitri (Mr Dim's)."}
+                keywords="Tarifs, Packs, Devis Logiciel, Simulateur de Coût, MVP, SaaS, Développement Web, Cameroun, Franck Dimitri"
+            />
 
             <div className="py-24 relative z-10 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 font-sans">
                 {/* Header */}

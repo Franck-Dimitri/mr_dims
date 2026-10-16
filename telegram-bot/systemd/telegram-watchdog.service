@@ -1,14 +1,16 @@
 [Unit]
-Description=Watchdog Alertes Temps Réel Telegram
-After=network.target mysql.service nginx.service
+Description=Watchdog Alertes Temps Réel Telegram pour VPS
+After=network.target
 
 [Service]
 Type=simple
-User=franc
-WorkingDirectory=/var/www/mr_dims/telegram-bot
-ExecStart=/var/www/mr_dims/telegram-bot/venv/bin/python watchdog.py
+User=mrdims
+Group=mrdims
+WorkingDirectory=/var/www/mrdims-portfolio/telegram-bot
+ExecStart=/var/www/mrdims-portfolio/venv/bin/python watchdog.py
 Restart=always
 RestartSec=10
+EnvironmentFile=/var/www/mrdims-portfolio/telegram-bot/.env
 
 [Install]
 WantedBy=multi-user.target

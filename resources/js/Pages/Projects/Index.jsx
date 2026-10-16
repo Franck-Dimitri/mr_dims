@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BlueprintLayout from '@/Layouts/BlueprintLayout';
-import ConstructionBackground from '@/Components/ConstructionBackground';
+import SEO from '@/Components/SEO';
 import { useLanguage } from '@/Context/LanguageContext';
 
-export default function Index({ projects, filters }) {
+export default function Index({ projects = [], filters }) {
     const { t, lang } = useLanguage() || { lang: 'fr', t: (k) => k };
     const [viewMode, setViewMode] = useState('grid');
     const [searchQuery, setSearchQuery] = useState('');
@@ -15,7 +15,7 @@ export default function Index({ projects, filters }) {
 
     const getCategoryLabel = (cat) => {
         switch (cat) {
-            case 'ALL': return 'Tout afficher';
+            case 'ALL': return lang === 'en' ? 'All Projects' : 'Tous les projets';
             case 'FULL_STACK': return 'Full Stack';
             case 'BACKEND': return 'Backend';
             case 'FRONTEND': return 'Frontend';
@@ -32,104 +32,127 @@ export default function Index({ projects, filters }) {
     });
 
     const fadeInUp = {
-        hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
     };
 
     const staggerContainer = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: { staggerChildren: 0.1 }
+            transition: { staggerChildren: 0.08 }
         }
+    };
+
+    const parseJSON = (data, defaultVal) => {
+        if (!data) return defaultVal;
+        if (Array.isArray(data)) return data;
+        if (typeof data === 'string') {
+            try { return JSON.parse(data); } 
+            catch (e) { return data.split(',').map(s => s.trim()); }
+        }
+        return defaultVal;
     };
 
     return (
         <BlueprintLayout>
-            <Head title="Projets & Réalisations - Software Architecture" />
+            <SEO 
+                title={lang === 'en' ? "Projects & Software Engineering Case Studies" : "Projets & Réalisations — Franck Dimitri"}
+                description={lang === 'en' ? "Explore full-stack software applications, Laravel systems, and React architectures by Franck Dimitri (Mr Dim's)." : "Découvrez les réalisations, architectures logicielles, applications web et intégrations d'APIs développées par Franck Dimitri (Mr Dim's)."}
+                keywords="Projets, Réalisations, Case Studies, Architecture Logicielle, Laravel, React, Franck Dimitri"
+            />
             
-            {/* Header Section */}
-            <section className="relative pt-32 pb-16 border-b border-blueprint-bluePrimary/20 dark:border-blueprint-cyan/20 z-10 font-sans">
-                <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            {/* ========================================================= */}
+            {/* 1. EN-TÊTE DE LA GALERIE DE PROJETS                       */}
+            {/* ========================================================= */}
+            <section className="relative pt-12 pb-14 border-b border-neutral-200/80 dark:border-neutral-800/80 font-sans overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none select-none">
+                    <div className="max-w-6xl mx-auto h-full border-x border-dashed border-neutral-200/50 dark:border-neutral-800/50 relative">
+                        <span className="absolute top-4 -left-1 text-[10px] font-mono font-bold text-cyan-500/60">+</span>
+                        <span className="absolute top-4 -right-1 text-[10px] font-mono font-bold text-cyan-500/60">+</span>
+                        <span className="absolute bottom-4 -left-1 text-[10px] font-mono font-bold text-cyan-500/60">+</span>
+                        <span className="absolute bottom-4 -right-1 text-[10px] font-mono font-bold text-cyan-500/60">+</span>
+                    </div>
+                </div>
+
+                <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
                     <motion.div 
                         initial="hidden"
                         animate="visible"
                         variants={staggerContainer}
                     >
-                        <motion.div variants={fadeInUp} className="flex items-center gap-6 mb-6 text-xs text-blueprint-bluePrimary dark:text-blueprint-cyan font-mono">
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full animate-pulse"></div>
-                                Portfolio d'Ingénierie
-                            </div>
-                            <div className="h-px bg-gray-300 dark:bg-gray-800 w-12"></div>
-                            <div>
-                                Total: {projects.length} projets
-                            </div>
+                        <motion.div variants={fadeInUp} className="flex items-center gap-3 font-mono text-xs text-cyan-600 dark:text-cyan-400 font-bold mb-4">
+                            <span className="w-1.5 h-1.5 bg-cyan-500 rounded-none animate-pulse"></span>
+                            <span>INDEX // RÉALISATIONS TECHNIQUES</span>
+                            <span className="text-neutral-400">·</span>
+                            <span className="text-neutral-500">{projects.length} PROJETS RÉPERTORIÉS</span>
                         </motion.div>
 
-                        <motion.h1 variants={fadeInUp} className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-6 text-blueprint-textDark dark:text-white font-sans">
-                            Projets & Réalisations
+                        <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-neutral-900 dark:text-white mb-4">
+                            Projets & Architectures
                         </motion.h1>
 
-                        <motion.p variants={fadeInUp} className="text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">
-                            Une sélection d'architectures systèmes, d'interfaces et de logiques backend. 
-                            Chaque projet est traité comme un écosystème logiciel sur-mesure.
+                        <motion.p variants={fadeInUp} className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+                            Sélection d'applications web, de systèmes d'information et d'APIs critiques conçus avec une exigence de robustesse et de performance.
                         </motion.p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* Toolbar Section */}
-            <section className="border-b border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-[#070A10]/80 backdrop-blur-md sticky top-20 z-30 font-sans">
-                <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col lg:flex-row lg:items-center justify-between py-4 gap-4">
+            {/* ========================================================= */}
+            {/* 2. BARRE D'OUTILS : FILTRES, RECHERCHE & VUE (CARRÉ)      */}
+            {/* ========================================================= */}
+            <section className="border-b border-neutral-200/80 dark:border-neutral-800/80 bg-white/70 dark:bg-[#070A10]/70 backdrop-blur-md sticky top-16 sm:top-20 z-30 font-sans">
+                <div className="max-w-6xl mx-auto px-5 sm:px-8">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between py-3.5 gap-4">
                         
-                        {/* Categories */}
-                        <div className="flex overflow-x-auto pb-2 lg:pb-0 hide-scrollbar gap-6 text-xs font-bold">
+                        {/* Filtres par Catégorie - Boutons Carrés */}
+                        <div className="flex overflow-x-auto pb-1 md:pb-0 gap-2">
                             {categories.map(cat => (
                                 <button 
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
-                                    className={`relative whitespace-nowrap pb-2 ${activeCategory === cat ? 'text-blueprint-bluePrimary dark:text-blueprint-cyan font-bold' : 'text-gray-500 hover:text-blueprint-textDark dark:hover:text-white transition-colors'}`}
+                                    className={`px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider rounded-none transition-colors whitespace-nowrap ${
+                                        activeCategory === cat 
+                                            ? 'bg-cyan-600 text-white' 
+                                            : 'bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:text-cyan-500 border border-neutral-200 dark:border-neutral-800'
+                                    }`}
                                 >
                                     {getCategoryLabel(cat)}
-                                    {activeCategory === cat && (
-                                        <motion.div 
-                                            layoutId="activeCategoryIndicator"
-                                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"
-                                        />
-                                    )}
                                 </button>
                             ))}
                         </div>
 
-                        {/* Search & View Toggle */}
-                        <div className="flex items-center gap-4">
-                            <div className="relative">
-                                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+                        {/* Recherche & Switch Grille/Liste - Carrés */}
+                        <div className="flex items-center gap-3">
+                            <div className="relative flex-1 md:w-64">
                                 <input 
                                     type="text" 
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Rechercher un projet..." 
-                                    className="bg-gray-50 dark:bg-[#111827] border border-gray-200 dark:border-gray-800 focus:border-blueprint-bluePrimary dark:focus:border-blueprint-cyan focus:ring-1 focus:ring-blueprint-bluePrimary dark:focus:ring-blueprint-cyan pl-10 pr-4 py-2 text-xs rounded-xl w-full lg:w-64"
+                                    placeholder="Filtrer par titre ou techno..." 
+                                    className="w-full bg-neutral-50 dark:bg-[#0A0E17] border border-neutral-200 dark:border-neutral-800 focus:border-cyan-500 focus:ring-0 pl-8 pr-3 py-1.5 text-xs rounded-none text-neutral-900 dark:text-white font-sans"
                                 />
+                                <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
                             </div>
                             
-                            <div className="flex border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#111827] rounded-xl overflow-hidden">
+                            {/* Toggle Grille / Liste */}
+                            <div className="flex border border-neutral-200 dark:border-neutral-800 rounded-none bg-neutral-100 dark:bg-neutral-900">
                                 <button 
                                     onClick={() => setViewMode('grid')}
-                                    className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-gray-200 dark:bg-gray-800 text-blueprint-bluePrimary dark:text-blueprint-cyan' : 'text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
+                                    className={`p-2 rounded-none transition-colors ${viewMode === 'grid' ? 'bg-cyan-600 text-white' : 'text-neutral-400 hover:text-neutral-900 dark:hover:text-white'}`}
+                                    title="Vue Mosaïque"
                                 >
-                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z"/></svg>
+                                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z"/></svg>
                                 </button>
                                 <button 
                                     onClick={() => setViewMode('list')}
-                                    className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-gray-200 dark:bg-gray-800 text-blueprint-bluePrimary dark:text-blueprint-cyan' : 'text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
+                                    className={`p-2 rounded-none transition-colors ${viewMode === 'list' ? 'bg-cyan-600 text-white' : 'text-neutral-400 hover:text-neutral-900 dark:hover:text-white'}`}
+                                    title="Vue Liste"
                                 >
-                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
                                 </button>
                             </div>
                         </div>
@@ -137,13 +160,15 @@ export default function Index({ projects, filters }) {
                 </div>
             </section>
 
-            {/* Grid Section */}
-            <section className="py-16 relative z-10 min-h-screen font-sans">
-                <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            {/* ========================================================= */}
+            {/* 3. GRILLE DE PROJETS ARCHITECTURALE (CARRÉE AVEC COINS +) */}
+            {/* ========================================================= */}
+            <section className="py-16 relative z-10 min-h-[60vh] font-sans">
+                <div className="max-w-6xl mx-auto px-5 sm:px-8">
                     
-                    <div className="flex justify-between items-center mb-8 text-xs text-gray-500 border-b border-gray-200 dark:border-gray-800 pb-4 font-mono">
-                        <div>Affichage: {filteredProjects.length} projet(s)</div>
-                        <div>Vue: {viewMode === 'grid' ? 'Mosaïque' : 'Liste'}</div>
+                    <div className="flex justify-between items-center mb-8 text-xs font-mono text-neutral-500 border-b border-neutral-100 dark:border-neutral-800 pb-3">
+                        <div>RÉSULTAT : {filteredProjects.length} PROJET(S)</div>
+                        <div className="uppercase">AFFICHAGE : {viewMode === 'grid' ? 'MOSAÏQUE ARCHITECTURALE' : 'LISTE LINÉAIRE'}</div>
                     </div>
 
                     <motion.div 
@@ -152,91 +177,106 @@ export default function Index({ projects, filters }) {
                     >
                         <AnimatePresence>
                             {filteredProjects.length > 0 ? (
-                                filteredProjects.map((project, idx) => {
-                                    const parseJSON = (data, defaultVal) => {
-                                        if (!data) return defaultVal;
-                                        if (Array.isArray(data)) return data;
-                                        if (typeof data === 'string') {
-                                            try { return JSON.parse(data); } 
-                                            catch (e) { return data.split(',').map(s => s.trim()); }
-                                        }
-                                        return defaultVal;
-                                    };
+                                filteredProjects.map((project) => {
                                     const techStack = parseJSON(project.tech_stack, ['Laravel', 'React']);
-                                    const images = parseJSON(project.images, []);
-                                    const coverImage = images.length > 0 ? images[0] : null;
+                                    const coverImage = project.cover_image || (project.images && parseJSON(project.images, [])[0]) || null;
 
                                     return (
                                         <motion.div 
                                             layout
-                                            initial={{ opacity: 0, scale: 0.95 }}
-                                            animate={{ opacity: 1, scale: 1 }}
+                                            initial={{ opacity: 0, y: 15 }}
+                                            animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, scale: 0.95 }}
-                                            transition={{ duration: 0.3 }}
+                                            transition={{ duration: 0.25 }}
                                             key={project.id} 
-                                            className={`group bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-gray-800 hover:border-blueprint-bluePrimary/50 dark:hover:border-blueprint-cyan/50 transition-colors flex rounded-2xl overflow-hidden shadow-sm hover:shadow-md ${viewMode === 'list' ? 'flex-row items-center h-44' : 'flex-col'}`}
+                                            className={`relative group bg-white dark:bg-[#0A0E17] border border-neutral-200 dark:border-neutral-800 hover:border-cyan-500/60 rounded-none transition-all duration-300 flex overflow-hidden shadow-sm ${
+                                                viewMode === 'list' ? 'flex-col sm:flex-row items-stretch' : 'flex-col'
+                                            }`}
                                         >
-                                            <Link href={`/projects/${project.slug}`} className={`relative bg-gray-100 dark:bg-[#111827] overflow-hidden ${viewMode === 'list' ? 'w-48 h-full shrink-0 border-r border-gray-200 dark:border-gray-800' : 'h-64 border-b border-gray-200 dark:border-gray-800'}`}>
-                                                <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-                                                    <div className="w-2 h-2 bg-blueprint-bluePrimary dark:bg-blueprint-cyan rounded-full"></div>
-                                                    <div className="bg-black/70 backdrop-blur px-2.5 py-1 text-[10px] font-bold text-white rounded-full">
-                                                        {project.category || 'Web App'}
-                                                    </div>
-                                                </div>
-                                                
+                                            {/* 4 COINS CARRÉS AVEC + */}
+                                            <span className="absolute -top-2 -left-1.5 text-xs font-mono font-bold text-cyan-500 leading-none select-none z-20">+</span>
+                                            <span className="absolute -top-2 -right-1.5 text-xs font-mono font-bold text-cyan-500 leading-none select-none z-20">+</span>
+                                            <span className="absolute -bottom-2 -left-1.5 text-xs font-mono font-bold text-cyan-500 leading-none select-none z-20">+</span>
+                                            <span className="absolute -bottom-2 -right-1.5 text-xs font-mono font-bold text-cyan-500 leading-none select-none z-20">+</span>
+
+                                            {/* Image du Projet avec Grayscale to Color */}
+                                            <Link 
+                                                href={`/projects/${project.slug}`} 
+                                                className={`relative bg-neutral-100 dark:bg-[#111622] overflow-hidden ${
+                                                    viewMode === 'list' 
+                                                        ? 'sm:w-56 h-48 sm:h-auto shrink-0 border-b sm:border-b-0 sm:border-r border-neutral-200 dark:border-neutral-800' 
+                                                        : 'aspect-[16/10] border-b border-neutral-200 dark:border-neutral-800'
+                                                }`}
+                                            >
+                                                {project.category && (
+                                                    <span className="absolute top-3 left-3 z-10 px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-wider bg-neutral-900/90 text-white border border-white/20 rounded-none">
+                                                        {project.category}
+                                                    </span>
+                                                )}
+
                                                 {coverImage ? (
-                                                    <img src={coverImage} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                                    <img 
+                                                        src={coverImage} 
+                                                        alt={project.title} 
+                                                        className="w-full h-full object-cover object-top filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 rounded-none" 
+                                                    />
                                                 ) : (
-                                                    <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">
-                                                        <svg className="w-24 h-24 text-blueprint-textDark dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                                    <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                                                        <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
                                                     </div>
                                                 )}
                                             </Link>
 
-                                            <div className={`p-6 flex-1 flex flex-col ${viewMode === 'list' ? 'justify-center' : ''}`}>
-                                                <Link href={`/projects/${project.slug}`} className="block">
-                                                    <h3 className="text-xl font-bold tracking-tight mb-2 group-hover:text-blueprint-bluePrimary dark:group-hover:text-blueprint-cyan transition-colors line-clamp-1">
-                                                        {project.title}
-                                                    </h3>
-                                                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2 mb-4">
-                                                        {project.excerpt || project.description_markdown}
+                                            {/* Contenu de la Carte */}
+                                            <div className="p-6 flex-1 flex flex-col justify-between">
+                                                <div>
+                                                    <Link href={`/projects/${project.slug}`}>
+                                                        <h3 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white uppercase group-hover:text-cyan-500 transition-colors line-clamp-1">
+                                                            {project.title}
+                                                        </h3>
+                                                    </Link>
+
+                                                    <p className="mt-2 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-2">
+                                                        {project.excerpt || "Système web et architecture logicielle moderne."}
                                                     </p>
-                                                </Link>
 
-                                                <div className="mb-4 text-xs font-mono text-gray-400 border-l-2 border-blueprint-bluePrimary dark:border-blueprint-cyan pl-3">
-                                                    {techStack.join(' • ')}
-                                                </div>
-                                                
-                                                <div className={`mt-auto pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-gray-500 font-mono ${viewMode === 'list' ? 'border-none pt-0 mt-4' : 'border-t border-gray-100 dark:border-gray-800'}`}>
-                                                    <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
-                                                        <span>Temps: {project.development_time || 'N/A'}</span>
-                                                        {project.live_url ? (
-                                                            <span className="flex items-center gap-1.5 text-green-500 font-bold">
-                                                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                                                                En ligne
+                                                    {/* Stack Pills Carrées */}
+                                                    <div className="flex flex-wrap gap-1 mt-4">
+                                                        {techStack.slice(0, 4).map((tech, i) => (
+                                                            <span 
+                                                                key={i} 
+                                                                className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded-none bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800"
+                                                            >
+                                                                {tech}
                                                             </span>
-                                                        ) : (
-                                                            <span className="flex items-center gap-1.5 text-gray-400">
-                                                                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                                                                Hors ligne
-                                                            </span>
-                                                        )}
+                                                        ))}
                                                     </div>
+                                                </div>
 
-                                                    <div className="flex gap-4 items-center font-bold">
-                                                        {project.repository_url ? (
-                                                            <a href={project.repository_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-blueprint-bluePrimary dark:text-blueprint-cyan hover:underline z-20 relative">
-                                                                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                                                Dépôt Code
-                                                            </a>
-                                                        ) : (
-                                                            <span className="text-gray-400 flex items-center gap-1 cursor-not-allowed">Code Privé</span>
-                                                        )}
-                                                        
+                                                {/* Pied de Carte : Liens & Statut */}
+                                                <div className="mt-6 pt-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between text-xs font-mono font-bold uppercase">
+                                                    <Link 
+                                                        href={`/projects/${project.slug}`}
+                                                        className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 inline-flex items-center gap-1"
+                                                    >
+                                                        <span>Détails</span>
+                                                        <span>→</span>
+                                                    </Link>
+
+                                                    <div className="flex items-center gap-3">
                                                         {project.live_url && (
-                                                            <a href={project.live_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-blueprint-bluePrimary dark:text-blueprint-cyan hover:underline z-20 relative">
-                                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                                                                Voir le site
+                                                            <a 
+                                                                href={project.live_url} 
+                                                                target="_blank" 
+                                                                rel="noreferrer"
+                                                                className="text-neutral-500 hover:text-cyan-500 inline-flex items-center gap-1"
+                                                            >
+                                                                <span>Live</span>
+                                                                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                                </svg>
                                                             </a>
                                                         )}
                                                     </div>
@@ -247,15 +287,11 @@ export default function Index({ projects, filters }) {
                                 })
                             ) : (
                                 <motion.div 
-                                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                                    className="col-span-full border border-dashed border-gray-300 dark:border-gray-700 p-16 text-center flex flex-col items-center justify-center rounded-2xl"
+                                    initial={{ opacity: 0 }} 
+                                    animate={{ opacity: 1 }}
+                                    className="col-span-full border border-dashed border-neutral-300 dark:border-neutral-800 p-12 text-center text-xs font-mono text-neutral-500 rounded-none"
                                 >
-                                    <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <div className="text-sm font-medium text-gray-500">
-                                        Aucun projet ne correspond à cette catégorie ou recherche.
-                                    </div>
+                                    [ AUCUN PROJET CORRESPONDANT À CES CRITÈRES ]
                                 </motion.div>
                             )}
                         </AnimatePresence>

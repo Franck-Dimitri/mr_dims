@@ -26,8 +26,8 @@ use App\Http\Controllers\Admin\PrivateProductController as AdminPrivateProductCo
 */
 // Sitemap Route
 Route::get('/sitemap.xml', function () {
-    $projects = \App\Models\Project::all();
-    $blogs = \App\Models\Blog::all();
+    $projects = \App\Models\Project::orderBy('updated_at', 'desc')->get();
+    $blogs = \App\Models\Blog::where('status', 'published')->orderBy('published_at', 'desc')->get();
     return response()->view('sitemap', [
         'projects' => $projects,
         'blogs' => $blogs,

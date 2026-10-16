@@ -1,135 +1,19 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 export default function ConstructionBackground() {
     return (
-        <div className="fixed inset-0 w-screen h-screen z-0 overflow-hidden pointer-events-none">
-            {/* Soft background color */}
-            <div className="absolute inset-0 bg-blueprint-white dark:bg-blueprint-darkNight"></div>
+        <div className="fixed inset-0 w-screen h-screen z-0 overflow-hidden pointer-events-none select-none">
+            {/* Base Background Color */}
+            <div className="absolute inset-0 bg-[#FAFAFA] dark:bg-[#070A11] transition-colors duration-300"></div>
 
-            <svg className="absolute w-full h-full opacity-[0.2] dark:opacity-[0.1]" xmlns="http://www.w3.org/2000/svg">
-                
-                {/* Horizontal Top Alignment Line */}
-                <motion.line 
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 2.5, ease: "easeInOut", delay: 0.1 }}
-                    x1="0" y1="15vh" x2="100vw" y2="15vh" 
-                    stroke="currentColor" strokeWidth="1" className="text-gray-500"
-                />
-                
-                {/* Horizontal Bottom Alignment Line */}
-                <motion.line 
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 2.5, ease: "easeInOut", delay: 0.4 }}
-                    x1="0" y1="85vh" x2="100vw" y2="85vh" 
-                    stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-gray-400"
-                />
+            {/* Subtle Ambient Radial Glows (Cyan & Tech Blue) */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.12),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(0,217,255,0.10),transparent_70%)] opacity-80 pointer-events-none"></div>
+            <div className="absolute top-1/3 -left-48 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(37,99,235,0.06),transparent_65%)] dark:bg-[radial-gradient(circle,rgba(0,140,255,0.06),transparent_65%)] pointer-events-none"></div>
+            <div className="absolute bottom-10 -right-48 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(6,182,212,0.05),transparent_65%)] pointer-events-none"></div>
 
-                {/* Vertical Left Blueprint Margin */}
-                <motion.line 
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 2, ease: "easeOut", delay: 0.3 }}
-                    x1="5vw" y1="0" x2="5vw" y2="100vh" 
-                    stroke="currentColor" strokeWidth="1" strokeDasharray="2 4" className="text-blueprint-bluePrimary dark:text-blueprint-cyan"
-                />
-
-                {/* Vertical Right Sub-margin */}
-                <motion.line 
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 2.5, ease: "easeOut", delay: 0.6 }}
-                    x1="95vw" y1="0" x2="95vw" y2="100vh" 
-                    stroke="currentColor" strokeWidth="1" className="text-gray-400"
-                />
-
-                {/* Secondary Vertical Line */}
-                <motion.line 
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 3, ease: "easeOut", delay: 0.5 }}
-                    x1="25vw" y1="0" x2="25vw" y2="100vh" 
-                    stroke="currentColor" strokeWidth="0.5" className="text-gray-300 dark:text-gray-700"
-                />
-
-                {/* Diagonal Architecture Cut */}
-                <motion.line 
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 3, ease: "easeInOut", delay: 0.8 }}
-                    x1="5vw" y1="95vh" x2="60vw" y2="15vh" 
-                    stroke="currentColor" strokeWidth="1" className="text-gray-400"
-                />
-                
-                {/* Secondary Diagonal */}
-                <motion.line 
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 3, ease: "easeInOut", delay: 1 }}
-                    x1="25vw" y1="100vh" x2="95vw" y2="40vh" 
-                    stroke="currentColor" strokeWidth="0.5" strokeDasharray="5 5" className="text-gray-300 dark:text-gray-700"
-                />
-
-                {/* Construction Nodes at Intersections */}
-                {[
-                    { x: "5vw", y: "15vh" },
-                    { x: "25vw", y: "15vh" },
-                    { x: "95vw", y: "15vh" },
-                    { x: "5vw", y: "85vh" },
-                    { x: "95vw", y: "40vh" },
-                ].map((point, index) => (
-                    <motion.g 
-                        key={index}
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 1.2 + (index * 0.2) }}
-                        className="text-blueprint-bluePrimary dark:text-blueprint-cyan"
-                    >
-                        {/* Target crosses */}
-                        <line x1={`calc(${point.x} - 8px)`} y1={point.y} x2={`calc(${point.x} + 8px)`} y2={point.y} stroke="currentColor" strokeWidth="1.5" />
-                        <line x1={point.x} y1={`calc(${point.y} - 8px)`} x2={point.x} y2={`calc(${point.y} + 8px)`} stroke="currentColor" strokeWidth="1.5" />
-                        {/* Center dot */}
-                        <circle cx={point.x} cy={point.y} r="2" fill="currentColor" />
-                    </motion.g>
-                ))}
-
-                {/* Floating Architectural Data Annotations */}
-                <motion.text 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 0.8, y: 0 }}
-                    transition={{ duration: 1.5, delay: 2 }}
-                    x="6vw" y="14vh" 
-                    fill="currentColor" 
-                    className="text-[10px] font-mono tracking-[0.2em] text-blueprint-bluePrimary dark:text-blueprint-cyan uppercase font-bold"
-                >
-                    SEC: A-1 // ALIGNMENT VERIFIED
-                </motion.text>
-                
-                <motion.text 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 0.6, x: 0 }}
-                    transition={{ duration: 1.5, delay: 2.5 }}
-                    x="30vw" y="55vh" 
-                    fill="currentColor" 
-                    transform="rotate(-45, 30vw, 55vh)"
-                    className="text-[10px] font-mono tracking-widest text-gray-500 uppercase font-bold"
-                >
-                    --- STRUCTURAL OFFSET RATIO 1.618 ---
-                </motion.text>
-                
-                <motion.text 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.6 }}
-                    transition={{ duration: 1.5, delay: 2.8 }}
-                    x="85vw" y="87vh" 
-                    fill="currentColor" 
-                    className="text-[10px] font-mono tracking-widest text-gray-400 uppercase text-right"
-                >
-                    GRID_REF: 099.4X
-                </motion.text>
-            </svg>
+            {/* Ultra-subtle Architectural Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.025)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:40px_40px]"></div>
         </div>
     );
 }
+

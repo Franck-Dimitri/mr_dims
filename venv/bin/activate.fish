@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/mr-dims-tech/developpement/developpement_laravel/mr_dims/portfolio/venv
+set -gx VIRTUAL_ENV /var/www/mrdims-portfolio/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH
