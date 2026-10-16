@@ -57,41 +57,7 @@ class LiveContentSeeder extends Seeder
         }
 
         // BLOGS
-        $blogs = [
-            [
-                'title' => 'Comment l\'IA Révolutionne le Développement Web en 2026',
-                'slug' => Str::slug('Comment l\'IA Révolutionne le Développement Web en 2026'),
-                'meta_description' => 'Découvrez comment les outils d\'Intelligence Artificielle redéfinissent l\'architecture logicielle et l\'efficacité des développeurs Full-Stack.',
-                'markdown_content' => "L'Intelligence Artificielle ne vient pas remplacer les développeurs, elle vient augmenter nos capacités. \n\nEn 2026, l'utilisation de modèles agentiques permet non seulement de générer du code boilerplate en un temps record, mais surtout de réaliser des audits de sécurité complexes.\n\n### Les avantages au quotidien\n- Réduction drastique du temps de débogage.\n- Assistance lors de la conception d'architectures de bases de données (Prisma, Eloquent).\n- Génération de tests unitaires et d'intégration.\n\nLa véritable valeur d'un ingénieur logiciel aujourd'hui réside dans sa capacité à orchestrer ces outils IA pour livrer des produits robustes plus rapidement.",
-                'status' => 'published',
-                'author' => 'Mbouom Dimitri',
-                'published_at' => now(),
-                'views_count' => rand(100, 500),
-                'likes_count' => rand(10, 50),
-            ],
-            [
-                'title' => 'Les Avantages d\'Inertia.js avec Laravel et React',
-                'slug' => Str::slug('Les Avantages d\'Inertia.js avec Laravel et React'),
-                'meta_description' => 'Pourquoi j\'utilise Inertia.js pour mes projets SaaS modernes et comment cela accélère le temps de développement.',
-                'markdown_content' => "Le développement d'Applications Single Page (SPA) a longtemps nécessité la création d'une API côté serveur (Laravel) et d'un client lourd séparé (React/Vue). Cette approche est excellente mais souvent sur-dimensionnée pour beaucoup de projets.\n\n### La révolution Inertia\nInertia.js agit comme une colle magique entre Laravel et React. Vous n'avez plus besoin de :\n- Gérer le routage côté client (React Router)\n- Gérer l'état de l'authentification côté client\n- Écrire des appels axios répétitifs.\n\nVous retournez directement un composant React depuis un contrôleur Laravel ! Cela divise le temps de développement par deux tout en offrant l'expérience utilisateur ultra-fluide d'une SPA.",
-                'status' => 'published',
-                'author' => 'Mbouom Dimitri',
-                'published_at' => now()->subDays(2),
-                'views_count' => rand(100, 500),
-                'likes_count' => rand(10, 50),
-            ],
-            [
-                'title' => 'Pourquoi l\'Optimisation SEO est Vitale pour les SPA',
-                'slug' => Str::slug('Pourquoi l\'Optimisation SEO est Vitale pour les SPA'),
-                'meta_description' => 'Les défis du référencement naturel sur les applications React et comment les surmonter.',
-                'markdown_content' => "Les Single Page Applications offrent une expérience utilisateur inégalée. Cependant, historiquement, elles ont un grand défaut : le SEO. Les robots des moteurs de recherche voyaient souvent une page blanche car ils n'exécutaient pas le JavaScript.\n\n### Comment résoudre ce problème ?\n- **SSR (Server-Side Rendering)** : Rendre le code HTML sur le serveur avant de l'envoyer au client.\n- **Balises Meta Dynamiques** : Utiliser un composant `<Head>` pour injecter des titres et descriptions par page.\n- **Sitemap & Fichier Robots.txt** : Aider Google à cartographier votre application.\n- **AIO (AI Optimization)** : Fournir un fichier `llm.txt` lisible directement par des IA comme ChatGPT pour être référencé dans les réponses IA.",
-                'status' => 'published',
-                'author' => 'Mbouom Dimitri',
-                'published_at' => now()->subDays(5),
-                'views_count' => rand(100, 500),
-                'likes_count' => rand(10, 50),
-            ]
-        ];
+        $blogs = require __DIR__ . '/real_blogs.php';
 
         foreach ($blogs as $blog) {
             Blog::updateOrCreate(['slug' => $blog['slug']], $blog);

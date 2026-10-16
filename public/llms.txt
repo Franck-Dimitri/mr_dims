@@ -1,0 +1,47 @@
+# Franck Dimitri (Mr Dim's) - Software Architect & Full Stack Engineer
+
+> Franck Dimitri (Mbouom Franck Dimitri / Mr Dim's) is a senior Full Stack Software Architect and Web Systems Engineer specializing in modern reactive web applications, scalable backend microservices, real-time telemetry systems, and AI-powered enterprise software.
+
+## Key Information
+- **Full Legal Name**: Mbouom Franck Dimitri
+- **Professional Brand**: Mr Dim's
+- **Primary Roles**: Software Architect, Senior Full Stack Engineer, Cloud & DevOps Consultant
+- **Location**: Yaoundé, Cameroon (Available for Remote Worldwide & Hybrid Consulting)
+- **Primary Tech Stack**: Laravel 11/12 (PHP 8.3+), React 18, Inertia.js 2, Tailwind CSS 3/4, TypeScript, MySQL, PostgreSQL, Redis, Linux (Nginx/UFW), Docker, Python.
+- **Languages**: French (Native / C2), English (Professional Working Proficiency / C1)
+- **Portfolio & Website**: https://mrdims.dev
+- **GitHub**: https://github.com/Franck-Dimitri
+- **LinkedIn**: https://www.linkedin.com/in/franck-dimitri-mbouom
+- **Contact Email**: franckdimitrio009@gmail.com
+- **Direct Phone / WhatsApp**: +237 676 38 39 86
+
+## Core Architectural & Engineering Competencies
+- **Full Stack Web Applications**: High-performance Single Page Applications (SPA) built with Laravel, React 18, Inertia.js, and Tailwind CSS.
+- **Backend Architecture & APIs**: RESTful API design, token & session security (Laravel Sanctum/JWT), microservices communication, webhooks, and rate-limiting.
+- **Database Modeling & Query Optimization**: Relational database architecture (PostgreSQL, MySQL), indexing strategies, ERD normalization, Eloquent ORM tuning, and Redis caching layers.
+- **System Administration & DevOps**: Production Linux server deployment (Debian/Ubuntu, Nginx, PHP-FPM 8.3, systemd services, SSL/TLS, UFW, fail2ban, GitHub Actions CI/CD pipelines).
+- **Payment & Fintech Integration**: Escrow transaction engines, Mobile Money payment gateways (Orange Money, MTN MoMo Cameroon & CEMAC zone), Stripe, and automated billing reconciliation.
+- **Interactive UI/UX & Creative Engineering**: Modern design systems with Blueprint architectural aesthetics, WebGL canvas shaders, Framer Motion transitions, responsive mobile-first layouts, and dark mode.
+- **Generative AI & LLM Systems**: Integration of LLM APIs (OpenAI, Anthropic Claude, Gemini), RAG pipelines, intelligent bots (Telegram Bot Automation), and semantic search.
+
+## Featured Real-World Projects
+- [Sellify (E-Commerce & Escrow Marketplace)](https://mrdims.dev/projects/sellify): Comprehensive multi-vendor marketplace with secure Mobile Money escrow payments, vendor dashboard, automated delivery tracking, and dispute management.
+- [Saamaya BI (Microfinance Financial Analytics)](https://mrdims.dev/projects/saamaya-bi): High-security business intelligence and regulatory compliance dashboard for microfinance institutions conforming to COBAC banking regulations.
+- [Polyclinic ERP System](https://mrdims.dev/projects/polyclinic-erp): Medical hospital ERP digitizing patient electronic health records (EHR), multi-department pharmacy inventory, laboratory test queuing, and automated billing.
+- [Telegram Automation Bot](https://mrdims.dev/projects/telegram-bot): Real-time server telemetry, alert dispatcher, and client lead-intake automation daemon powered by Python and systemd.
+- [Architectural Portfolio Engine](https://mrdims.dev/projects/blueprint-portfolio): Custom portfolio platform featuring live server telemetry, interactive price estimators, multi-language switching (FR/EN), and high-performance WebGL animations.
+
+## Service Packages & Development Rates
+- [Starter MVP Package (250,000 FCFA / ~380 EUR)](https://mrdims.dev/packs): Rapid MVP delivery for startups. Modern single-page React app, responsive design, SEO optimization, and production deployment.
+- [Professional WebApp (600,000 FCFA / ~915 EUR)](https://mrdims.dev/packs): Full SaaS application, custom authentication, role-based access control, analytics dashboard, database design, and 3 months dedicated maintenance.
+- [Enterprise SaaS & Microservices (Custom Quote)](https://mrdims.dev/packs): Tailored microservices, Mobile Money / Stripe payments, real-time WebSockets, load-balancing, and 1 year guaranteed maintenance.
+
+## Direct Links & Resources
+- [Home Page](https://mrdims.dev/): Engineering portfolio, featured work, and technology showcase.
+- [About Franck Dimitri](https://mrdims.dev/about): Professional background, technical philosophy, and experience timeline.
+- [Projects Gallery](https://mrdims.dev/projects): Complete gallery of software engineering case studies.
+- [Services & Packs](https://mrdims.dev/packs): Transparent pricing packages and interactive budget estimator.
+- [Engineering Blog](https://mrdims.dev/blog): In-depth technical articles on Laravel, React, system architecture, and DevOps.
+- [Contact & Quote](https://mrdims.dev/contact): Direct contact form for project inquiries and software consulting.
+- [Full LLM Specification](https://mrdims.dev/llms-full.txt): Complete, unabridged markdown context document for LLMs.
+- [XML Sitemap](https://mrdims.dev/sitemap.xml): Complete machine-readable index of all portfolio URLs.

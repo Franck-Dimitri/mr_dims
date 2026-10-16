@@ -1,4 +1,4 @@
-#!/home/mr-dims-tech/developpement/developpement_laravel/mr_dims/portfolio/venv/bin/python3
+#!/var/www/mrdims-portfolio/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

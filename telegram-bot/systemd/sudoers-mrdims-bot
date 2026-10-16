@@ -1,0 +1,5 @@
+# Configuration Sudoers pour le Bot de Supervision VPS (Utilisateur: mrdims)
+# À placer dans : /etc/sudoers.d/mrdims-bot
+# Commande pour installer : sudo cp /var/www/mrdims-portfolio/telegram-bot/systemd/sudoers-mrdims-bot /etc/sudoers.d/mrdims-bot && sudo chmod 0440 /etc/sudoers.d/mrdims-bot
+
+mrdims ALL=(ALL) NOPASSWD: /usr/bin/systemctl status *, /usr/bin/systemctl restart *, /usr/bin/systemctl is-active *, /usr/bin/journalctl, /usr/sbin/ufw status, /usr/sbin/ufw status *, /usr/bin/fail2ban-client status, /usr/bin/fail2ban-client status *, /usr/bin/fail2ban-client set * banip *, /usr/bin/fail2ban-client set * unbanip *

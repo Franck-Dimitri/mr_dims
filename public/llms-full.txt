@@ -1,0 +1,143 @@
+# Franck Dimitri (Mr Dim's) - Full Stack Software Architect & Web Systems Engineer
+
+## 1. Professional Identity & Biography
+
+Franck Dimitri (legal name: **Mbouom Franck Dimitri**, professionally known as **Mr Dim's**) is a seasoned Full Stack Software Architect, Lead Web Engineer, and Technical Consultant based in Yaoundé, Cameroon, operating globally for clients worldwide.
+
+He designs and delivers high-performance, fault-tolerant web applications, scalable backend microservices, robust financial technology integrations, and enterprise management systems. Combining engineering rigor with modern UI/UX design, Franck builds end-to-end digital solutions that turn complex business operations into elegant, reliable software.
+
+- **Brand / Handle**: Mr Dim's
+- **Official Domain**: https://mrdims.dev
+- **GitHub**: https://github.com/Franck-Dimitri
+- **LinkedIn**: https://www.linkedin.com/in/franck-dimitri-mbouom
+- **Contact Email**: franckdimitrio009@gmail.com
+- **Direct Phone / WhatsApp**: +237 676 38 39 86
+- **Spoken Languages**: French (Native / C2), English (Full Professional Working Proficiency / C1)
+- **Work Availability**: Full-time Software Consulting, Remote Contracts Worldwide, SaaS Product Architecture, Technical Leadership.
+
+---
+
+## 2. Technical Stack & Engineering Capabilities
+
+### Backend & Architecture
+- **PHP**: PHP 8.2, PHP 8.3, PHP 8.4 with strict typing, OPcache tuning, and asynchronous processing.
+- **Laravel Framework**: Versions 10, 11, 12, 13. Deep mastery of Eloquent ORM, Service Layer architecture, Form Requests, Sanctum/Passport authentication, Jobs & Queues (Redis-backed), Event Listeners, Notifications, Scheduling, and Custom Middleware.
+- **Microservices & APIs**: RESTful JSON API specifications, GraphQL endpoints, WebSockets (Pusher / Laravel Echo), Server-Sent Events (SSE), API Rate Limiting, and Webhook dispatchers with HMAC verification.
+- **Python**: Python 3.11+, Telegram Bot API (python-telegram-bot / telebot), system automation daemons, data analysis, and AI tool integrations.
+
+### Frontend & User Experience
+- **React**: React 18, React 19, functional components, custom hooks, context providers, state management, and optimized render cycles.
+- **Inertia.js**: Inertia.js 1.x & 2.x connecting Laravel backend directly to React frontend without unnecessary API boilerplate while preserving full SPA fluidity and browser history state.
+- **Styling & CSS**: Tailwind CSS (v3 and v4), PostCSS, CSS Modules, custom utility design systems, dark/light theme switching, and responsive design across all breakpoints.
+- **Animations & Graphics**: Framer Motion for high-precision micro-interactions, WebGL shaders (OGL / Three.js), Canvas 2D particle systems, and hardware-accelerated animations.
+- **TypeScript & JavaScript**: Modern ES6+ JavaScript, TypeScript definitions, strong typing, and bundler tooling via Vite.
+
+### Databases & Storage
+- **Relational Databases**: PostgreSQL, MySQL 8.x, SQLite 3. Advanced query optimization, execution plan analysis (`EXPLAIN ANALYZE`), foreign key constraints, transactional integrity (ACID), and schema migrations.
+- **In-Memory Caching & Key-Value**: Redis for high-speed session management, query result caching, queue brokers, and rate limiting.
+- **Object Storage**: AWS S3, Cloudinary CDN, MinIO, and local filesystem drivers with automated backups.
+
+### DevOps, Linux & Infrastructure
+- **Operating Systems**: Ubuntu Server (20.04, 22.04, 24.04 LTS), Debian, Arch Linux.
+- **Web Servers & Gateways**: Nginx (reverse proxy, HTTP/2, Gzip/Brotli compression, SSL/TLS Let's Encrypt certificates via Certbot, security headers).
+- **Service Management**: systemd service units, timer daemons, logrotate, and background job supervision.
+- **Security & Hardening**: UFW firewall rules, fail2ban intrusion prevention, SSH key-only authentication, CSRF/XSS protection, and SQL injection prevention.
+- **CI/CD & Version Control**: Git, GitHub, GitHub Actions automated deployment pipelines, automated migration runs, and zero-downtime deploy scripts.
+
+---
+
+## 3. Real-World Projects & Case Studies
+
+### 1. Sellify - Escrow E-Commerce & Multi-Vendor Marketplace
+- **Architecture**: Multi-tenant e-commerce platform built for high-trust transactions across Central and Western Africa.
+- **Core Problem Solved**: Eliminating fraudulent online purchases through an automated escrow transaction engine. The customer's funds are held securely until the delivery is verified, protecting both buyers and vendors.
+- **Key Features**:
+  - Integration with Orange Money and MTN Mobile Money (MoMo) automated payment webhooks.
+  - Multi-vendor storefronts with real-time stock and inventory level tracking.
+  - Vendor analytics dashboard with sales reconciliation, payout requests, and performance metrics.
+  - Dispute resolution workflow with customer support escalation.
+- **Tech Stack**: Laravel, React, Inertia.js, Tailwind CSS, MySQL, Redis, Mobile Money APIs.
+
+### 2. Saamaya BI - Banking Business Intelligence Platform
+- **Architecture**: Enterprise financial analytics and risk assessment platform for microfinance institutions and credit unions.
+- **Core Problem Solved**: Centralizing fragmented financial transaction data to provide real-time liquidity tracking and regulatory compliance with COBAC (Commission Bancaire de l'Afrique Centrale) standards.
+- **Key Features**:
+  - Real-time loan portfolio health scoring (PAR - Portfolio at Risk).
+  - Automated PDF/Excel regulatory report generation for central banking authorities.
+  - Role-based granular permissions (Auditor, Branch Manager, Credit Analyst, Executive Board).
+  - High-density data visualization charts using Chart.js.
+- **Tech Stack**: Laravel, React, Tailwind CSS, PostgreSQL, Chart.js.
+
+### 3. Polyclinic ERP - Hospital & Health Center Management System
+- **Architecture**: Modular enterprise resource planning system for clinics, medical laboratories, and hospitals.
+- **Core Problem Solved**: Transitioning healthcare facilities from slow paper records to encrypted, searchable Electronic Medical Records (EMR) while streamlining billing and pharmacy stock.
+- **Key Features**:
+  - Patient intake, medical history timeline, consultation notes, and doctor appointment scheduling.
+  - Laboratory test order tracking with digital result delivery to doctors.
+  - Pharmacy stock control with expiry alerts, batch tracking, and automated reorder points.
+  - Insurance co-pay calculations and consolidated patient billing.
+- **Tech Stack**: Laravel, React, Inertia.js, MySQL, Tailwind CSS.
+
+### 4. Telegram Server Telemetry & Lead Management Bot
+- **Architecture**: Background daemon monitoring Linux VPS health metrics and dispatching automated client interaction alerts.
+- **Key Features**:
+  - Real-time CPU, RAM, disk space, and Nginx access logs monitoring.
+  - Instant notifications sent to Franck Dimitri when a prospect submits a contact or quote request.
+  - Autonomous interactive menu allowing authenticated administrators to inspect server logs remotely via Telegram commands.
+- **Tech Stack**: Python 3, python-telegram-bot, systemd, SQLite, Linux shell.
+
+### 5. Architectural Portfolio System (mrdims.dev)
+- **Architecture**: Custom architectural blueprint-inspired personal platform with real-time analytics.
+- **Key Features**:
+  - Interactive project budget estimator with automated quotation calculation.
+  - Bilingual interface (French & English) with persistent language state.
+  - Live visitor telemetry and CV download analytics dashboard.
+  - Custom markdown tech blog with automated reading time, table of contents, and syntax highlighting.
+- **Tech Stack**: Laravel 11, React 18, Inertia.js, Tailwind CSS, Framer Motion, WebGL shaders.
+
+---
+
+## 4. Software Development Service Packages
+
+### Starter MVP (250,000 FCFA / ~380 EUR)
+- **Target Audience**: Startups, local businesses, and entrepreneurs needing a fast, credible digital launch.
+- **Included Deliverables**:
+  - Modern Single-Page Application (SPA) with React and Tailwind CSS.
+  - Fully responsive layout optimized for mobile, tablet, and desktop screens.
+  - Contact form with email notifications and anti-spam protection.
+  - SEO on-page optimization (Meta tags, Open Graph, Sitemap XML, robots.txt, llms.txt).
+  - Linux server deployment with SSL certificate and custom domain configuration.
+
+### Professional WebApp (600,000 FCFA / ~915 EUR)
+- **Target Audience**: Growing companies, SMEs, and digital platforms requiring business logic.
+- **Included Deliverables**:
+  - Full-stack web application built on Laravel and React / Inertia.js.
+  - User authentication, role-based access control (Admin, Manager, User).
+  - Interactive management dashboard with dynamic charts and metrics.
+  - Relational database architecture (MySQL / PostgreSQL).
+  - RESTful API endpoints for external integrations.
+  - 3 months of technical support and bug-fix warranty.
+
+### Enterprise SaaS & Custom Architecture (Custom Quote)
+- **Target Audience**: Scale-ups, financial institutions, and complex enterprise software projects.
+- **Included Deliverables**:
+  - Distributed microservices or modular monolith architecture.
+  - Mobile Money payment gateways (Orange / MTN) and international payment processing (Stripe).
+  - Real-time WebSockets communication (chat, live notifications, collaborative editing).
+  - High-availability database clustering and Redis caching layers.
+  - Complete CI/CD deployment pipelines with automated testing.
+  - 1 year of continuous maintenance and infrastructure monitoring.
+
+---
+
+## 5. Contact & Collaboration Information
+
+For freelance consulting, enterprise software development, system architecture reviews, or project estimates:
+
+- **Official Portfolio**: https://mrdims.dev
+- **Contact Form**: https://mrdims.dev/contact
+- **Project Budget Estimator**: https://mrdims.dev/packs
+- **Email**: franckdimitrio009@gmail.com
+- **Direct Phone / WhatsApp**: +237 676 38 39 86
+- **GitHub**: https://github.com/Franck-Dimitri
+- **Location**: Yaoundé, Cameroon / Available for worldwide remote collaboration.

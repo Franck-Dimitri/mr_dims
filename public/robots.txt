@@ -1,7 +1,84 @@
+# ==============================================================================
+# Robots.txt for mrdims.dev (Franck Dimitri - Software Architect)
+# Optimized for Web Search Engines & Generative AI Agents (GEO / LLMs)
+# ==============================================================================
+
+# Default rule for all web crawlers
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /login
 Disallow: /register
+Disallow: /api/cv/track
 
+# ------------------------------------------------------------------------------
+# Generative AI & Large Language Model Crawlers (Permitted for Indexation)
+# ------------------------------------------------------------------------------
+# OpenAI (ChatGPT / SearchGPT)
+User-agent: GPTBot
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# Anthropic (Claude / Claude-Web)
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# Google AI & Extended Crawlers (Gemini)
+User-agent: Google-Extended
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# Apple Intelligence
+User-agent: Applebot
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# Microsoft Bing & Copilot
+User-agent: Bingbot
+User-agent: Copilot
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# Other Major AI & Knowledge Crawlers
+User-agent: CCBot
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: Bytespider
+User-agent: FacebookBot
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# ------------------------------------------------------------------------------
+# Sitemaps & Machine-Readable AI Specifications
+# ------------------------------------------------------------------------------
 Sitemap: https://mrdims.dev/sitemap.xml
+
+# LLM Context Specifications (GEO / AI SEO)
+# Specification: https://llmstxt.org/
+# https://mrdims.dev/llms.txt
+# https://mrdims.dev/llms-full.txt
